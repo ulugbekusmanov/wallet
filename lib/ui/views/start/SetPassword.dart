@@ -19,10 +19,13 @@ class SetPasswordModel extends BaseViewModel {
     await _authService.setPassword(repeatPasswordController.text);
     if (changePassword != true) {
       if (_settings.canCheckBiometrics) {
-        var confirmed = (await showConfirmationDialog(S.of(context).biometrics, S.of(context).biometricsEnableAsk)).confirmed;
+        var confirmed = (await showConfirmationDialog(
+                S.of(context).biometrics, S.of(context).biometricsEnableAsk))
+            .confirmed;
 
         if (confirmed) {
-          var authenticated = await _authService.biometricAuth(S.of(context).confirmAction);
+          var authenticated =
+              await _authService.biometricAuth(S.of(context).confirmAction);
           if (authenticated) {
             _settings
               ..biometricsEnabled = true
@@ -65,53 +68,66 @@ class SetPasswordScreen extends StatelessWidget {
           ),
           body: model.state == ViewState.Busy
               ? TBCCLoader()
-              : Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: Text(
-                            S.of(context).passwordInfo,
-                            style: Theme.of(context).textTheme.bodyText2!,
-                            textAlign: TextAlign.center,
-                          ),
+              : SafeArea(
+                  child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 40,
+                                right: MediaQuery.of(context).size.width * 0.08,
+                                left: MediaQuery.of(context).size.width * 0.08,
+                              ),
+                              child: Text(
+                                S.of(context).passwordInfo,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                        color: AppColors.text.withOpacity(0.6)),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            TextFormField(
+                              controller: model.passwordController,
+                              decoration: generalTextFieldDecor(context,
+                                  hintText: S.of(context).password),
+                              obscureText: model.obscure,
+                              validator: (val) {
+                                if (val?.length != null && val!.length < 8) {
+                                  return S.of(context).passwordSymbolAmount;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 16),
+                            TextFormField(
+                              controller: model.repeatPasswordController,
+                              decoration: generalTextFieldDecor(context,
+                                  hintText: S.of(context).repeatPassword),
+                              obscureText: model.obscure,
+                              validator: (val) {
+                                if (model.passwordController.text != val) {
+                                  return S.of(context).passwordDoNotMatch;
+                                }
+                              },
+                            ),
+                            Spacer(),
+                            Button(
+                              value: btnValue,
+                              onTap: () {
+                                if (formKey.currentState?.validate() == true)
+                                  model.setPassword(context);
+                              },
+                            )
+                          ],
                         ),
-                        TextFormField(
-                          controller: model.passwordController,
-                          decoration: generalTextFieldDecor(context, hintText: S.of(context).password),
-                          obscureText: model.obscure,
-                          validator: (val) {
-                            if (val?.length != null && val!.length < 8) {
-                              return S.of(context).passwordSymbolAmount;
-                            }
-                          },
-                        ),
-                        SizedBox(height: 16),
-                        TextFormField(
-                          controller: model.repeatPasswordController,
-                          decoration: generalTextFieldDecor(context, hintText: S.of(context).repeatPassword),
-                          obscureText: model.obscure,
-                          validator: (val) {
-                            if (model.passwordController.text != val) {
-                              return S.of(context).passwordDoNotMatch;
-                            }
-                          },
-                        ),
-                        Spacer(),
-                        Button(
-                          value: btnValue,
-                          onTap: () {
-                            if (formKey.currentState?.validate() == true) model.setPassword(context);
-                          },
-                        )
-                      ],
-                    ),
-                  )),
+                      )),
+                ),
         );
       },
     );

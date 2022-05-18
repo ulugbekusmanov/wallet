@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:tbccwallet/ui/MainScreen.dart';
 import 'package:tbccwallet/ui/views/start/SetPassword.dart';
 import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
+import 'package:dartx/dartx.dart';
 
 import 'RestoreWallet.dart';
 
@@ -179,7 +180,7 @@ class CreateWalletScreen extends StatelessWidget {
                                 .textTheme
                                 .bodyText1!
                                 .copyWith(
-                                    color: AppColors.text.withOpacity(0.7)),
+                                    color: AppColors.text.withOpacity(0.6)),
                           ))
                         ]),
                         Row(children: [
@@ -288,55 +289,59 @@ class CheckMnemonicScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
+                              SizedBox(height: 12),
                               Text(
                                 S.of(context).verifyMnemonic,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 30.0, top: 40),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: AppColors.generalShapesBg,
-                                  ),
-                                  padding: const EdgeInsets.all(12),
-                                  constraints: BoxConstraints(minHeight: 200),
-                                  child: Wrap(
-                                    runAlignment: WrapAlignment.center,
-                                    alignment: WrapAlignment.center,
-                                    runSpacing: 10,
-                                    spacing: 10,
-                                    children: List.generate(
-                                      model.verifyMnemonicList.length,
-                                      (index) => GestureDetector(
-                                        onTap: () {
-                                          model.reformedMnemonicList.add(
-                                              model.verifyMnemonicList[index]);
-                                          model.verifyMnemonicList
-                                              .removeAt(index);
-                                          if (listEquals(
-                                              model.newMnemonicList.sublist(
-                                                  0,
-                                                  model.verifyMnemonicList
-                                                      .length),
-                                              model.verifyMnemonicList)) {
-                                            model.verifyValid = true;
-                                            model.lastCorrectIndex = model
-                                                    .verifyMnemonicList.length -
-                                                1;
-                                          } else
-                                            model.verifyValid = false;
-                                          model.setState();
-                                        },
-                                        behavior: HitTestBehavior.opaque,
-                                        child: MnemonicWordChipFilled(
-                                          index,
-                                          model.verifyMnemonicList[index],
-                                          err: index > model.lastCorrectIndex,
-                                        ),
-                                      ),
+                              SizedBox(height: 54),
+                              Wrap(
+                                alignment: WrapAlignment.center,
+                                runSpacing: 10,
+                                spacing: 10,
+                                children: List.generate(
+                                  model.reformedMnemonicList.length,
+                                  (index) => GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () {
+                                      if (model.verifyMnemonicList
+                                          .containsWhere((e) =>
+                                              model.reformedMnemonicList[
+                                                          index] ==
+                                                      e
+                                                  ? true
+                                                  : false))
+                                        model.verifyMnemonicList.remove(
+                                            model.reformedMnemonicList[index]);
+                                      else
+                                        model.verifyMnemonicList.add(
+                                            model.reformedMnemonicList[index]);
+                                      if (listEquals(
+                                          model.newMnemonicList.sublist(0,
+                                              model.verifyMnemonicList.length),
+                                          model.verifyMnemonicList)) {
+                                        model.verifyValid = true;
+                                        model.lastCorrectIndex =
+                                            model.verifyMnemonicList.length - 1;
+                                      } else
+                                        model.verifyValid = false;
+                                      if (listEquals(model.newMnemonicList,
+                                          model.verifyMnemonicList)) {
+                                        model.setPassworBtnActive = true;
+                                      }
+                                      model.setState();
+                                    },
+                                    child: MnemonicWordChipFilled(
+                                      model.verifyMnemonicList.containsWhere(
+                                              (e) => model.reformedMnemonicList[
+                                                          index] ==
+                                                      e
+                                                  ? true
+                                                  : false)
+                                          ? index
+                                          : null,
+                                      model.reformedMnemonicList[index],
                                     ),
                                   ),
                                 ),
@@ -355,41 +360,6 @@ class CheckMnemonicScreen extends StatelessWidget {
                                             .copyWith(color: AppColors.red),
                                       ),
                                     ),
-                              Wrap(
-                                alignment: WrapAlignment.center,
-                                runSpacing: 10,
-                                spacing: 10,
-                                children: List.generate(
-                                  model.reformedMnemonicList.length,
-                                  (index) => GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      model.verifyMnemonicList.add(
-                                          model.reformedMnemonicList[index]);
-                                      model.reformedMnemonicList
-                                          .removeAt(index);
-                                      if (listEquals(
-                                          model.newMnemonicList.sublist(0,
-                                              model.verifyMnemonicList.length),
-                                          model.verifyMnemonicList)) {
-                                        model.verifyValid = true;
-                                        model.lastCorrectIndex =
-                                            model.verifyMnemonicList.length - 1;
-                                      } else
-                                        model.verifyValid = false;
-                                      if (listEquals(model.newMnemonicList,
-                                          model.verifyMnemonicList)) {
-                                        model.setPassworBtnActive = true;
-                                      }
-                                      model.setState();
-                                    },
-                                    child: MnemonicWordChip(
-                                      null,
-                                      model.reformedMnemonicList[index],
-                                    ),
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
                           Button(
@@ -448,16 +418,26 @@ class MnemonicWordChipFilled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        border: err ? Border.all(color: Theme.of(context).primaryColor) : null,
-        color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(12),
-      ),
+      decoration: index == null
+          ? BoxDecoration(
+              border: Border.all(color: Colors.black54),
+              borderRadius: BorderRadius.circular(12))
+          : BoxDecoration(
+              border: err
+                  ? Border.all(color: Theme.of(context).primaryColor)
+                  : null,
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
       child: Text(
         word,
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: Colors.white,
-            ),
+        style: index == null
+            ? Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Colors.black54,
+                )
+            : Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Colors.white,
+                ),
       ),
     );
   }
