@@ -147,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "changePassword":
             MessageLookupByLibrary.simpleMessage("Change Password"),
         "chart": MessageLookupByLibrary.simpleMessage("Chart"),
+        "check": MessageLookupByLibrary.simpleMessage("Check"),
         "checkInternet": MessageLookupByLibrary.simpleMessage(
             "Check Your Internet connection"),
         "checkSavedMnemonicAll": MessageLookupByLibrary.simpleMessage(
@@ -465,7 +466,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "useBiometrics": MessageLookupByLibrary.simpleMessage("Use biometrics"),
         "usedFunds": MessageLookupByLibrary.simpleMessage("Used funds"),
         "verifyMnemonic": MessageLookupByLibrary.simpleMessage(
-            "Tap the words from your \nmnemonic phrase in correct order"),
+            "Tap the words from your secret key"),
         "vote": MessageLookupByLibrary.simpleMessage("Vote"),
         "voting": MessageLookupByLibrary.simpleMessage("Voting"),
         "vpnDescription": MessageLookupByLibrary.simpleMessage(

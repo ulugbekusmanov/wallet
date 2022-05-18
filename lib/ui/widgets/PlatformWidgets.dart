@@ -6,7 +6,7 @@ import 'package:tbccwallet/core/authentication/AuthService.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 
-import 'package:tbccwallet/ui/styles/styles.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
 
 class PlatformTabScaffold extends StatefulWidget {

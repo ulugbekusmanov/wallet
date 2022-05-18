@@ -1,19 +1,19 @@
 import 'dart:io';
 
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tbccwallet/core/settings/UserSettings.dart';
 import 'package:tbccwallet/main.dart';
 import 'package:tbccwallet/shared.dart';
-
-import 'package:tbccwallet/ui/styles/styles.dart';
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 import 'package:tbccwallet/ui/update/ForceUpdateScreen.dart';
 
+import 'generated/l10n.dart';
 import 'locator.dart';
 import 'ui/views/start/LoginScreen.dart';
 import 'ui/views/start/StartScreen.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:overlay_support/overlay_support.dart';
 
 class WalletApp extends StatelessWidget {
   @override
@@ -35,10 +35,10 @@ class WalletApp extends StatelessWidget {
               ],
               supportedLocales: S.delegate.supportedLocales,
               title: 'TBCC Wallet',
-              themeMode: ThemeMode.system,
-              // theme: LIGHT_THEME,
-              //darkTheme: DARK_THEME,
-              theme: currTheme,
+              // themeMode: ThemeMode.system,
+              theme: LIGHT_THEME,
+              // themeDark: DARK_THEME,
+              // theme: currTheme,
               locale: model.getLocale(),
               navigatorKey: StackedService.navigatorKey,
               //home: MainAppScreen(),

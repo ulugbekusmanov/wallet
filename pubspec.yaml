@@ -14,9 +14,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  intl_utils: ^2.6.1
 
   cupertino_icons: ^1.0.2
-
   flutter_native_splash: ^2.1.6
   qr_code_scanner: ^0.5.1
   qr_flutter: ^4.0.0
@@ -66,6 +66,7 @@ dependencies:
   flutter_displaymode: ^0.3.2
   showcaseview: ^1.1.2
 
+
 dependency_overrides:
   platform: ^3.1.0
   
@@ -102,28 +103,8 @@ flutter_intl:
 # flutter pub run flutter_native_splash:create
 flutter_native_splash:
   color: "#438AF9"
-  #background_image: "assets/background.png"
   image: assets/images/splash.png
-  #branding: assets/dart.png
-  #branding_mode: bottom
-  #color_dark: "#042a49"
-  #background_image_dark: "assets/dark-background.png"
-  #image_dark: assets/splash-invert.png
-  #branding_dark: assets/dart_dark.png
   android: true
   ios: true
   web: false
-
-  android_12:
-    #image: assets/android12splash.png
-    #icon_background_color: "#111111"
-    #image_dark: assets/android12splash-invert.png
-    #icon_background_color_dark: "#eeeeee"
-
-  #android_gravity: center
-  #ios_content_mode: center
-  #web_image_mode: center
   fullscreen: true
-  #info_plist_files:
-  #  - 'ios/Runner/Info-Debug.plist'
-  #  - 'ios/Runner/Info-Release.plist'

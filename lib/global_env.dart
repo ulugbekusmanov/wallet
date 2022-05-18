@@ -1,16 +1,14 @@
 import 'package:binance_chain/binance_chain.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:binance_chain/binance_chain.dart' as bc;
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
+import 'package:solana/solana.dart' as sol;
 import 'package:tbccwallet/core/token/TokenContainer.dart';
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:http/http.dart';
-import 'package:binance_chain/binance_chain.dart' as bc;
-import 'package:solana/solana.dart' as sol;
 
 import 'core/settings/AppSettings.dart';
 import 'locator.dart';
-import 'ui/views/dapp_browser/RequestHandler.dart';
 
 class ENVS_CONTAINER {
   bc.HttpApiClient? BC_ENV;

@@ -1,7 +1,7 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tbccwallet/shared.dart';
 
-import 'styles.dart';
+import 'AppTheme.dart';
 
 String _pathBase = 'assets/images';
 String _iconsPathBase = '$_pathBase/vector/icons';

@@ -9,7 +9,7 @@ import 'package:tbccwallet/shared.dart';
 import 'package:rive/rive.dart'
     show RiveAnimation, OneShotAnimation, RiveAnimationController;
 
-import 'package:tbccwallet/ui/styles/styles.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 
 Widget gradientIcon(Widget icon) => ShaderMask(
     shaderCallback: AppColors.mainGradient.createShader,

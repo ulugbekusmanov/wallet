@@ -3,7 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'package:flutter/services.dart';
 
-import 'styles/styles.dart';
+import 'styles/AppTheme.dart';
 
 class QRCodeReader extends StatefulWidget {
   /// mode=1 => login screen

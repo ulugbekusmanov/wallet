@@ -2,7 +2,7 @@ import 'package:tbccwallet/global_env.dart';
 import 'package:tbccwallet/shared.dart';
 
 import 'package:flutter_svg/svg.dart';
-import 'package:tbccwallet/ui/styles/styles.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 

@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:bip39/bip39.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:solana/solana.dart' as sol;
+import 'package:tbccwallet/App.dart';
 import 'package:tbccwallet/core/api/tbcc/TBCCApi.dart';
 import 'package:tbccwallet/core/authentication/UserAccount.dart';
 import 'package:tbccwallet/core/settings/AppSettings.dart';
 import 'package:tbccwallet/core/settings/UserSettings.dart';
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:tbccwallet/shared.dart';
-
-import 'package:tbccwallet/App.dart';
-
 import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
+
 import 'core/api/binance_chain/BCApi.dart';
 import 'core/api/bsc/BSCApi.dart';
 import 'core/api/ethereum/ETHApi.dart';
@@ -23,10 +23,7 @@ import 'core/storage/SecureStorage.dart';
 import 'core/tickers/TickersService.dart';
 import 'global_env.dart';
 import 'locator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:solana/solana.dart' as sol;
 import 'ui/views/settings/address_book/AddressBookModel.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +50,8 @@ Future<void> init({bool retryInternet = false}) async {
       settings.initNetworkFailed = true;
     } else {
       settings.update = InnerUpdate.fromJson(config.load.updateJson);
-      locator<AppSettings>().from(AppSettings.fromJson(config.load.appSettingsJson));
+      locator<AppSettings>()
+          .from(AppSettings.fromJson(config.load.appSettingsJson));
       setupEnv();
 
       /// add to locator remote config-dependent instances
@@ -75,7 +73,8 @@ Future<void> init({bool retryInternet = false}) async {
       ));
 
       settings.fillfromJson(json.decode(load[1]));
-      settings.canCheckBiometrics = await authService.localAuth.canCheckBiometrics;
+      settings.canCheckBiometrics =
+          await authService.localAuth.canCheckBiometrics;
       settings.versionName = '2.1.1';
       settings.versionCode = '83';
       if (settings.sentFirstRunVer != settings.versionCode) {
@@ -96,7 +95,10 @@ Future<void> init({bool retryInternet = false}) async {
         }
 
         /// init SOLANA wallet from seed
-        a.solWallet = sol.Wallet(rpcClient: ENVS.SOL_ENV!, signer: await sol.Ed25519HDKeyPair.fromSeedWithHdPath(seed: a.seed!.toList(), hdPath: "m/44'/501'/0'"));
+        a.solWallet = sol.Wallet(
+            rpcClient: ENVS.SOL_ENV!,
+            signer: await sol.Ed25519HDKeyPair.fromSeedWithHdPath(
+                seed: a.seed!.toList(), hdPath: "m/44'/501'/0'"));
         authService.accManager.allAccounts.add(a);
       }
       if (needToSaveAccs == true) authService.accManager.saveAccounts();
@@ -104,7 +106,9 @@ Future<void> init({bool retryInternet = false}) async {
       if (settings.loggedIn) {
         /// run preload balances
         locator<WalletMainScreenModel>().loadBalances();
-        locator<TBCCApi>().getUsers(authService.accManager.allAccounts.map((e) => e.bcWallet.address!).toList());
+        locator<TBCCApi>().getUsers(authService.accManager.allAccounts
+            .map((e) => e.bcWallet.address!)
+            .toList());
       }
       settings.initNetworkFailed = false;
     }

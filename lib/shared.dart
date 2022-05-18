@@ -1,41 +1,39 @@
 import 'dart:math' show pow;
 
 import 'package:binance_chain/binance_chain.dart';
+import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
-
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/ui/views/wallet/transactions/binance_smart_chain/bsc_Transfer.dart';
 import 'package:tbccwallet/ui/views/wallet/transactions/ethereum/eth_Transfer.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:decimal/decimal.dart';
 
 import 'core/balance/WalletBalance.dart';
 import 'global_env.dart';
 import 'ui/views/wallet/transactions/binance_chain/bc_Transfer.dart';
 import 'ui/views/wallet/transactions/solana/sol_Transfer.dart';
 
-export 'package:flutter/material.dart';
 export 'package:decimal/decimal.dart';
-
-export 'package:tbccwallet/ui/BaseView.dart';
-export 'package:tbccwallet/ui/BaseViewModel.dart';
-export 'package:tbccwallet/ui/styles/styles.dart';
-export 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
-export 'package:tbccwallet/ui/styles/icons.dart';
-export 'package:tbccwallet/generated/l10n.dart';
+export 'package:flutter/material.dart';
 export 'package:page_transition/page_transition.dart';
-export 'package:web3dart/web3dart.dart' show Web3Client, EthereumAddress;
-export 'package:web3dart/src/crypto/formatting.dart';
 export 'package:tbccwallet/core/balance/WalletBalance.dart';
 export 'package:tbccwallet/core/token/WalletToken.dart';
+export 'package:tbccwallet/generated/l10n.dart';
+export 'package:tbccwallet/ui/BaseView.dart';
+export 'package:tbccwallet/ui/BaseViewModel.dart';
+export 'package:tbccwallet/ui/styles/AppTheme.dart';
+export 'package:tbccwallet/ui/styles/icons.dart';
+export 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
+export 'package:web3dart/src/crypto/formatting.dart';
+export 'package:web3dart/web3dart.dart' show Web3Client, EthereumAddress;
 
 enum ViewState { Busy, Idle }
 
-void routeToTransfer(WalletBalance tokenBalance, BuildContext context, int accountFrom) {
+void routeToTransfer(
+    WalletBalance tokenBalance, BuildContext context, int accountFrom) {
   var result;
   switch (tokenBalance.token.standard) {
     case 'BEP20':
@@ -72,25 +70,29 @@ void routeToTransfer(WalletBalance tokenBalance, BuildContext context, int accou
   Navigator.of(context).push(MaterialPageRoute(builder: (_) => result));
 }
 
-String getFiatLiteral(String symbol) => FIAT_CURRENCIES_LITERALS[symbol] ?? symbol;
+String getFiatLiteral(String symbol) =>
+    FIAT_CURRENCIES_LITERALS[symbol] ?? symbol;
 String shortFmtAddr(String addr) {
   return '${addr.substring(0, 10)}...${addr.substring(addr.length - 8, addr.length)}';
 }
 
 extension SetExt<T> on Set<T> {
-  Set<T> differenceWhere(Set<Object> other, bool Function(T elementOfThis, Object elementOfOther) test) {
+  Set<T> differenceWhere(Set<Object> other,
+      bool Function(T elementOfThis, Object elementOfOther) test) {
     Set<T> result = toSet();
     var otherList = other.toList();
 
     for (T element in this) {
-      if (otherList.containsWhere((otherObj) => test(element, otherObj))) result.remove(element);
+      if (otherList.containsWhere((otherObj) => test(element, otherObj)))
+        result.remove(element);
     }
     return result;
   }
 }
 
 Iterable<int> range(int start, int stop, [int step = 1]) sync* {
-  if (start > stop && step > 0) throw ArgumentError('if start>stop, step must be negative');
+  if (start > stop && step > 0)
+    throw ArgumentError('if start>stop, step must be negative');
   for (int i = start; start > stop ? i > stop : i < stop; i += step) yield i;
 }
 
@@ -155,7 +157,8 @@ extension DecimalExt on Decimal {
     return this / DecimalExt.gweiDecimal;
   }
 
-  String toStringWithFractionDigits(int fractionDigits, {bool shrinkZeros = false}) {
+  String toStringWithFractionDigits(int fractionDigits,
+      {bool shrinkZeros = false}) {
     var splitted = toString().split('.');
     if (this.isInteger) {
       if (shrinkZeros) {
@@ -166,7 +169,11 @@ extension DecimalExt on Decimal {
     } else {
       String intPart = splitted.first;
       String fractionalPart = splitted.last;
-      fractionalPart = fractionalPart.substring(0, fractionalPart.length <= fractionDigits ? fractionalPart.length : fractionDigits);
+      fractionalPart = fractionalPart.substring(
+          0,
+          fractionalPart.length <= fractionDigits
+              ? fractionalPart.length
+              : fractionDigits);
 
       if (shrinkZeros) {
         int i;
@@ -180,17 +187,23 @@ extension DecimalExt on Decimal {
   }
 
   EtherAmount toEtherAmount([int decimals = 18]) {
-    return EtherAmount.inWei(BigInt.parse((this * Decimal.fromInt(10).pow(decimals)).toString()));
+    return EtherAmount.inWei(
+        BigInt.parse((this * Decimal.fromInt(10).pow(decimals)).toString()));
   }
 }
 
 extension DoubleExt on double {
-  String toStringWithFractionDigits(int fractionDigits, {bool shrinkZeros = false}) {
+  String toStringWithFractionDigits(int fractionDigits,
+      {bool shrinkZeros = false}) {
     var splitted = toString().split('.');
 
     String intPart = splitted.first;
     String fractionalPart = splitted.last;
-    fractionalPart = fractionalPart.substring(0, fractionalPart.length <= fractionDigits ? fractionalPart.length : fractionDigits);
+    fractionalPart = fractionalPart.substring(
+        0,
+        fractionalPart.length <= fractionDigits
+            ? fractionalPart.length
+            : fractionDigits);
 
     if (shrinkZeros) {
       int i;
@@ -255,8 +268,12 @@ extension OrderDataModelAdaptor on Order {
       ..quantity = other.quantity
       ..cumulateQuantity = other.cumulativeFilledQuantity
       ..price = other.price
-      ..orderCreateTime = DateTime.fromMicrosecondsSinceEpoch(other.orderCreationTime! ~/ 1000).toIso8601String()
-      ..transactionTime = DateTime.fromMicrosecondsSinceEpoch(other.transactionTime! ~/ 1000).toIso8601String()
+      ..orderCreateTime =
+          DateTime.fromMicrosecondsSinceEpoch(other.orderCreationTime! ~/ 1000)
+              .toIso8601String()
+      ..transactionTime =
+          DateTime.fromMicrosecondsSinceEpoch(other.transactionTime! ~/ 1000)
+              .toIso8601String()
       ..symbol = other.symbol
       ..status = other.orderStatus
       ..type = other.orderType;
@@ -270,23 +287,28 @@ extension DateTimeConverters on DateTime {
     return '${this.day < 10 ? '0' : ''}${this.day}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.year < 10 ? '0' : ''}${this.year}';
   }
 
-  String toStringDMY_hm([String dsep = '.', String tsep = ':', String dtsep = ', ']) {
+  String toStringDMY_hm(
+      [String dsep = '.', String tsep = ':', String dtsep = ', ']) {
     return '${this.day < 10 ? '0' : ''}${this.day}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.year < 10 ? '0' : ''}${this.year}$dtsep${this.hour < 10 ? '0' : ''}${this.hour}$tsep${this.minute < 10 ? '0' : ''}${this.minute}';
   }
 
-  String toStringDMY_hms([String dsep = '.', String tsep = ':', String dtsep = ', ']) {
+  String toStringDMY_hms(
+      [String dsep = '.', String tsep = ':', String dtsep = ', ']) {
     return '${this.day < 10 ? '0' : ''}${this.day}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.year < 10 ? '0' : ''}${this.year}$dtsep${this.hour < 10 ? '0' : ''}${this.hour}$tsep${this.minute < 10 ? '0' : ''}${this.minute}$tsep${this.second < 10 ? '0' : ''}${this.second}';
   }
 
-  String toStringhm_YMD([String dsep = '.', String tsep = ':', String dtsep = ', ']) {
+  String toStringhm_YMD(
+      [String dsep = '.', String tsep = ':', String dtsep = ', ']) {
     return '${this.hour < 10 ? '0' : ''}${this.hour}$tsep${this.minute < 10 ? '0' : ''}${this.minute}$dtsep${this.day < 10 ? '0' : ''}${this.day}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.year < 10 ? '0' : ''}${this.year}';
   }
 
-  String toStringYMD_hm([String dsep = '.', String tsep = ':', String dtsep = ', ']) {
+  String toStringYMD_hm(
+      [String dsep = '.', String tsep = ':', String dtsep = ', ']) {
     return '${this.year < 10 ? '0' : ''}${this.year}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.day < 10 ? '0' : ''}${this.day}$dtsep${this.hour < 10 ? '0' : ''}${this.hour}$tsep${this.minute < 10 ? '0' : ''}${this.minute}';
   }
 
-  String toStringYMD_hms([String dsep = '.', String tsep = ':', String dtsep = ', ']) {
+  String toStringYMD_hms(
+      [String dsep = '.', String tsep = ':', String dtsep = ', ']) {
     return '${this.year < 10 ? '0' : ''}${this.year}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.day < 10 ? '0' : ''}${this.day}$dtsep${this.hour < 10 ? '0' : ''}${this.hour}$tsep${this.minute < 10 ? '0' : ''}${this.minute}$tsep${this.second < 10 ? '0' : ''}${this.second}';
   }
 }
@@ -301,9 +323,16 @@ String dividedStringNum(Object? number) {
     try {
       var endIndex = i * 3 + 3;
       if (endIndex < intSplitted.length) {
-        divided = [' ', ...intSplitted.getRange(i * 3, endIndex).toList().reversed, ...divided];
+        divided = [
+          ' ',
+          ...intSplitted.getRange(i * 3, endIndex).toList().reversed,
+          ...divided
+        ];
       } else {
-        divided = [...intSplitted.getRange(i * 3, intSplitted.length).toList().reversed, ...divided];
+        divided = [
+          ...intSplitted.getRange(i * 3, intSplitted.length).toList().reversed,
+          ...divided
+        ];
         break;
       }
       i += 1;
@@ -311,10 +340,14 @@ String dividedStringNum(Object? number) {
       break;
     }
   }
-  return dotSplitted.length > 1 ? [divided.join(''), dotSplitted[1]].join('.') : divided.join('');
+  return dotSplitted.length > 1
+      ? [divided.join(''), dotSplitted[1]].join('.')
+      : divided.join('');
 }
 
-Future<dynamic> showConfirmationDialog(String title, String description, {String cancelTitle = 'Cancel', String confirmationTitle = 'Confirm'}) async {
+Future<dynamic> showConfirmationDialog(String title, String description,
+    {String cancelTitle = 'Cancel',
+    String confirmationTitle = 'Confirm'}) async {
   var _service = locator<DialogService>();
 
   var result = await _service.showConfirmationDialog(

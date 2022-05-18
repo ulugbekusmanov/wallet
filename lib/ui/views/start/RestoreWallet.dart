@@ -21,7 +21,8 @@ class RestoreWalletModel extends BaseViewModel {
     setState(ViewState.Busy);
     if (validateMnemonic(mnemonicController.text)) {
       if (addWallet) {
-        if (_authService.accManager.allAccounts.any((element) => element.mnemonic == mnemonicController.text)) {
+        if (_authService.accManager.allAccounts
+            .any((element) => element.mnemonic == mnemonicController.text)) {
           Flushbar.error(title: S.of(context).accountExists).show();
         } else {
           await restoreWallet(context);
@@ -45,12 +46,14 @@ class RestoreWalletModel extends BaseViewModel {
   }
 
   Future<void> restoreWallet(BuildContext context) async {
-    var seed = await compute<String, Uint8List>(calculateSeedFromMnemonic, mnemonicController.text);
+    var seed = await compute<String, Uint8List>(
+        calculateSeedFromMnemonic, mnemonicController.text);
     await _authService.createNewAccount(mnemonicController.text, seed);
     locator<WalletMainScreenModel>().loadBalances();
     //await locator<TBCCApi>().newClient(_authService.accManager.currentAccount.bcWallet.address);
 
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => MainAppScreen()), (_) => false);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => MainAppScreen()), (_) => false);
   }
 
   @override
@@ -97,8 +100,11 @@ class RestoreWalletScreen extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                                decoration: BoxDecoration(color: AppColors.generalShapesBg, borderRadius: BorderRadius.circular(16)),
+                                padding:
+                                    const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                                decoration: BoxDecoration(
+                                    color: AppColors.generalShapesBg,
+                                    borderRadius: BorderRadius.circular(16)),
                                 child: TextFormField(
                                   maxLines: null,
                                   minLines: 7,
@@ -118,20 +124,30 @@ class RestoreWalletScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   IconButton_(
-                                      icon: AppIcons.qr_code_scan(24, Colors.white),
+                                      icon: AppIcons.qr_code_scan(
+                                          24, Colors.white),
                                       onTap: () {
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (_) => QRCodeReader(
-                                                  mode: 1,
-                                                  onRead: (val) {
-                                                    Navigator.of(context).pop();
-                                                    if (validateMnemonic(val)) {
-                                                      model.mnemonicController.text = val;
-                                                    } else {
-                                                      Flushbar.error(title: S.of(context).noValidMnemonic).show();
-                                                    }
-                                                  },
-                                                )));
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (_) => QRCodeReader(
+                                                      mode: 1,
+                                                      onRead: (val) {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        if (validateMnemonic(
+                                                            val)) {
+                                                          model
+                                                              .mnemonicController
+                                                              .text = val;
+                                                        } else {
+                                                          Flushbar.error(
+                                                                  title: S
+                                                                      .of(context)
+                                                                      .noValidMnemonic)
+                                                              .show();
+                                                        }
+                                                      },
+                                                    )));
                                       }),
                                   Spacer(),
                                   GestureDetector(
@@ -141,13 +157,21 @@ class RestoreWalletScreen extends StatelessWidget {
                                     },
                                     child: Container(
                                       height: 54,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.red)),
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          border:
+                                              Border.all(color: AppColors.red)),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 12),
                                       child: Center(
                                         child: Text(
                                           S.of(context).clear,
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.red),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .copyWith(color: AppColors.red),
                                         ),
                                       ),
                                     ),
@@ -156,19 +180,31 @@ class RestoreWalletScreen extends StatelessWidget {
                                   GestureDetector(
                                     behavior: HitTestBehavior.opaque,
                                     onTap: () async {
-                                      model.mnemonicController.text = (await Clipboard.getData('text/plain'))!.text!;
+                                      model.mnemonicController.text =
+                                          (await Clipboard.getData(
+                                                  'text/plain'))!
+                                              .text!;
                                     },
                                     child: ShaderMask(
-                                      shaderCallback: AppColors.mainGradient.createShader,
+                                      shaderCallback:
+                                          AppColors.mainGradient.createShader,
                                       child: Container(
                                         height: 54,
-                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.white)),
-                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            border: Border.all(
+                                                color: Colors.white)),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 12),
                                         child: Center(
                                           child: Text(
                                             S.of(context).paste,
                                             textAlign: TextAlign.center,
-                                            style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1!
+                                                .copyWith(color: Colors.white),
                                           ),
                                         ),
                                       ),

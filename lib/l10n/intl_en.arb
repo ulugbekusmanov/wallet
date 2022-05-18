@@ -271,7 +271,7 @@
   "updateDownlodaded": "Update downloaded",
   "useBiometrics": "Use biometrics",
   "usedFunds": "Used funds",
-  "verifyMnemonic": "Tap the words from your \nmnemonic phrase in correct order",
+  "verifyMnemonic": "Tap the words from your secret key",
   "vote": "Vote",
   "voting": "Voting",
   "vpnDescription": "Try the first decentralized blockchain-based VPN. Even a supercomputer will not get an acсessto your data.",
@@ -288,5 +288,6 @@
   "youPay": "You pay",
   "youProNow": "You {type} now",
   "youReceive": "You receive",
-  "yourBalance": "Your balance"
+  "yourBalance": "Your balance",
+  "check":"Check"
 }

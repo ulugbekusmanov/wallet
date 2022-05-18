@@ -149,6 +149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "changePassword":
             MessageLookupByLibrary.simpleMessage("Изменить пароль"),
         "chart": MessageLookupByLibrary.simpleMessage("График"),
+        "check": MessageLookupByLibrary.simpleMessage("Проверить"),
         "checkInternet": MessageLookupByLibrary.simpleMessage(
             "Проверьте интернет-соединение"),
         "checkSavedMnemonicAll": MessageLookupByLibrary.simpleMessage(
@@ -467,7 +468,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "usedFunds":
             MessageLookupByLibrary.simpleMessage("Использовано средств"),
         "verifyMnemonic": MessageLookupByLibrary.simpleMessage(
-            "Нажимайте слова из мнемонической \nфразы в правильном порядке"),
+            "Нажмите на слова из вашего секретного ключа"),
         "vote": MessageLookupByLibrary.simpleMessage("Голосовать"),
         "voting": MessageLookupByLibrary.simpleMessage("Голосование"),
         "vpnDescription": MessageLookupByLibrary.simpleMessage(

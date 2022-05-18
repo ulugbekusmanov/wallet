@@ -93,151 +93,142 @@ class CreateWalletScreen extends StatelessWidget {
               ? TBCCLoader()
               : SafeArea(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       children: [
                         Center(
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(children: <TextSpan>[
-                              TextSpan(
-                                  text: S.of(context).mnemonicDescription1,
-                                  style: Theme.of(context).textTheme.bodyText1),
-                              TextSpan(
-                                text: S.of(context).mnemonicPhrase,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    ?.copyWith(color: AppColors.active),
-                              ),
-                              TextSpan(
-                                  text:
-                                      ' ${S.of(context).mnemonicDescription3}',
-                                  style: Theme.of(context).textTheme.bodyText1)
-                            ]),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              right: MediaQuery.of(context).size.width * 0.1,
+                              left: MediaQuery.of(context).size.width * 0.1,
+                              top: 12,
+                            ),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(children: <TextSpan>[
+                                TextSpan(
+                                    text: S.of(context).mnemonicDescription1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                                TextSpan(
+                                  text: S.of(context).mnemonicDescription2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.copyWith(color: AppColors.active),
+                                ),
+                                TextSpan(
+                                    text:
+                                        ' ${S.of(context).mnemonicDescription3}',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1)
+                              ]),
+                            ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '12 words ',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(
-                                      color: !model._24words
-                                          ? AppColors.active
-                                          : AppColors.text),
-                            ),
-                            CupertinoSwitch(
-                                activeColor: AppColors.active,
-                                value: model._24words,
-                                onChanged: (val) {
-                                  model._24words = val;
-                                  model.generateNewMnemonic();
-                                  model.setState();
-                                }),
-                            Text(
-                              ' 24 words',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .copyWith(
-                                      color: model._24words
-                                          ? AppColors.active
-                                          : AppColors.text),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 32),
                         Wrap(
                           alignment: WrapAlignment.spaceBetween,
                           spacing: 8,
-                          runSpacing: 8,
+                          runSpacing: 12,
                           children: [
                             for (var w in model.newMnemonicList.indexed())
                               MnemonicWordChip(w[0], w[1])
                           ],
                         ),
                         SizedBox(height: 30),
-                        GestureDetector(
-                          onTap: () async {
-                            await Clipboard.setData(
-                                ClipboardData(text: model.mnemonic));
-                            Flushbar.success(
-                                    title: S.of(context).copiedToClipboard(''))
-                                .show();
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('${S.of(context).copy}  '),
-                              AppIcons.copy(22, AppColors.active)
-                            ],
-                          ),
-                        ),
                         Spacer(),
                         Row(children: [
-                          Stack(children: [
-                            Positioned.fill(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                        color: model.loseMnemonicCheckboxErr
-                                            ? AppColors.red
-                                            : Colors.transparent),
+                          Transform.scale(
+                            scale: 1.1,
+                            child: Stack(children: [
+                              Positioned.fill(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: model.loseMnemonicCheckboxErr
+                                              ? Colors.white
+                                              : Colors.transparent
+                                                  .withOpacity(0.1)),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            Checkbox(
-                                value: model.loseMnemonicCheckbox,
-                                activeColor: AppColors.active,
-                                onChanged: (val) {
-                                  model.loseMnemonicCheckbox = val!;
-                                  model.loseMnemonicCheckboxErr = !val;
-                                  model.setState();
-                                }),
-                          ]),
-                          Expanded(child: Text(S.of(context).mnemonicWarning))
-                        ]),
-                        Row(children: [
-                          Stack(children: [
-                            Positioned.fill(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                        color: model.termsCheckboxErr
-                                            ? AppColors.red
-                                            : Colors.transparent),
+                              Checkbox(
+                                  value: model.loseMnemonicCheckbox,
+                                  activeColor: Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Checkbox(
-                                activeColor: AppColors.active,
-                                value: model.termsCheckbox,
-                                onChanged: (val) {
-                                  model.termsCheckbox = val!;
-                                  model.termsCheckboxErr = !val;
-                                  model.setState();
-                                }),
-                          ]),
+                                  side: BorderSide(width: 1),
+                                  onChanged: (val) {
+                                    model.loseMnemonicCheckbox = val!;
+                                    model.loseMnemonicCheckboxErr = !val;
+                                    model.setState();
+                                  }),
+                            ]),
+                          ),
                           Expanded(
                               child: Text(
-                                  '${S.of(context).confirmPhrase1} ${S.of(context).confirmPhrase2}'))
+                            S.of(context).mnemonicWarning,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    color: AppColors.text.withOpacity(0.7)),
+                          ))
+                        ]),
+                        Row(children: [
+                          Transform.scale(
+                            scale: 1.1,
+                            child: Stack(children: [
+                              Positioned.fill(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      border: Border.all(
+                                          color: model.termsCheckboxErr
+                                              ? Colors.transparent
+                                              : Colors.transparent
+                                                  .withOpacity(0.1)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Checkbox(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: model.termsCheckbox,
+                                  side: BorderSide(width: 1),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  onChanged: (val) {
+                                    model.termsCheckbox = val!;
+                                    model.termsCheckboxErr = !val;
+                                    model.setState();
+                                  }),
+                            ]),
+                          ),
+                          Expanded(
+                            child: Text(
+                              '${S.of(context).confirmPhrase1} ${S.of(context).confirmPhrase2}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(
+                                      color: AppColors.text.withOpacity(0.7)),
+                            ),
+                          )
                         ]),
                         SizedBox(height: 12),
                         Button(
-                            value: S.of(context).createWallet,
+                            value: S.of(context).next,
                             onTap: () {
                               model.loseMnemonicCheckboxErr =
                                   !model.loseMnemonicCheckbox;
@@ -283,28 +274,29 @@ class CheckMnemonicScreen extends StatelessWidget {
           child: Scaffold(
             appBar: CAppBar(
               elevation: 0,
-              title: Text('Check'),
+              title: Text(S.of(context).check),
             ),
             body: model.state == ViewState.Busy
                 ? TBCCLoader()
-                : Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            Text(
-                              S.of(context).verifyMnemonic,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 30.0, top: 40),
-                              child: Container(
+                : SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Text(
+                                S.of(context).verifyMnemonic,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    bottom: 30.0, top: 40),
+                                child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16),
                                     color: AppColors.generalShapesBg,
@@ -317,64 +309,12 @@ class CheckMnemonicScreen extends StatelessWidget {
                                     runSpacing: 10,
                                     spacing: 10,
                                     children: List.generate(
-                                        model.verifyMnemonicList.length,
-                                        (index) => GestureDetector(
-                                              onTap: () {
-                                                model.reformedMnemonicList.add(
-                                                    model.verifyMnemonicList[
-                                                        index]);
-                                                model.verifyMnemonicList
-                                                    .removeAt(index);
-                                                if (listEquals(
-                                                    model.newMnemonicList.sublist(
-                                                        0,
-                                                        model.verifyMnemonicList
-                                                            .length),
-                                                    model.verifyMnemonicList)) {
-                                                  model.verifyValid = true;
-                                                  model.lastCorrectIndex = model
-                                                          .verifyMnemonicList
-                                                          .length -
-                                                      1;
-                                                } else
-                                                  model.verifyValid = false;
-                                                model.setState();
-                                              },
-                                              behavior: HitTestBehavior.opaque,
-                                              child: MnemonicWordChipFilled(
-                                                index,
-                                                model.verifyMnemonicList[index],
-                                                err: index >
-                                                    model.lastCorrectIndex,
-                                              ),
-                                            )),
-                                  )),
-                            ),
-                            model.verifyValid
-                                ? Container()
-                                : Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
-                                    child: Text(
-                                      S.of(context).invalidOrder,
-                                      textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(color: AppColors.red),
-                                    )),
-                            Wrap(
-                              alignment: WrapAlignment.center,
-                              runSpacing: 10,
-                              spacing: 10,
-                              children: List.generate(
-                                  model.reformedMnemonicList.length,
-                                  (index) => GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
+                                      model.verifyMnemonicList.length,
+                                      (index) => GestureDetector(
                                         onTap: () {
-                                          model.verifyMnemonicList.add(model
-                                              .reformedMnemonicList[index]);
-                                          model.reformedMnemonicList
+                                          model.reformedMnemonicList.add(
+                                              model.verifyMnemonicList[index]);
+                                          model.verifyMnemonicList
                                               .removeAt(index);
                                           if (listEquals(
                                               model.newMnemonicList.sublist(
@@ -388,30 +328,83 @@ class CheckMnemonicScreen extends StatelessWidget {
                                                 1;
                                           } else
                                             model.verifyValid = false;
-                                          if (listEquals(model.newMnemonicList,
-                                              model.verifyMnemonicList)) {
-                                            model.setPassworBtnActive = true;
-                                          }
                                           model.setState();
                                         },
-                                        child: MnemonicWordChip(null,
-                                            model.reformedMnemonicList[index]),
-                                      )),
-                            ),
-                          ],
-                        ),
-                        Button(
-                          value: S.of(context).next,
-                          isActive: model.setPassworBtnActive,
-                          onTap: model.setPassworBtnActive
-                              ? () {
-                                  if (model.verifyValid) {
-                                    model.setPassword(context);
+                                        behavior: HitTestBehavior.opaque,
+                                        child: MnemonicWordChipFilled(
+                                          index,
+                                          model.verifyMnemonicList[index],
+                                          err: index > model.lastCorrectIndex,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              model.verifyValid
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Text(
+                                        S.of(context).invalidOrder,
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText1!
+                                            .copyWith(color: AppColors.red),
+                                      ),
+                                    ),
+                              Wrap(
+                                alignment: WrapAlignment.center,
+                                runSpacing: 10,
+                                spacing: 10,
+                                children: List.generate(
+                                  model.reformedMnemonicList.length,
+                                  (index) => GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () {
+                                      model.verifyMnemonicList.add(
+                                          model.reformedMnemonicList[index]);
+                                      model.reformedMnemonicList
+                                          .removeAt(index);
+                                      if (listEquals(
+                                          model.newMnemonicList.sublist(0,
+                                              model.verifyMnemonicList.length),
+                                          model.verifyMnemonicList)) {
+                                        model.verifyValid = true;
+                                        model.lastCorrectIndex =
+                                            model.verifyMnemonicList.length - 1;
+                                      } else
+                                        model.verifyValid = false;
+                                      if (listEquals(model.newMnemonicList,
+                                          model.verifyMnemonicList)) {
+                                        model.setPassworBtnActive = true;
+                                      }
+                                      model.setState();
+                                    },
+                                    child: MnemonicWordChip(
+                                      null,
+                                      model.reformedMnemonicList[index],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Button(
+                            value: S.of(context).next,
+                            isActive: model.setPassworBtnActive,
+                            onTap: model.setPassworBtnActive
+                                ? () {
+                                    if (model.verifyValid) {
+                                      model.setPassword(context);
+                                    }
                                   }
-                                }
-                              : null,
-                        )
-                      ],
+                                : null,
+                          )
+                        ],
+                      ),
                     ),
                   ),
           ),
@@ -429,30 +422,16 @@ class MnemonicWordChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShaderMask(
-      shaderCallback: AppColors.mainGradient.createShader,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(12)),
-        child: RichText(
-          text: TextSpan(
-            text: index != null ? '${index! + 1}  ' : '',
-            style: Theme.of(context)
-                .textTheme
-                .caption!
-                .copyWith(color: AppColors.text),
-            children: [
-              TextSpan(
-                  text: word,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(color: Colors.white)),
-            ],
-          ),
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black54),
+          borderRadius: BorderRadius.circular(12)),
+      child: Text(
+        word,
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              color: Colors.black54,
+            ),
       ),
     );
   }
@@ -468,28 +447,17 @@ class MnemonicWordChipFilled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        border: err ? Border.all(color: AppColors.red) : null,
-        gradient: AppColors.mainGradient,
+        border: err ? Border.all(color: Theme.of(context).primaryColor) : null,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: RichText(
-        text: TextSpan(
-          text: index != null ? '${index! + 1}  ' : '',
-          style: Theme.of(context)
-              .textTheme
-              .caption!
-              .copyWith(color: Colors.white),
-          children: [
-            TextSpan(
-                text: word,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: Colors.white)),
-          ],
-        ),
+      child: Text(
+        word,
+        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+              color: Colors.white,
+            ),
       ),
     );
   }

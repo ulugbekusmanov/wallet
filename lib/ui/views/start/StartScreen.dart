@@ -33,7 +33,10 @@ class StartScreen extends StatelessWidget {
                   ),
                   child: Text(
                     'Buy, stire, send, exchange your cryptocurrency with an easy-to-use and convinient wallet',
-                    style: Theme.of(context).textTheme.bodyText1!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: AppColors.text.withOpacity(0.7)),
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:tbccwallet/shared.dart';
 
 class ColorSet {
@@ -94,24 +95,20 @@ final LIGHT_THEME = ThemeData(
   primaryColor: LightColors.primary,
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
-        color: LightColors.text,
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-      ),
-      toolbarTextStyle: TextStyle(
-        color: LightColors.text,
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-      ),
-      foregroundColor: LightColors.text,
-      iconTheme: IconThemeData(size: 24, color: LightColors.text),
-      color: Colors.transparent,
-      textTheme: TextTheme(
-          bodyText2: TextStyle(
-              color: LightColors.text,
-              fontSize: 20,
-              fontWeight: FontWeight.w500))),
+    titleTextStyle: TextStyle(
+      color: LightColors.text,
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+    ),
+    toolbarTextStyle: TextStyle(
+      color: LightColors.text,
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+    ),
+    foregroundColor: LightColors.text,
+    iconTheme: IconThemeData(size: 24, color: LightColors.text),
+    color: Colors.transparent,
+  ),
   fontFamily: 'Jost',
   scaffoldBackgroundColor: LightColors.primaryBg,
   textTheme: TextTheme(
@@ -162,7 +159,6 @@ final DARK_THEME = ThemeData(
   primaryColor: DarkColors.primary,
   brightness: Brightness.dark,
   appBarTheme: AppBarTheme(
-    brightness: Brightness.dark,
     titleTextStyle: TextStyle(
         color: DarkColors.text, fontSize: 20, fontWeight: FontWeight.w500),
     toolbarTextStyle: TextStyle(

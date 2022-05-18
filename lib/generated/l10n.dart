@@ -2760,10 +2760,10 @@ class S {
     );
   }
 
-  /// `Tap the words from your \nmnemonic phrase in correct order`
+  /// `Tap the words from your secret key`
   String get verifyMnemonic {
     return Intl.message(
-      'Tap the words from your \nmnemonic phrase in correct order',
+      'Tap the words from your secret key',
       name: 'verifyMnemonic',
       desc: '',
       args: [],
@@ -2935,6 +2935,16 @@ class S {
     return Intl.message(
       'Your balance',
       name: 'yourBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check`
+  String get check {
+    return Intl.message(
+      'Check',
+      name: 'check',
       desc: '',
       args: [],
     );

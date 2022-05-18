@@ -1,10 +1,10 @@
 import 'dart:async';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tbccwallet/shared.dart';
-
-import 'package:flutter_svg/svg.dart';
-import 'package:tbccwallet/ui/styles/styles.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 
 import 'views/dapp_browser/DAppScreen.dart';
 import 'views/dex/DexMainScreen.dart';
@@ -27,7 +27,8 @@ class MainAppScreen extends StatelessWidget {
     return BaseView<MainScreenModel>(
       onModelReady: (model) {
         Future.delayed(Duration(seconds: 1), () {
-          ShowCaseWidget.of(model.mainScreenContext)!.startShowCase(model.showcaseKeys.values.toList());
+          ShowCaseWidget.of(model.mainScreenContext)!
+              .startShowCase(model.showcaseKeys.values.toList());
           //ShowCaseWidget.of(model.mainScreenContext)!.startShowCase(model.showcaseKeys);
         });
       },
@@ -38,7 +39,8 @@ class MainAppScreen extends StatelessWidget {
               return true;
             } else {
               model.popTapedOnce = true;
-              ScaffoldMessenger.of(model.tabScaffoldKey.currentContext!).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(model.tabScaffoldKey.currentContext!)
+                  .showSnackBar(SnackBar(
                 content: Text('Press again to exit app'),
               ));
               Timer(Duration(seconds: 4), () {
@@ -58,11 +60,31 @@ class MainAppScreen extends StatelessWidget {
                       return PlatformTabScaffold(
                         key: model.tabScaffoldKey,
                         bodyItems: [
-                          SafeArea(bottom: true, right: false, top: false, left: false, child: WalletMainScreen()),
-                          SafeArea(bottom: true, right: false, top: false, left: false, child: DAppScreen()),
-                          SafeArea(bottom: true, right: false, top: false, left: false, child: DexMainScreen()),
+                          SafeArea(
+                              bottom: true,
+                              right: false,
+                              top: false,
+                              left: false,
+                              child: WalletMainScreen()),
+                          SafeArea(
+                              bottom: true,
+                              right: false,
+                              top: false,
+                              left: false,
+                              child: DAppScreen()),
+                          SafeArea(
+                              bottom: true,
+                              right: false,
+                              top: false,
+                              left: false,
+                              child: DexMainScreen()),
                           //SafeArea(bottom: true, right: false, top: false, left: false, child: Scaffold()),
-                          SafeArea(bottom: true, right: false, top: false, left: false, child: SettingsMainScreen()),
+                          SafeArea(
+                              bottom: true,
+                              right: false,
+                              top: false,
+                              left: false,
+                              child: SettingsMainScreen()),
                         ],
                         bottomItems: [
                           for (var item in items)
@@ -71,14 +93,16 @@ class MainAppScreen extends StatelessWidget {
                                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
                                 child: SvgPicture(
                                   (item[0] as SvgPicture).pictureProvider,
-                                  colorFilter: ColorFilter.mode(AppColors.inactiveText, BlendMode.srcIn),
+                                  colorFilter: ColorFilter.mode(
+                                      AppColors.inactiveText, BlendMode.srcIn),
                                 ),
                               ),
                               activeIcon: Padding(
                                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
                                 child: SvgPicture(
                                   (item[0] as SvgPicture).pictureProvider,
-                                  colorFilter: ColorFilter.mode(AppColors.active, BlendMode.srcIn),
+                                  colorFilter: ColorFilter.mode(
+                                      AppColors.active, BlendMode.srcIn),
                                 ),
                               ),
                               label: item[1] as String,

@@ -11,7 +11,7 @@ import 'package:tbccwallet/global_env.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 import 'dart:math' show pi;
-import 'package:tbccwallet/ui/styles/styles.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
 import 'package:tbccwallet/ui/views/wallet/ReceiveScreen.dart';
 import 'package:tbccwallet/ui/views/wallet/SparklineChart.dart';

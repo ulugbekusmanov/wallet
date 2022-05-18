@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tbccwallet/ui/styles/styles.dart';
+import 'package:tbccwallet/ui/styles/AppTheme.dart';
 
 BoxDecoration elevatedContainerDecoration({double? borderRadius, Color? color}) => BoxDecoration(
       color: color ?? AppColors.generalShapesBg,
