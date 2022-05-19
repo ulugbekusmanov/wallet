@@ -49,7 +49,7 @@ class CreateWalletModel extends BaseViewModel {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => SetPasswordScreen(
-            S.of(context).createWallet,
+            S.of(context).next,
             () async {
               await this.createAccount(context);
             },
@@ -129,7 +129,7 @@ class CreateWalletScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 32),
                         Wrap(
-                          alignment: WrapAlignment.spaceBetween,
+                          alignment: WrapAlignment.center,
                           spacing: 8,
                           runSpacing: 12,
                           children: [

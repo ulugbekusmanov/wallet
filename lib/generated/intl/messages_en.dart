@@ -84,7 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Such account is already added"),
         "accounts": MessageLookupByLibrary.simpleMessage("Accounts"),
         "actions": MessageLookupByLibrary.simpleMessage("Actions"),
-        "addChange": MessageLookupByLibrary.simpleMessage("Add/change"),
+        "addChange": MessageLookupByLibrary.simpleMessage("Add a new card"),
         "addWallet": MessageLookupByLibrary.simpleMessage("Add Wallet"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "addressBook": MessageLookupByLibrary.simpleMessage("Address book"),
@@ -302,6 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nfcUnavailable": MessageLookupByLibrary.simpleMessage(
             "NFC is off or not avaliable. Please, check if the NFC module is enabled."),
+        "nft": MessageLookupByLibrary.simpleMessage("NFT"),
         "noActions":
             MessageLookupByLibrary.simpleMessage("No actions available"),
         "noClosedOrders":

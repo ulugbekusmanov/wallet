@@ -260,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("下一步"),
         "nfcUnavailable":
             MessageLookupByLibrary.simpleMessage("NFC已禁用或不可用。 请检查NFC模式是否已启用。"),
+        "nft": MessageLookupByLibrary.simpleMessage("NFT"),
         "noActions": MessageLookupByLibrary.simpleMessage("无可用操作"),
         "noClosedOrders": MessageLookupByLibrary.simpleMessage("没有关闭的订单"),
         "noOpenOrders": MessageLookupByLibrary.simpleMessage("没有未结订单"),

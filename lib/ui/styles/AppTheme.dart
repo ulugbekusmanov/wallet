@@ -4,6 +4,7 @@ import 'package:tbccwallet/shared.dart';
 class ColorSet {
   late LinearGradient mainGradient;
   late LinearGradient altGradient;
+  late LinearGradient cardGradient;
 
   late Color primary;
   late Color active;
@@ -34,21 +35,27 @@ class LightThemeColors extends ColorSet {
     primary = Color(0xff4E94D7);
     active = Color(0xFF438AF9);
     altGradient = LinearGradient(
-        colors: [Color(0xFFF5F5FA), Color(0xFFFEFEFF)],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter);
+      colors: [Color(0xFFFEFFFF), Color(0xFFEAEDF2)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
+    cardGradient = LinearGradient(
+      colors: [Color(0xFFEDF2F9), Color(0xFFFFFFFF), Color(0xFFEDF2F9)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
     text = Color(0xFF2F385E);
     yellowOpac = Color(0xFFFCC419).withOpacity(0.08);
     yellow = Color(0xFFFCC419);
     inactiveText = Color(0xFFADB5BD);
     green = Color(0xFF38D9A9);
     red = Color(0xFFFD736A);
-    primaryBg = Color(0xFFF5F5FA);
+    primaryBg = Color(0xFFFFFFFF);
     secondaryBG = Color(0xFFFFFFFF);
     secondaryBG_gray = Color(0xFFEDEFF6);
     shadowColor = Colors.black.withOpacity(0.03);
     highlightedText = Color(0xFF589BFF);
-    generalShapesBg = Color(0xFFFFFFFF);
+    generalShapesBg = Color(0xFFF4F7FC);
     generalBorder = Color(0xFFE9ECF5);
     tokenCardPriceUp = Color(0x1438D9A9);
     tokenCardPriceDown = Color(0xFFFFF0F6);
@@ -66,6 +73,11 @@ class DarkThemeColors extends ColorSet {
         colors: [Color(0xFF111316), Color(0xFF1E2125)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter);
+    cardGradient = LinearGradient(
+      colors: [Color(0xFFEDF2F9), Color(0xFFFFFFFF), Color(0xFFEDF2F9)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
     primary = Color(0xff4E94D7);
     active = Color(0xFF438AF9);
     text = Color(0xFFFFFFFF);

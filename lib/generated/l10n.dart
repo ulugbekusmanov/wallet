@@ -80,10 +80,10 @@ class S {
     );
   }
 
-  /// `Add/change`
+  /// `Add a new card`
   String get addChange {
     return Intl.message(
-      'Add/change',
+      'Add a new card',
       name: 'addChange',
       desc: '',
       args: [],
@@ -775,6 +775,16 @@ class S {
     return Intl.message(
       'Coin',
       name: 'coin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NFT`
+  String get nft {
+    return Intl.message(
+      'NFT',
+      name: 'nft',
       desc: '',
       args: [],
     );

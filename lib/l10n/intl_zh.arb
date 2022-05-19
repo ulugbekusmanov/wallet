@@ -176,6 +176,7 @@
     "txTime": "交易时间",
     "smartContractCall": "调用智能合约",
     "coin": "硬币",
+    "nft": "NFT",
     "all": "所有",
     "mnemonicPhrase": "助记词",
     "binancePK": "BinanceChain私钥",

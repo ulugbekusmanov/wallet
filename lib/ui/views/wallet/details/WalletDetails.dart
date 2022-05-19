@@ -28,21 +28,23 @@ class WalletDetails extends StatelessWidget {
             ),
           ],
         ),
-        //actions: [
-        //  Padding(
-        //    padding: const const EdgeInsets.all(10.0),
-        //    child: PremiumGlobalButton(true, false),
-        //  ),
-        //  Padding(
-        //    padding: const const EdgeInsets.fromLTRB(0, 10, 10, 10),
-        //    child: NotificationsBell(),
-        //  ),
-        //],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.all(10.0),
+        //     child: PremiumGlobalButton(),
+        //   ),
+        //   Padding(
+        //     padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+        //     child: NotificationsBell(),
+        //   ),
+        // ],
       ),
       body: Center(
         child: Column(
           children: [
-            Padding(padding: const EdgeInsets.symmetric(vertical: 15), child: balance.token.icon(80)),
+            Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: balance.token.icon(80)),
             Padding(
               padding: const EdgeInsets.all(5),
               child: AutoSizeText(
@@ -67,7 +69,10 @@ class WalletDetails extends StatelessWidget {
                 for (var t in [
                   [AppIcons.arrow_outcome(24, AppColors.text), () {}],
                   [AppIcons.arrow_income(24, AppColors.text), () {}],
-                  [Icon(Icons.more_horiz, size: 24, color: AppColors.text), () {}]
+                  [
+                    Icon(Icons.more_horiz, size: 24, color: AppColors.text),
+                    () {}
+                  ]
                 ])
                   ControlButtons(
                     icon: t[0] as Widget?,
@@ -132,7 +137,10 @@ class ControlButtons extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
-            BoxShadow(offset: Offset(0, 13), color: AppColors.shadowColor, blurRadius: 18),
+            BoxShadow(
+                offset: Offset(0, 13),
+                color: AppColors.shadowColor,
+                blurRadius: 18),
           ],
           gradient: AppColors.altGradient,
         ),
@@ -152,7 +160,8 @@ class HistoryTile extends StatelessWidget {
     return GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => TxDetailsScreen(tx, token)));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => TxDetailsScreen(tx, token)));
         },
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 8),
@@ -170,8 +179,11 @@ class HistoryTile extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(right: 16),
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(color: AppColors.secondaryBG, borderRadius: BorderRadius.circular(16)),
-                child: (tx.type == TransactionType.ETH_ContractCall && (token.symbol == 'ETH' || token.symbol == 'BNB'))
+                decoration: BoxDecoration(
+                    color: AppColors.secondaryBG,
+                    borderRadius: BorderRadius.circular(16)),
+                child: (tx.type == TransactionType.ETH_ContractCall &&
+                        (token.symbol == 'ETH' || token.symbol == 'BNB'))
                     ? AppIcons.smart_contract(30, AppColors.text)
                     : tx.side!
                         ? AppIcons.arrow_income(30, AppColors.text)
@@ -189,10 +201,14 @@ class HistoryTile extends StatelessWidget {
                         Expanded(
                             child: Text(
                           () {
-                            if (tx.type == TransactionType.ETH_ContractCall && (token.symbol == 'ETH' || token.symbol == 'BNB')) {
+                            if (tx.type == TransactionType.ETH_ContractCall &&
+                                (token.symbol == 'ETH' ||
+                                    token.symbol == 'BNB')) {
                               return S.of(context).smartContractCall;
                             } else {
-                              return tx.side! ? S.of(context).received : S.of(context).sent;
+                              return tx.side!
+                                  ? S.of(context).received
+                                  : S.of(context).sent;
                             }
                           }(),
                           style: tt.bodyText2,
@@ -201,13 +217,19 @@ class HistoryTile extends StatelessWidget {
                           maxLines: 1,
                         )),
                         // Spacer(),
-                        Text('${tx.value!.toStringWithFractionDigits(6, shrinkZeros: true)} ${tx.symbol}', style: tt.bodyText2!.copyWith(color: tx.side! ? AppColors.green : AppColors.red)),
+                        Text(
+                            '${tx.value!.toStringWithFractionDigits(6, shrinkZeros: true)} ${tx.symbol}',
+                            style: tt.bodyText2!.copyWith(
+                                color: tx.side!
+                                    ? AppColors.green
+                                    : AppColors.red)),
                       ],
                     ),
                     SizedBox(height: 5),
                     Text(
                       () {
-                        if (tx.type == TransactionType.ETH_ContractCall && (token.symbol == 'ETH' || token.symbol == 'BNB')) {
+                        if (tx.type == TransactionType.ETH_ContractCall &&
+                            (token.symbol == 'ETH' || token.symbol == 'BNB')) {
                           return 'Contract ${shortFmtAddr(tx.to!)}';
                         } else if (tx.side!) {
                           return '${S.of(context).from}: ${shortFmtAddr(tx.from!)}';

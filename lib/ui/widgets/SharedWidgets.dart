@@ -280,21 +280,23 @@ class PremiumGlobalButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: active ? AppColors.mainGradient : AppColors.altGradient,
-      ),
+          borderRadius: BorderRadius.circular(12),
+          gradient: active ? null : AppColors.altGradient,
+          color: active ? AppColors.primary : null,
+          border: Border.all(
+              width: 1, color: AppColors.inactiveText.withOpacity(0.1))),
       child: Row(
         children: [
-          AppIcons.crown(24, active ? Colors.white : AppColors.inactiveText),
+          AppIcons.crown(24, active ? Colors.white : AppColors.text),
           if (expanded)
             shimmer
                 ? Shimmer.fromColors(
-                    baseColor: AppColors.inactiveText,
+                    baseColor: AppColors.text,
                     highlightColor: AppColors.active,
                     child: shimmerBlock(100, 16, 16))
                 : Text(' $type',
                     style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        color: active ? Colors.white : AppColors.inactiveText)),
+                        color: active ? Colors.white : AppColors.text)),
         ],
       ),
     );
@@ -332,7 +334,7 @@ class CAppBar extends AppBar {
           elevation: elevation,
           backgroundColor: backgroundColor,
           centerTitle: centerTitle,
-          //titleSpacing: -10,
+          titleSpacing: -10,
           backwardsCompatibility: false,
           toolbarHeight: 64,
           foregroundColor: AppColors.text,
@@ -625,7 +627,7 @@ class _AnimatedButtonBarState extends State<AnimatedButtonBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(2.5),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Theme.of(context).brightness == Brightness.dark
             ? Colors.black
@@ -645,7 +647,13 @@ class _AnimatedButtonBarState extends State<AnimatedButtonBar> {
             curve: Curves.easeInOut,
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.generalShapesBg,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 13),
+                      blurRadius: 18,
+                      color: Colors.black.withOpacity(0.04))
+                ],
+                color: AppColors.secondaryBG,
                 borderRadius: BorderRadius.all(Radius.circular(18)),
               ),
             ),
@@ -690,7 +698,12 @@ class ButtonBarEntry {
   final Widget child;
   final VoidCallback onTap;
   final Color? activeColor;
-  ButtonBarEntry({required this.child, required this.onTap, this.activeColor});
+
+  ButtonBarEntry({
+    required this.child,
+    required this.onTap,
+    this.activeColor,
+  });
 }
 
 class AccountSelector extends StatefulWidget {

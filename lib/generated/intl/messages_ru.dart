@@ -84,7 +84,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Такой аккаунт уже добавлен!"),
         "accounts": MessageLookupByLibrary.simpleMessage("Аккаунты"),
         "actions": MessageLookupByLibrary.simpleMessage("Действия"),
-        "addChange": MessageLookupByLibrary.simpleMessage("Добавить/изменить"),
+        "addChange":
+            MessageLookupByLibrary.simpleMessage("Добавить новую карту"),
         "addWallet": MessageLookupByLibrary.simpleMessage("Добавить кошелёк"),
         "address": MessageLookupByLibrary.simpleMessage("Адрес"),
         "addressBook": MessageLookupByLibrary.simpleMessage("Адресная книга"),
@@ -307,6 +308,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Далее"),
         "nfcUnavailable": MessageLookupByLibrary.simpleMessage(
             "NFC выключен или недоступен. Пожалуйста, проверьте, включен ли модуль NFC."),
+        "nft": MessageLookupByLibrary.simpleMessage("NFT"),
         "noActions":
             MessageLookupByLibrary.simpleMessage("Нет доступных действий"),
         "noClosedOrders":
