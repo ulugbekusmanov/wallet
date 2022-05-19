@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:tbccwallet/shared.dart';
 import 'package:tbccwallet/ui/styles/AppTheme.dart';
+import 'package:tbccwallet/ui/views/wallet/market/MarketScreen.dart';
 
 import 'views/dapp_browser/DAppScreen.dart';
 import 'views/dex/DexMainScreen.dart';
@@ -18,10 +19,11 @@ class MainAppScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var items = [
-      [AppIcons.wallet(24), S.of(context).wallet],
-      [AppIcons.dapp(24), 'DApps'],
-      [AppIcons.chart(24), 'DEX'],
-      [AppIcons.settings(24), S.of(context).settings],
+      [AppIcons.wallet(24), ''],
+      [AppIcons.chart(24), ''],
+      [AppIcons.dapp(24), ''],
+      [AppIcons.purchase(24), ''],
+      [AppIcons.settings(24), ''],
     ];
 
     return BaseView<MainScreenModel>(
@@ -71,13 +73,19 @@ class MainAppScreen extends StatelessWidget {
                               right: false,
                               top: false,
                               left: false,
+                              child: DexMainScreen()),
+                          SafeArea(
+                              bottom: true,
+                              right: false,
+                              top: false,
+                              left: false,
                               child: DAppScreen()),
                           SafeArea(
                               bottom: true,
                               right: false,
                               top: false,
                               left: false,
-                              child: DexMainScreen()),
+                              child: MarketScreen()),
                           //SafeArea(bottom: true, right: false, top: false, left: false, child: Scaffold()),
                           SafeArea(
                               bottom: true,
@@ -90,7 +98,7 @@ class MainAppScreen extends StatelessWidget {
                           for (var item in items)
                             BottomNavigationBarItem(
                               icon: Padding(
-                                padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
+                                padding: const EdgeInsets.fromLTRB(8, 12, 8, 0),
                                 child: SvgPicture(
                                   (item[0] as SvgPicture).pictureProvider,
                                   colorFilter: ColorFilter.mode(
@@ -98,7 +106,7 @@ class MainAppScreen extends StatelessWidget {
                                 ),
                               ),
                               activeIcon: Padding(
-                                padding: const EdgeInsets.fromLTRB(8, 8, 8, 2),
+                                padding: const EdgeInsets.fromLTRB(8, 12, 8, 0),
                                 child: SvgPicture(
                                   (item[0] as SvgPicture).pictureProvider,
                                   colorFilter: ColorFilter.mode(

@@ -323,7 +323,8 @@ class DAppBrowserScreenModel extends BaseViewModel {
   late BuildContext context;
   DAppBrowserScreenModel() {
     webviewinitCompleteStreamController = StreamController();
-    webviewinitCompleteStream = webviewinitCompleteStreamController.stream.asBroadcastStream();
+    webviewinitCompleteStream =
+        webviewinitCompleteStreamController.stream.asBroadcastStream();
     webviewinitCompleteStream.listen((event) {
       initCompleted = event;
     });
@@ -372,7 +373,8 @@ class DAppBrowserScreenModel extends BaseViewModel {
     if (id != null) {
       this.chainId = chainId;
     }
-    await controller.evaluateJavascript("window.ethereum.chainId=${this.chainId};window.statusAppNetworkId=${this.chainId};");
+    await controller.evaluateJavascript(
+        "window.ethereum.chainId=${this.chainId};window.statusAppNetworkId=${this.chainId};");
   }
 
   Future<void> init() async {
@@ -436,7 +438,8 @@ class DAppBrowserScreen extends StatefulWidget {
   _DAppBrowserScreenState createState() => _DAppBrowserScreenState();
 }
 
-class _DAppBrowserScreenState extends State<DAppBrowserScreen> with AutomaticKeepAliveClientMixin {
+class _DAppBrowserScreenState extends State<DAppBrowserScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -456,7 +459,8 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen> with AutomaticKee
               appBar: CAppBar(
                 elevation: 0,
                 title: Row(children: [
-                  AppIcons.token_ic(chainID_symbol[model.chainId]!.toLowerCase(), 24),
+                  AppIcons.token_ic(
+                      chainID_symbol[model.chainId]!.toLowerCase(), 24),
                   SizedBox(width: 10),
                   Expanded(child: Text('${model.pageTitle}')),
                 ]),
@@ -464,7 +468,9 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen> with AutomaticKee
                   IconButton(
                     icon: Icon(Icons.menu),
                     onPressed: () {
-                      showModalBottomSheet(context: context, builder: (c) => optionsBottomSheet(context, model));
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (c) => optionsBottomSheet(context, model));
                     },
                   ),
                   IconButton(
@@ -482,7 +488,8 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen> with AutomaticKee
                       debuggingEnabled: true,
                       javascriptMode: JavascriptMode.unrestricted,
                       javascriptChannels: {model.ethprovchannel},
-                      onWebViewCreated: (WebViewController webViewController) async {
+                      onWebViewCreated:
+                          (WebViewController webViewController) async {
                         model.controller = webViewController;
                         model.webviewinitCompleteStreamController.add(true);
                       },
@@ -496,7 +503,8 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen> with AutomaticKee
                         model.pageTitle = await model.controller.getTitle();
                         await model.injectProvider();
                         await model.setChainID();
-                        var providerCheck = await model.controller.evaluateJavascript('window.ethereum');
+                        var providerCheck = await model.controller
+                            .evaluateJavascript('window.ethereum');
                         if (providerCheck == 'null') {
                           await model.injectProvider();
                           await model.setChainID();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tbccwallet/ui/styles/icons.dart';
 import 'package:web3dart/credentials.dart';
 
+import '../../ui/views/dapp_browser/DAppLaunchScreen.dart';
 import 'utils.dart';
 
 var chainIds = {
@@ -37,15 +38,25 @@ class WalletToken {
   @override
   bool operator ==(Object other) {
     if (other is WalletToken)
-      return chainID == other.chainID && ethAddress == other.ethAddress && standard == other.standard && symbol == other.symbol && network == other.network;
+      return chainID == other.chainID &&
+          ethAddress == other.ethAddress &&
+          standard == other.standard &&
+          symbol == other.symbol &&
+          network == other.network;
     else
       return false;
   }
 
   @override
-  int get hashCode => symbol.hashCode ^ chainID.hashCode ^ standard.hashCode ^ network.hashCode ^ (ethAddress?.hashCode ?? 1);
+  int get hashCode =>
+      symbol.hashCode ^
+      chainID.hashCode ^
+      standard.hashCode ^
+      network.hashCode ^
+      (ethAddress?.hashCode ?? 1);
 
-  WalletToken.fromJson(Map<String, dynamic> json, TokenNetwork tnetwork, [String? tstandard]) {
+  WalletToken.fromJson(Map<String, dynamic> json, TokenNetwork tnetwork,
+      [String? tstandard]) {
     network = tnetwork;
     standard = tstandard ?? json['standard'];
     symbol = json['symbol'];
@@ -53,7 +64,8 @@ class WalletToken {
     decimals = json['decimals'];
     coingeckoId = json['coingeckoId'] ?? '-1';
     //show = json['showByDefault'] ?? false;
-    if (json['address'] != null) ethAddress = EthereumAddress.fromHex(json['address']);
+    if (json['address'] != null)
+      ethAddress = EthereumAddress.fromHex(json['address']);
     chainID = chainIds[network] ?? 0;
   }
 
@@ -66,7 +78,8 @@ class WalletToken {
         case TokenNetwork.BinanceChain:
           if (symbol == 'BNB') {
             url = '${TOKEN_ICON_BASE_URLs[network]}/info/logo.png';
-          } else if (['TBC-3A7', 'TBCC-BA1M', 'VTBC-C26M', 'VOTE-692M'].contains(symbol)) {
+          } else if (['TBC-3A7', 'TBCC-BA1M', 'VTBC-C26M', 'VOTE-692M']
+              .contains(symbol)) {
             return AppIcons.token_ic(symbol.toLowerCase(), size);
           } else {
             url = '${TOKEN_ICON_BASE_URLs[network]}/assets/$symbol/logo.png';
@@ -76,7 +89,8 @@ class WalletToken {
           if (['TBCC', 'API3'].contains(symbol)) {
             return AppIcons.token_ic(symbol.toLowerCase(), size);
           } else {
-            url = '${TOKEN_ICON_BASE_URLs[network]}/assets/${ethAddress!.hexEip55}/logo.png';
+            url =
+                '${TOKEN_ICON_BASE_URLs[network]}/assets/${ethAddress!.hexEip55}/logo.png';
           }
           break;
 
@@ -84,12 +98,14 @@ class WalletToken {
           if (['TBCC'].contains(symbol)) {
             return AppIcons.token_ic(symbol.toLowerCase(), size);
           } else {
-            url = '${TOKEN_ICON_BASE_URLs[network]}/assets/${ethAddress!.hexEip55}/logo.png';
+            url =
+                '${TOKEN_ICON_BASE_URLs[network]}/assets/${ethAddress!.hexEip55}/logo.png';
           }
           break;
         case TokenNetwork.Solana:
           //TODO
-          url = '${TOKEN_ICON_BASE_URLs[network]}/assets/${ethAddress!.hexEip55}/logo.png';
+          url =
+              '${TOKEN_ICON_BASE_URLs[network]}/assets/${ethAddress!.hexEip55}/logo.png';
 
           break;
       }
@@ -98,6 +114,8 @@ class WalletToken {
         imageUrl: url,
         width: size,
         height: size,
+        placeholder: (ctx, url) => const BaseImagePlaceHolderWidget(),
+        errorWidget: (ctx, url, err) => const BaseImagePlaceHolderWidget(),
         //placeholder: (context, url) => CircularProgressIndicator(),
       );
     }

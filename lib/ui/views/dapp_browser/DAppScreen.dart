@@ -27,7 +27,8 @@ class DAppScreen extends StatefulWidget {
   _DAppScreenState createState() => _DAppScreenState();
 }
 
-class _DAppScreenState extends State<DAppScreen> with AutomaticKeepAliveClientMixin {
+class _DAppScreenState extends State<DAppScreen>
+    with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   @override

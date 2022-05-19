@@ -44,56 +44,88 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
         }
         return true;
       },
-      child: CScaffold(
-        appBar: CAppBar(
-          title: Text('Tokens'),
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: TextFormField(
-                controller: controllerSearch,
-                onChanged: (_) {
-                  setState(() {});
-                },
-                decoration: generalTextFieldDecor(
-                  context,
-                  hintText: "Search...",
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: AppIcons.search(20, AppColors.inactiveText),
-                  ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: TextFormField(
+              controller: controllerSearch,
+              onChanged: (_) {
+                setState(() {});
+              },
+              decoration: generalTextFieldDecor(
+                context,
+                hintText: "Search...",
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: AppIcons.search(20, AppColors.inactiveText),
                 ),
               ),
             ),
-            Divider(),
-            Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: SingleChildScrollView(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: () {
-                        return [
-                          for (var i in range(0, values.length))
-                            GestureDetector(
-                              onTap: () => setState(() => index = i),
-                              child: TokenTypeButton(values[i][0] as String, index == i),
-                            )
-                        ];
-                      }()),
-                )),
-            Expanded(
-                child: FilterTokensListView(values[index][1], controllerSearch, (cb) {
-              setState(() {
-                needToReload = true;
-                cb.call();
-              });
-            }))
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Сортировка',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: AppColors.inactiveText,
+                          ),
+                    ),
+                    Text(
+                      'По алфавиту (A – Z)',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Скрыть пустые',
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: AppColors.inactiveText,
+                          ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12),
+              ],
+            ),
+          ),
+          Divider(),
+          Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: SingleChildScrollView(
+                clipBehavior: Clip.none,
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: () {
+                      return [
+                        for (var i in range(0, values.length))
+                          GestureDetector(
+                            onTap: () => setState(() => index = i),
+                            child: TokenTypeButton(
+                                values[i][0] as String, index == i),
+                          )
+                      ];
+                    }()),
+              )),
+          Expanded(
+              child: FilterTokensListView(values[index][1], controllerSearch,
+                  (cb) {
+            setState(() {
+              needToReload = true;
+              cb.call();
+            });
+          }))
+        ],
       ),
     );
   }
@@ -103,7 +135,9 @@ class TokenCardFilter extends StatelessWidget {
   final WalletToken token;
   final bool active;
   final void Function(bool) onSwitchChanged;
-  const TokenCardFilter(this.token, this.active, this.onSwitchChanged, {Key? key}) : super(key: key);
+  const TokenCardFilter(this.token, this.active, this.onSwitchChanged,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +155,11 @@ class TokenCardFilter extends StatelessWidget {
             margin: const EdgeInsets.only(right: 16),
             width: 56,
             padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: Theme.of(context).brightness == Brightness.dark ? AppColors.primaryBg : AppColors.secondaryBG, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.primaryBg
+                    : AppColors.secondaryBG,
+                borderRadius: BorderRadius.circular(16)),
             child: token.icon(45),
           ),
           Expanded(
@@ -130,13 +168,19 @@ class TokenCardFilter extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(token.symbol.split('-').first),
-                Text(token.standard, style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.inactiveText)),
+                Text(token.standard,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .copyWith(color: AppColors.inactiveText)),
               ],
             ),
           ),
           CupertinoSwitch(
             value: active,
-            activeColor: token.standard != 'Native' ? AppColors.active : AppColors.inactiveText,
+            activeColor: token.standard != 'Native'
+                ? AppColors.active
+                : AppColors.inactiveText,
             onChanged: token.standard != 'Native' ? onSwitchChanged : null,
           ),
         ],
@@ -150,7 +194,10 @@ class FilterTokensListView extends StatelessWidget {
   final TextEditingController controllerSearch;
   TokenFilterType tokenFilterType;
   void Function(void Function()) functionSetState;
-  FilterTokensListView(this.tokenFilterType, this.controllerSearch, this.functionSetState, {Key? key}) : super(key: key);
+  FilterTokensListView(
+      this.tokenFilterType, this.controllerSearch, this.functionSetState,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +224,11 @@ class FilterTokensListView extends StatelessWidget {
     }
     if (controllerSearch.text.isNotEmpty) {
       var text = controllerSearch.text.toLowerCase();
-      tokens = tokens.where((t) => t.symbol.toLowerCase().contains(text) || t.name.toLowerCase().contains(text)).toList();
+      tokens = tokens
+          .where((t) =>
+              t.symbol.toLowerCase().contains(text) ||
+              t.name.toLowerCase().contains(text))
+          .toList();
     }
     return ListView.separated(
       //controller: walletMainModel.sc,
@@ -191,12 +242,21 @@ class FilterTokensListView extends StatelessWidget {
         var token = tokens[index];
         return AnimatedOpacityWrapper(
           index: index,
-          child: TokenCardFilter(token, tokensContainer.listByTypeShow(tokenFilterType)?.contains(token) == true, (val) {
+          child: TokenCardFilter(
+              token,
+              tokensContainer
+                      .listByTypeShow(tokenFilterType)
+                      ?.contains(token) ==
+                  true, (val) {
             if (val) {
-              locator<WALLET_TOKENS_CONTAINER>().listByTypeShow(tokenFilterType)?.add(token);
+              locator<WALLET_TOKENS_CONTAINER>()
+                  .listByTypeShow(tokenFilterType)
+                  ?.add(token);
               functionSetState.call(() {});
             } else {
-              locator<WALLET_TOKENS_CONTAINER>().listByTypeShow(tokenFilterType)?.remove(token);
+              locator<WALLET_TOKENS_CONTAINER>()
+                  .listByTypeShow(tokenFilterType)
+                  ?.remove(token);
               functionSetState.call(() {});
             }
           }),
@@ -207,6 +267,36 @@ class FilterTokensListView extends StatelessWidget {
           height: 12,
         );
       },
+    );
+  }
+}
+
+class BaseDropMenu extends StatelessWidget {
+  const BaseDropMenu({
+    Key? key,
+    required this.onChanged,
+    required this.items,
+    required this.value,
+  }) : super(key: key);
+  final void Function(dynamic) onChanged;
+  final List<DropdownMenuItem<dynamic>> items;
+  final dynamic value;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      isExpanded: true,
+      style: Theme.of(context).textTheme.bodyText2,
+      elevation: 2,
+      borderRadius: BorderRadius.circular(16),
+      underline: SizedBox(),
+      icon: Icon(
+        Icons.arrow_drop_down,
+        color: Colors.black54,
+      ), //Icon(Icons.arrow_drop_down),
+      items: items,
+      value: value,
+      onChanged: onChanged,
     );
   }
 }

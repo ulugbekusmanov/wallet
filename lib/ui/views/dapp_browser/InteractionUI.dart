@@ -1,18 +1,16 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:tbccwallet/core/api/coingecko/model/SimplePrice.dart';
 import 'package:tbccwallet/core/api/network_fees/NetworkFeesApi.dart';
 import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
 import 'package:tbccwallet/core/blockchain/ethereum/contracts/ERC20_abi.dart';
 import 'package:tbccwallet/core/tickers/TickersService.dart';
 import 'package:tbccwallet/global_env.dart';
+import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 import 'package:tbccwallet/ui/views/dapp_browser/DAppScreen.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/foundation.dart';
-import 'RequestHandler.dart';
 
 var chainID_symbol = {
   1: 'ETH',
@@ -43,11 +41,16 @@ class DAppTransactionViewModel extends BaseViewModel {
 
   Future<void> loadGasPrice() async {
     setState(ViewState.Busy);
-    var ticker = locator<TickersService>().simpleTickers?[chainID_symbol[chainId]];
+    var ticker =
+        locator<TickersService>().simpleTickers?[chainID_symbol[chainId]];
     if (chainId == 1) {
       var resp = await locator<NetworkFeesApi>().getEthGasPrices();
       var load = resp.load;
-      this.fees = [TxFee(ticker, load.average!, tx.maxGas!), TxFee(ticker, load.fast!, tx.maxGas!), TxFee(ticker, load.fastest!, tx.maxGas!)];
+      this.fees = [
+        TxFee(ticker, load.average!, tx.maxGas!),
+        TxFee(ticker, load.fast!, tx.maxGas!),
+        TxFee(ticker, load.fastest!, tx.maxGas!)
+      ];
     } else if (chainId == 56) {
       //var resp = await locator<NetworkFeesApi>().getBSCGasPrices();
 
@@ -59,7 +62,11 @@ class DAppTransactionViewModel extends BaseViewModel {
       //    this.fees = [TxFee(ticker, load.slow!, tx.maxGas!), TxFee(ticker, load.standard!, tx.maxGas!), TxFee(ticker, load.fast!, tx.maxGas!)];
       //  }
       //} else {
-      fees = [TxFee(ticker, Decimal.fromInt(5), tx.maxGas!), TxFee(ticker, Decimal.fromInt(6), tx.maxGas!), TxFee(ticker, Decimal.fromInt(6), tx.maxGas!)];
+      fees = [
+        TxFee(ticker, Decimal.fromInt(5), tx.maxGas!),
+        TxFee(ticker, Decimal.fromInt(6), tx.maxGas!),
+        TxFee(ticker, Decimal.fromInt(6), tx.maxGas!)
+      ];
       //}
     }
     selectedFee = fees[1];
@@ -67,7 +74,9 @@ class DAppTransactionViewModel extends BaseViewModel {
     if (approve == true) {
       try {
         var c = DeployedContract(erc20BasicContractAbi, tx.to!);
-        this.approveTokenName = (await ENVS.chainId_Provider![chainId]!.call(contract: c, function: c.function('symbol'), params: [])).first as String;
+        this.approveTokenName = (await ENVS.chainId_Provider![chainId]!
+                .call(contract: c, function: c.function('symbol'), params: []))
+            .first as String;
       } catch (e) {
         print(e);
       }
@@ -77,8 +86,12 @@ class DAppTransactionViewModel extends BaseViewModel {
 
   void parseTx(Map<String, dynamic> txJson) {
     tx = Transaction(
-      value: txJson['value'] != null ? EtherAmount.inWei(BigInt.parse(strip0x(txJson['value']), radix: 16)) : null,
-      from: txJson['from'] != null ? EthereumAddress.fromHex(txJson['from']) : null,
+      value: txJson['value'] != null
+          ? EtherAmount.inWei(BigInt.parse(strip0x(txJson['value']), radix: 16))
+          : null,
+      from: txJson['from'] != null
+          ? EthereumAddress.fromHex(txJson['from'])
+          : null,
       to: txJson['to'] != null ? EthereumAddress.fromHex(txJson['to']) : null,
       maxGas: txJson['gas'] != null ? hexToDartInt(txJson['gas']) : null,
       data: txJson['data'] != null ? hexToBytes(txJson['data']) : null,
@@ -88,9 +101,18 @@ class DAppTransactionViewModel extends BaseViewModel {
   Future<void> sendTransaction(context) async {
     setState(ViewState.Busy);
 
-    tx = tx.copyWith(gasPrice: EtherAmount.fromUnitAndValue(EtherUnit.gwei, selectedFee.gwei.toInt()));
+    tx = tx.copyWith(
+        gasPrice: EtherAmount.fromUnitAndValue(
+            EtherUnit.gwei, selectedFee.gwei.toInt()));
 
-    var resp = await ENVS.chainId_Provider![chainId]?.sendTransaction(locator<AccountManager>().allAccounts[locator<DAppScreenModel>().launchScreenModel.selectedAccIndex].bscWallet.privateKey, tx, chainId: chainId);
+    var resp = await ENVS.chainId_Provider![chainId]?.sendTransaction(
+        locator<AccountManager>()
+            .allAccounts[
+                locator<DAppScreenModel>().launchScreenModel.selectedAccIndex]
+            .bscWallet
+            .privateKey,
+        tx,
+        chainId: chainId);
 
     Navigator.of(context).pop(resp);
   }
@@ -124,15 +146,19 @@ class DAppApproveScreen extends StatelessWidget {
           Expanded(
             flex: 7,
             child: Material(
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
               color: AppColors.primaryBg,
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
                     child: Stack(
                       children: [
-                        Align(alignment: Alignment.center, child: Text('Approve')),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Text('Approve')),
                         Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
@@ -160,12 +186,16 @@ class DAppApproveScreen extends StatelessWidget {
                                   Text(
                                     S.of(context).thirdPartyApp,
                                     textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.yellow),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .caption!
+                                        .copyWith(color: AppColors.yellow),
                                   ),
                                   Text(S.of(context).currency),
                                   Text(
                                     '${model.approveTokenName}',
-                                    style: Theme.of(context).textTheme.headline5,
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
                                   ),
                                   //SizedBox(height: 20),
                                   //TextFieldSimple(
@@ -212,26 +242,35 @@ class FeeSelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(S.of(context).networkFee, style: Theme.of(context).textTheme.bodyText1),
-        feeTile(context, model.fees[0], S.of(context).slow, model.selectedFee == model.fees[0], () {
+        Text(S.of(context).networkFee,
+            style: Theme.of(context).textTheme.bodyText1),
+        feeTile(context, model.fees[0], S.of(context).slow,
+            model.selectedFee == model.fees[0], () {
           model.feeSelected(model.fees[0]);
         }),
-        feeTile(context, model.fees[1], S.of(context).recommended, model.selectedFee == model.fees[1], () {
+        feeTile(context, model.fees[1], S.of(context).recommended,
+            model.selectedFee == model.fees[1], () {
           model.feeSelected(model.fees[1]);
         }),
-        feeTile(context, model.fees[2], S.of(context).fast, model.selectedFee == model.fees[2], () {
+        feeTile(context, model.fees[2], S.of(context).fast,
+            model.selectedFee == model.fees[2], () {
           model.feeSelected(model.fees[2]);
         }),
       ],
     );
   }
 
-  feeTile(context, TxFee fee, String speed, bool active, void Function()? onTap) => GestureDetector(
+  feeTile(context, TxFee fee, String speed, bool active,
+          void Function()? onTap) =>
+      GestureDetector(
         onTap: onTap,
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 8),
           padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(border: Border.all(color: active ? AppColors.active : AppColors.inactiveText), borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: active ? AppColors.active : AppColors.inactiveText),
+              borderRadius: BorderRadius.circular(12)),
           child: Row(
             children: [
               Expanded(
@@ -239,12 +278,23 @@ class FeeSelector extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(speed, style: Theme.of(context).textTheme.bodyText1!.copyWith(color: active ? AppColors.active : AppColors.text)),
+                        Text(speed,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    color: active
+                                        ? AppColors.active
+                                        : AppColors.text)),
                         Text('  ${fee.gwei} Gwei'),
                       ],
                     ),
                     Row(
-                      children: [Text('${fee.inCoin} ${chainID_symbol[model.chainId]}'), Text('  \$${fee.inFiat.toStringWithFractionDigits(4, shrinkZeros: true)}')],
+                      children: [
+                        Text('${fee.inCoin} ${chainID_symbol[model.chainId]}'),
+                        Text(
+                            '  \$${fee.inFiat.toStringWithFractionDigits(4, shrinkZeros: true)}')
+                      ],
                     )
                   ],
                 ),
@@ -268,7 +318,8 @@ class DAppTransactionScreen extends StatelessWidget {
 
   Map<String, dynamic> requestTx;
 
-  DAppTransactionScreen(this.requestTx, this.chainId, {Key? key}) : super(key: key);
+  DAppTransactionScreen(this.requestTx, this.chainId, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -291,15 +342,20 @@ class DAppTransactionScreen extends StatelessWidget {
           Expanded(
               flex: 7,
               child: Material(
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                   color: AppColors.primaryBg,
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 16),
                         child: Stack(
                           children: [
-                            Align(alignment: Alignment.center, child: Text(S.of(context).signTx)),
+                            Align(
+                                alignment: Alignment.center,
+                                child: Text(S.of(context).signTx)),
                             Align(
                                 alignment: Alignment.centerRight,
                                 child: GestureDetector(
@@ -314,42 +370,60 @@ class DAppTransactionScreen extends StatelessWidget {
                       Expanded(
                         child: model.state == ViewState.Busy
                             ? Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 30),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 30),
                                 child: TBCCLoader(),
                               )
                             : Scrollbar(
                                 child: SingleChildScrollView(
                                   padding: const EdgeInsets.all(16),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
                                         S.of(context).thirdPartyApp,
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.yellow),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption!
+                                            .copyWith(color: AppColors.yellow),
                                       ),
                                       SizedBox(height: 20),
                                       if (model.tx.value != null) ...[
                                         Text(S.of(context).amount),
                                         AutoSizeText(
                                           '${model.tx.value!.weiToDecimalEther(18)}',
-                                          style: Theme.of(context).textTheme.headline5,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
                                           maxLines: 1,
                                         ),
                                         SizedBox(height: 10),
-                                        Text('${chainID_symbol[model.chainId]}'),
+                                        Text(
+                                            '${chainID_symbol[model.chainId]}'),
                                         SizedBox(height: 20),
                                       ],
                                       FeeSelector(model),
                                       SizedBox(height: 20),
-                                      Text(S.of(context).to, style: Theme.of(context).textTheme.bodyText1),
+                                      Text(S.of(context).to,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1),
                                       SizedBox(height: 15),
                                       Text('${model.tx.to?.hex}'),
                                       SizedBox(height: 20),
-                                      Text('Data', style: Theme.of(context).textTheme.bodyText1),
+                                      Text('Data',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1),
                                       SizedBox(height: 15),
-                                      Text('0x${bytesToHex(model.tx.data!.toList())}', style: Theme.of(context).textTheme.caption),
+                                      Text(
+                                          '0x${bytesToHex(model.tx.data!.toList())}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption),
                                       SizedBox(height: 40),
                                       Button(
                                           value: S.of(context).confirm,
@@ -361,7 +435,8 @@ class DAppTransactionScreen extends StatelessWidget {
                                           value: S.of(context).cancel,
                                           color: AppColors.red,
                                           onTap: () {
-                                            Navigator.of(context).pop('canceled');
+                                            Navigator.of(context)
+                                                .pop('canceled');
                                           }),
                                     ],
                                   ),

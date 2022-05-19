@@ -1,23 +1,22 @@
 import 'dart:ui';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:tbccwallet/core/authentication/AccountManager.dart';
 import 'package:tbccwallet/core/settings/AppSettings.dart';
-
-import 'package:tbccwallet/core/settings/UserSettings.dart';
 import 'package:tbccwallet/global_env.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 import 'package:tbccwallet/ui/MainScreen.dart';
-
 import 'package:tbccwallet/ui/styles/AppTheme.dart';
 import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
-import 'package:tbccwallet/ui/views/wallet/market/MarketScreen.dart';
 import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:tbccwallet/ui/widgets/TokenCard.dart';
 import 'package:tbccwallet/ui/widgets/bottom_sheet/CustomBottomSheet.dart';
-import 'package:shimmer/shimmer.dart';
+
 //import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'AccountsSettings.dart';
@@ -25,8 +24,6 @@ import 'News.dart';
 import 'SparklineChart.dart';
 import 'TokenFilterScreen.dart';
 import 'WalletMainScreenModel.dart';
-
-import 'package:showcaseview/showcaseview.dart';
 
 class WalletMainScreen extends StatefulWidget {
   const WalletMainScreen({Key? key}) : super(key: key);
@@ -121,8 +118,8 @@ class _WalletMainScreenState extends State<WalletMainScreen>
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => MarketScreen()));
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (_) => Pro_PremiumView()));
                             },
                             child: Container(
                               padding: const EdgeInsets.all(10),
@@ -133,7 +130,8 @@ class _WalletMainScreenState extends State<WalletMainScreen>
                                       width: 1,
                                       color: AppColors.inactiveText
                                           .withOpacity(0.1))),
-                              child: AppIcons.market(24, AppColors.text),
+                              child: AppIcons.notification_bell(
+                                  20, AppColors.text),
                             ),
                           )
                           // NotificationsBell(),
@@ -269,8 +267,7 @@ class _TokenTypeSwitchState extends State<TokenTypeSwitch> {
       key: locator<MainScreenModel>().showcaseKeys['token_filter_switch_bar'],
       contentPadding: EdgeInsets.all(8.0),
       description: 'Filter tokens by type',
-      child: Container(
-          child: SingleChildScrollView(
+      child: SingleChildScrollView(
         clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
         child: Column(
@@ -283,13 +280,21 @@ class _TokenTypeSwitchState extends State<TokenTypeSwitch> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => TokenFilterScreen()));
+                    showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        context: context,
+                        builder: (context) {
+                          return TokenFilterScreen();
+                        });
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Container(
                     margin: const EdgeInsets.only(right: 12),
-                    padding: const EdgeInsets.all(9),
+                    padding: const EdgeInsets.all(7),
                     decoration: BoxDecoration(
                       gradient: AppColors.altGradient,
                       borderRadius: BorderRadius.circular(12),
@@ -300,10 +305,10 @@ class _TokenTypeSwitchState extends State<TokenTypeSwitch> {
                         BoxShadow(
                             blurRadius: 18,
                             color: AppColors.shadowColor,
-                            offset: Offset(0, 13))
+                            offset: Offset(0, 13)),
                       ],
                     ),
-                    child: AppIcons.filter(20, AppColors.text),
+                    child: AppIcons.filter(24, AppColors.text),
                   ),
                 ),
                 Container(
@@ -363,7 +368,7 @@ class _TokenTypeSwitchState extends State<TokenTypeSwitch> {
                 ),
               ],
             ),
-            SizedBox(height: 22),
+            SizedBox(height: 16),
             Row(
               children: [
                 ...() {
@@ -398,7 +403,7 @@ class _TokenTypeSwitchState extends State<TokenTypeSwitch> {
             )
           ],
         ),
-      )),
+      ),
     );
   }
 }
@@ -426,7 +431,7 @@ class TokenTypeButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
+        padding: const EdgeInsets.only(top: 10, right: 18, left: 18),
         duration: Duration(milliseconds: 200),
         child: Text(value,
             style: selected
@@ -539,16 +544,20 @@ class EditAccountsCard extends StatelessWidget {
             Align(
               alignment: Alignment.bottomLeft,
               child: SvgPicture.asset(
-                  'assets/images/vector/icons/elipsLeft.svg',
-                  fit: BoxFit.fill,
-                  clipBehavior: Clip.hardEdge),
+                'assets/images/vector/icons/elipsLeft.svg',
+                fit: BoxFit.fill,
+                clipBehavior: Clip.hardEdge,
+                allowDrawingOutsideViewBox: true,
+              ),
             ),
             Align(
               alignment: Alignment.topRight,
               child: SvgPicture.asset(
-                  'assets/images/vector/icons/elipsRight.svg',
-                  fit: BoxFit.fill,
-                  clipBehavior: Clip.hardEdge),
+                'assets/images/vector/icons/elipsRight.svg',
+                fit: BoxFit.fill,
+                clipBehavior: Clip.hardEdge,
+                allowDrawingOutsideViewBox: true,
+              ),
             )
           ]),
         ),

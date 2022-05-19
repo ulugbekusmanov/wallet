@@ -26,7 +26,12 @@ class TBCCApi extends ApiBase {
     this.endpoint = 'https://asia.tbcc.com/api/v2/';
     //this.endpoint = 'https://asia.tbcc.com/testbackend/';
   }
-  Future<RequestResult> _request(String method, String path, {required Map<String, String> headers, dynamic body, String? address, bool sign = true, bool customPath = false}) async {
+  Future<RequestResult> _request(String method, String path,
+      {required Map<String, String> headers,
+      dynamic body,
+      String? address,
+      bool sign = true,
+      bool customPath = false}) async {
     //APIStatus connStatus = await checkConnection();
     //if (connStatus == APIStatus.ConnectionReady) {
     var url = customPath ? Uri.parse(path) : createFullPath(path);
@@ -34,13 +39,15 @@ class TBCCApi extends ApiBase {
     dynamic decodedJson;
     try {
       if (sign) {
-        var hash = hex.encode(_authDigest.process(Uint8List.fromList(utf8.encode(address! + _authSalt))));
+        var hash = hex.encode(_authDigest
+            .process(Uint8List.fromList(utf8.encode(address! + _authSalt))));
         headers = Map<String, String>.from(headers);
         headers['x-authorization'] = hash;
       }
       switch (method) {
         case 'post':
-          resp = await httpClient.post(url, headers: headers, body: json.encode(body));
+          resp = await httpClient.post(url,
+              headers: headers, body: json.encode(body));
           break;
         case 'get':
           resp = await httpClient.get(url, headers: headers);
@@ -61,24 +68,56 @@ class TBCCApi extends ApiBase {
     return RequestResult(decodedJson, resp?.statusCode);
   }
 
-  Future<RequestResult> post(String path, {Map<String, String> headers = const {}, dynamic body = '', bool customPath = false, bool sign = true, String? address}) async {
+  // Future<ApiResponse<bool>> checkOrderedCard_multiaddr(
+  //     List<String> addresses, String address) async {
+  //   var resp = await get("user/$address/check/ordered_card_multiaddr",
+  //       headers: {'x-addresses': json.encode(addresses)}, address: address);
+  //   resp.load = resp.load == true;
+  //   return ApiResponse.fromBC(resp);
+  // }
+
+  Future<RequestResult> post(String path,
+      {Map<String, String> headers = const {},
+      dynamic body = '',
+      bool customPath = false,
+      bool sign = true,
+      String? address}) async {
     headers = Map<String, String>.from(headers);
     headers['Content-Type'] = 'Application/json; charset=utf-8';
-    return _request('post', path, headers: headers, body: body, sign: sign, address: address, customPath: customPath);
+    return _request('post', path,
+        headers: headers,
+        body: body,
+        sign: sign,
+        address: address,
+        customPath: customPath);
   }
 
-  Future<RequestResult> get(String path, {Map<String, String> headers = const {}, dynamic body = '', bool customPath = false, bool sign = true, String? address}) async {
-    return _request('get', path, headers: headers, sign: sign, address: address, customPath: customPath);
+  Future<RequestResult> get(String path,
+      {Map<String, String> headers = const {},
+      dynamic body = '',
+      bool customPath = false,
+      bool sign = true,
+      String? address}) async {
+    return _request('get', path,
+        headers: headers, sign: sign, address: address, customPath: customPath);
   }
 
-  Future<ApiResponse<InnerUpdate>> getInnerUpdateInfo({bool debug = false}) async {
-    var result = await get('inner_update', headers: {'x-package-name': 'com.wirelessenergy.tbccwallet'}, sign: false);
+  Future<ApiResponse<InnerUpdate>> getInnerUpdateInfo(
+      {bool debug = false}) async {
+    var result = await get('inner_update',
+        headers: {'x-package-name': 'com.wirelessenergy.tbccwallet'},
+        sign: false);
     var load = InnerUpdate.fromJson(result.json);
     return ApiResponse(result.statusCode ?? -1, load);
   }
 
   Future<ApiResponse<WhatsNew>> whatsNewLastVer(String lang) async {
-    var result = await get('whats_new', headers: {'x-lang': 'ru', 'x-version': '${locator<UserSettings>().update.actualVersion}'}, sign: false);
+    var result = await get('whats_new',
+        headers: {
+          'x-lang': 'ru',
+          'x-version': '${locator<UserSettings>().update.actualVersion}'
+        },
+        sign: false);
     var load = WhatsNew.fromJson(result.json);
     return ApiResponse(result.statusCode ?? -1, load);
   }
@@ -95,8 +134,10 @@ class TBCCApi extends ApiBase {
     }
   }
 
-  Future<ApiResponse<List<TBCCUserModel>>> getUsers(List<String> addresses) async {
-    var result = await get('get_users', headers: {'x-addresses': addresses.join('_')}, sign: false);
+  Future<ApiResponse<List<TBCCUserModel>>> getUsers(
+      List<String> addresses) async {
+    var result = await get('get_users',
+        headers: {'x-addresses': addresses.join('_')}, sign: false);
     var json_;
     try {
       json_ = result.json as List<dynamic>;
@@ -151,7 +192,8 @@ class TBCCApi extends ApiBase {
     return ApiResponse(result.statusCode ?? -1, load);
   }
 
-  Future<ApiResponse<LotterySettings>> loadLotterySettings(String address) async {
+  Future<ApiResponse<LotterySettings>> loadLotterySettings(
+      String address) async {
     var result = await get('lottery/$address', sign: false);
     var load;
     try {
@@ -162,8 +204,10 @@ class TBCCApi extends ApiBase {
     return ApiResponse(result.statusCode ?? -1, load);
   }
 
-  Future<ApiResponse<VPNKey>> clientBoughtVPN(String address, String txHash) async {
-    var result = await post("user/$address/vpn", body: {'txHash': txHash}, address: address);
+  Future<ApiResponse<VPNKey>> clientBoughtVPN(
+      String address, String txHash) async {
+    var result = await post("user/$address/vpn",
+        body: {'txHash': txHash}, address: address);
 
     var load;
     try {

@@ -287,7 +287,7 @@ class PremiumGlobalButton extends StatelessWidget {
               width: 1, color: AppColors.inactiveText.withOpacity(0.1))),
       child: Row(
         children: [
-          AppIcons.crown(24, active ? Colors.white : AppColors.text),
+          AppIcons.crown(20, active ? Colors.white : AppColors.text),
           if (expanded)
             shimmer
                 ? Shimmer.fromColors(
@@ -334,7 +334,7 @@ class CAppBar extends AppBar {
           elevation: elevation,
           backgroundColor: backgroundColor,
           centerTitle: centerTitle,
-          titleSpacing: -10,
+          // titleSpacing: -10,
           backwardsCompatibility: false,
           toolbarHeight: 64,
           foregroundColor: AppColors.text,
@@ -649,9 +649,9 @@ class _AnimatedButtonBarState extends State<AnimatedButtonBar> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                      offset: Offset(0, 13),
                       blurRadius: 18,
-                      color: Colors.black.withOpacity(0.04))
+                      color: AppColors.shadowColor,
+                      offset: Offset(0, 13)),
                 ],
                 color: AppColors.secondaryBG,
                 borderRadius: BorderRadius.all(Radius.circular(18)),

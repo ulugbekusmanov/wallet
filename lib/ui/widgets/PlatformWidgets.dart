@@ -13,7 +13,9 @@ class PlatformTabScaffold extends StatefulWidget {
   List<BottomNavigationBarItem> bottomItems;
   List<Widget> bodyItems;
 
-  PlatformTabScaffold({required this.bottomItems, required this.bodyItems, Key? key}) : super(key: key);
+  PlatformTabScaffold(
+      {required this.bottomItems, required this.bodyItems, Key? key})
+      : super(key: key);
 
   @override
   PlatformTabScaffoldState createState() => PlatformTabScaffoldState();
@@ -46,15 +48,18 @@ class PlatformTabScaffoldState extends State<PlatformTabScaffold> {
       if (locator<AuthService>().accManager.accountType != AccType.Free) {
         setState(() {
           bottomSelectedIndex = index;
-          pageController.animateToPage(index, duration: Duration(milliseconds: 1), curve: Curves.ease);
+          pageController.animateToPage(index,
+              duration: Duration(milliseconds: 1), curve: Curves.ease);
         });
       } else {
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
       }
     } else {
       setState(() {
         bottomSelectedIndex = index;
-        pageController.animateToPage(index, duration: Duration(milliseconds: 1), curve: Curves.ease);
+        pageController.animateToPage(index,
+            duration: Duration(milliseconds: 1), curve: Curves.ease);
       });
     }
   }
@@ -66,10 +71,13 @@ class PlatformTabScaffoldState extends State<PlatformTabScaffold> {
       return CupertinoTabScaffold(
         backgroundColor: Colors.white,
         tabBar: CupertinoTabBar(
+          height: 60,
           backgroundColor: AppColors.primaryBg,
           items: widget.bottomItems,
-          //activeColor: AppColors.active,
           activeColor: AppColors.green,
+          border: Border(
+              top: BorderSide(
+                  color: AppColors.inactiveText.withOpacity(0.5), width: 0.0)),
         ),
         tabBuilder: (context, index) {
           return widget.bodyItems[index];
@@ -103,7 +111,10 @@ class PlatformTabScaffoldState extends State<PlatformTabScaffold> {
                 //unselectedLabelStyle: Theme.of(context).textTheme.caption!.copyWith(fontSize: 0, height: 0),
                 //selectedLabelStyle: Theme.of(context).textTheme.caption!.copyWith(fontSize: 0, height: 0),
                 unselectedLabelStyle: Theme.of(context).textTheme.caption,
-                selectedLabelStyle: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.active),
+                selectedLabelStyle: Theme.of(context)
+                    .textTheme
+                    .caption!
+                    .copyWith(color: AppColors.active),
                 onTap: toPage,
                 items: widget.bottomItems,
               )));

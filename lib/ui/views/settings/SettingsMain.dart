@@ -22,7 +22,8 @@ class SettingsMainScreen extends StatefulWidget {
   _SettingsMainScreenState createState() => _SettingsMainScreenState();
 }
 
-class _SettingsMainScreenState extends State<SettingsMainScreen> with AutomaticKeepAliveClientMixin {
+class _SettingsMainScreenState extends State<SettingsMainScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -50,8 +51,13 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> with AutomaticK
                   icon: gradientIcon(AppIcons.verified(24)),
                   value: S.of(context).securityCenter,
                   onTap: () async {
-                    if ((await Navigator.of(context).push<bool>(MaterialPageRoute(builder: (_) => LoginScreen(confirmation: true)))) == true) {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SecurityMainScreen()));
+                    if ((await Navigator.of(context).push<bool>(
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    LoginScreen(confirmation: true)))) ==
+                        true) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => SecurityMainScreen()));
                     }
                   },
                   bottomSpace: true),
@@ -63,21 +69,31 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> with AutomaticK
                   child: Container(
                     width: 25,
                     height: 25,
-                    child: SvgPicture.asset('assets/images/flags/${FIAT_CURRENCY_SYMBOL.toLowerCase()}.svg', fit: BoxFit.fill, clipBehavior: Clip.hardEdge),
+                    child: SvgPicture.asset(
+                        'assets/images/flags/${FIAT_CURRENCY_SYMBOL.toLowerCase()}.svg',
+                        fit: BoxFit.fill,
+                        clipBehavior: Clip.hardEdge),
                   ),
                 ),
                 value: S.of(context).currency,
-                onTap: () => Navigator.of(context).push(PageTransition(type: PageTransitionType.rightToLeftWithFade, child: CurrencyScreen(model))),
+                onTap: () => Navigator.of(context).push(PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: CurrencyScreen(model))),
                 trailing: Text(
                   '$FIAT_CURRENCY_SYMBOL  ',
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.inactiveText),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: AppColors.inactiveText),
                 ),
               ),
               SettingsTile(
                 index: 2,
                 icon: gradientIcon(AppIcons.globe(24)),
                 value: S.of(context).language,
-                onTap: () => Navigator.of(context).push(PageTransition(type: PageTransitionType.rightToLeftWithFade, child: LanguageScreen(model))),
+                onTap: () => Navigator.of(context).push(PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: LanguageScreen(model))),
               ),
               //SettingsTile(index: 3, icon: gradientIcon(AppIcons.crown(24)), value: 'Push Notifications', onTap: () {}),
               SettingsTile(
@@ -85,7 +101,9 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> with AutomaticK
                 bottomSpace: true,
                 icon: gradientIcon(AppIcons.book_open(24)),
                 value: S.of(context).addressBook,
-                onTap: () => Navigator.of(context).push(PageTransition(type: PageTransitionType.rightToLeftWithFade, child: AddressBookMain())),
+                onTap: () => Navigator.of(context).push(PageTransition(
+                    type: PageTransitionType.rightToLeftWithFade,
+                    child: AddressBookMain())),
               ),
               ThemeSwitcher(builder: (context) {
                 return SwitchSettingsTile(
@@ -94,7 +112,8 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> with AutomaticK
                   icon: gradientIcon(AppIcons.idea(24)),
                   value: S.of(context).darkMode,
                   onTap: () {},
-                  isSwitched: ThemeProvider.of(context)!.brightness == Brightness.dark,
+                  isSwitched:
+                      ThemeProvider.of(context)!.brightness == Brightness.dark,
                   onSwitchChanged: (bool val) {
                     model.changeTheme(context, val);
                   },
@@ -119,7 +138,8 @@ class _SettingsMainScreenState extends State<SettingsMainScreen> with AutomaticK
                 index: 5,
                 icon: gradientIcon(AppIcons.info(24)),
                 value: S.of(context).aboutTbcc,
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => AboutScreen())),
+                onTap: () => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => AboutScreen())),
                 bottomSpace: true,
               ),
               SettingsTile(
@@ -146,7 +166,14 @@ class SettingsTile extends StatelessWidget {
   final int index;
   final bool endIcon;
   @override
-  SettingsTile({required this.index, required this.icon, required this.value, required this.onTap, this.bottomSpace = false, this.trailing, this.endIcon = true});
+  SettingsTile(
+      {required this.index,
+      required this.icon,
+      required this.value,
+      required this.onTap,
+      this.bottomSpace = false,
+      this.trailing,
+      this.endIcon = true});
 
   Widget build(BuildContext context) {
     return AnimatedOpacityWrapper(
@@ -157,13 +184,19 @@ class SettingsTile extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.fromLTRB(0, 4, 0, bottomSpace ? 16 : 4),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: AppColors.generalShapesBg),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: AppColors.generalShapesBg),
           child: Row(
             children: [
               Row(
                 children: [
-                  Padding(padding: const EdgeInsets.only(right: 14), child: icon),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 5.0), child: Text(value, style: Theme.of(context).textTheme.bodyText2)),
+                  Padding(
+                      padding: const EdgeInsets.only(right: 14), child: icon),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Text(value,
+                          style: Theme.of(context).textTheme.bodyText2)),
                 ],
               ),
               Spacer(),
@@ -205,7 +238,9 @@ class SwitchSettingsTile extends StatelessWidget {
         child: Container(
           margin: EdgeInsets.fromLTRB(0, 4, 0, bottomSpace ? 16 : 4),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.5),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: AppColors.generalShapesBg),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: AppColors.generalShapesBg),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

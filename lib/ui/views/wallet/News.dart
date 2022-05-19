@@ -15,6 +15,8 @@ import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web3dart/web3dart.dart';
 
+import '../dapp_browser/DAppLaunchScreen.dart';
+
 class NewsListViewModel extends BaseViewModel {
   var tbccApi = locator<TBCCApi>();
   List<NewsModel>? news;
@@ -97,9 +99,10 @@ class NewsListView extends StatelessWidget {
                                     imageUrl: post!.previewImageUrl ?? '',
                                     width: 68,
                                     height: 68,
-                                    errorWidget: (_, __, ___) => Padding(
-                                        padding: EdgeInsets.zero,
-                                        child: AppIcons.logo(0)),
+                                    placeholder: (ctx, url) =>
+                                        const BaseImagePlaceHolderWidget(),
+                                    errorWidget: (ctx, url, err) =>
+                                        const BaseImagePlaceHolderWidget(),
                                   ),
                                 ),
                                 SizedBox(width: 16),
