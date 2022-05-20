@@ -26,6 +26,35 @@ class TBCCApi extends ApiBase {
     this.endpoint = 'https://asia.tbcc.com/api/v2/';
     //this.endpoint = 'https://asia.tbcc.com/testbackend/';
   }
+
+  Future<ApiNfcResponse<bool>> checkOrderedCard_multiaddr(
+      List<String> addresses, String address) async {
+    var resp = await get("user/$address/check/ordered_card_multiaddr",
+        headers: {'x-addresses': json.encode(addresses)}, address: address);
+    return ApiNfcResponse.fromOther(resp.json);
+  }
+
+  Future<ApiResponse<InnerUpdate>> getInnerUpdateInfo(
+      {bool debug = false}) async {
+    var result = await get('inner_update',
+        headers: {'x-package-name': 'com.wirelessenergy.tbccwallet'},
+        sign: false);
+    var load = InnerUpdate.fromJson(result.json);
+    return ApiResponse(result.statusCode ?? -1, load);
+  }
+
+  Future<ApiResponse<TBCCUserModel>> getUser(String address) async {
+    var result = await get('user/$address', address: address);
+    if (result.statusCode == 200) {
+      var load = TBCCUserModel.fromJson(result.json);
+
+      return ApiResponse(200, load);
+    } else {
+      newClient(address);
+      return ApiResponse(200, TBCCUserModel(address: address));
+    }
+  }
+
   Future<RequestResult> _request(String method, String path,
       {required Map<String, String> headers,
       dynamic body,
@@ -102,15 +131,6 @@ class TBCCApi extends ApiBase {
         headers: headers, sign: sign, address: address, customPath: customPath);
   }
 
-  Future<ApiResponse<InnerUpdate>> getInnerUpdateInfo(
-      {bool debug = false}) async {
-    var result = await get('inner_update',
-        headers: {'x-package-name': 'com.wirelessenergy.tbccwallet'},
-        sign: false);
-    var load = InnerUpdate.fromJson(result.json);
-    return ApiResponse(result.statusCode ?? -1, load);
-  }
-
   Future<ApiResponse<WhatsNew>> whatsNewLastVer(String lang) async {
     var result = await get('whats_new',
         headers: {
@@ -120,18 +140,6 @@ class TBCCApi extends ApiBase {
         sign: false);
     var load = WhatsNew.fromJson(result.json);
     return ApiResponse(result.statusCode ?? -1, load);
-  }
-
-  Future<ApiResponse<TBCCUserModel>> getUser(String address) async {
-    var result = await get('user/$address', address: address);
-    if (result.statusCode == 200) {
-      var load = TBCCUserModel.fromJson(result.json);
-
-      return ApiResponse(200, load);
-    } else {
-      newClient(address);
-      return ApiResponse(200, TBCCUserModel(address: address));
-    }
   }
 
   Future<ApiResponse<List<TBCCUserModel>>> getUsers(

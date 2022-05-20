@@ -20,9 +20,9 @@ class SmartCardAttachModel extends BaseViewModel {
   bool cardOrdered = false;
   Future<Null> checkCardOrdered(BuildContext context) async {
     setState(ViewState.Busy);
-    // var resp = await locator<TBCCApi>().checkOrderedCard_multiaddr(
-    //     [for (var acc in accManager.allAccounts) acc.bcWallet.address],
-    //     accManager.allAccounts.first.bcWallet.address);
+    var resp = await locator<TBCCApi>().checkOrderedCard_multiaddr(
+        [for (var acc in accManager.allAccounts) acc.bcWallet.address ?? ''],
+        accManager.allAccounts.first.bcWallet.address ?? '');
     cardOrdered = false; //resp.load;
     setState(ViewState.Idle);
   }

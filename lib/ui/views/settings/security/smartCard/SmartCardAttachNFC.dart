@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tbccwallet/locator.dart';
 
-import '../../../../../App.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../shared.dart';
 import '../../../../BaseView.dart';

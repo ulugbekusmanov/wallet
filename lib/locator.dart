@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tbccwallet/App.dart';
 import 'package:tbccwallet/core/settings/AppSettings.dart';
+import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
+import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttachModel.dart';
 import 'package:tbccwallet/ui/views/wallet/News.dart';
 import 'package:tbccwallet/ui/views/wallet/ReceiveScreen.dart';
 import 'core/api/tbcc/TBCCApi.dart';
@@ -89,6 +91,8 @@ void setupLocator() {
   locator.registerFactory(() => LotteryScreenModel());
   locator.registerFactory(() => AddContactModel());
   locator.registerFactory(() => BuyVpnModel());
+
+  locator.registerFactory(() => SmartCardAttachModel());
 
   //locator.registerFactory(() => DexOrderHistoryModel());
 }
