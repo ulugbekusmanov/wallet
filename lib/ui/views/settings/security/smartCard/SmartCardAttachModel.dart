@@ -55,7 +55,8 @@ class SmartCardAttachModel extends BaseViewModel {
           var res = await NFC.writeNDEF(newMessage, once: true).first;
 
           if (res != null) {
-            // SuccessFlushbar(S.of(context).success)..show(context);
+            Flushbar.success(title: S.of(context).success)
+                .show(Duration(seconds: 4));
             setState(state);
             wrote = true;
             nfcState = 2;
@@ -67,8 +68,9 @@ class SmartCardAttachModel extends BaseViewModel {
         } catch (e, st) {
           print('$e: $st');
 
-          //ErrorFlushbar(I18n.of(context).tryAgain)..show(context);
-          // ErrorFlushbar('Try again')..show(context);
+          Flushbar.error(title: S.of(context).tryAgain)
+              .show(Duration(seconds: 4));
+          Flushbar.error(title: 'Try again').show(Duration(seconds: 4));
         }
       } else {
         break;
