@@ -322,6 +322,10 @@ class _TokenTypeSwitchState extends State<TokenTypeSwitch> {
                 GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
+                        constraints: BoxConstraints(
+                          maxHeight: MediaQuery.of(context).size.height * 0.8,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(20),

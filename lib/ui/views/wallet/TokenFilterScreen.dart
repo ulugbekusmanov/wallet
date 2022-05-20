@@ -89,87 +89,116 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Сортировка',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: AppColors.inactiveText,
+          Expanded(
+            child: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[
+                  SliverAppBar(
+                    expandedHeight: 177,
+                    toolbarHeight: 177,
+                    floating: true,
+                    pinned: false,
+                    snap: false,
+                    leading: const SizedBox(),
+                    flexibleSpace: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Сортировка',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(
+                                          color: AppColors.inactiveText,
+                                        ),
+                                  ),
+                                  BaseDropMenu(
+                                    hint: chooseTypeSort.name,
+                                    onChanged: (item) => changeTypeSort(item),
+                                    items: listDrop,
+                                    value: chooseTypeSort,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Скрыть пустые',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(
+                                          color: AppColors.inactiveText,
+                                        ),
+                                  ),
+                                  Checkbox(
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      value: emptyCheckbox,
+                                      side: BorderSide(width: 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      onChanged: (val) {
+                                        setState(() {
+                                          emptyCheckbox = val!;
+                                        });
+                                      }),
+                                ],
+                              ),
+                              SizedBox(height: 12),
+                            ],
                           ),
-                    ),
-                    BaseDropMenu(
-                      hint: chooseTypeSort.name,
-                      onChanged: (item) => changeTypeSort(item),
-                      items: listDrop,
-                      value: chooseTypeSort,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Скрыть пустые',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: AppColors.inactiveText,
-                          ),
-                    ),
-                    Checkbox(
-                        activeColor: Theme.of(context).primaryColor,
-                        value: emptyCheckbox,
-                        side: BorderSide(width: 1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
                         ),
-                        onChanged: (val) {
-                          setState(() {
-                            emptyCheckbox = val!;
-                          });
-                        }),
-                  ],
-                ),
-                SizedBox(height: 12),
-              ],
+                        Divider(),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: 20, right: 20, top: 0, bottom: 20),
+                          child: SingleChildScrollView(
+                            clipBehavior: Clip.none,
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: () {
+                                  return [
+                                    for (var i in range(0, values.length))
+                                      GestureDetector(
+                                        onTap: () => setState(() => index = i),
+                                        child: TokenTypeButton(
+                                            values[i][0] as String, index == i),
+                                      )
+                                  ];
+                                }()),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ];
+              },
+              body: FilterTokensListView(
+                values[index][1],
+                controllerSearch,
+                (cb) {
+                  setState(() {
+                    needToReload = true;
+                    cb.call();
+                  });
+                },
+              ),
             ),
           ),
-          Divider(),
-          Container(
-              margin: const EdgeInsets.only(
-                  left: 20, right: 20, top: 0, bottom: 20),
-              child: SingleChildScrollView(
-                clipBehavior: Clip.none,
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: () {
-                      return [
-                        for (var i in range(0, values.length))
-                          GestureDetector(
-                            onTap: () => setState(() => index = i),
-                            child: TokenTypeButton(
-                                values[i][0] as String, index == i),
-                          )
-                      ];
-                    }()),
-              )),
-          Expanded(
-            child: FilterTokensListView(
-              values[index][1],
-              controllerSearch,
-              (cb) {
-                setState(() {
-                  needToReload = true;
-                  cb.call();
-                });
-              },
-            ),
-          )
         ],
       ),
     );
