@@ -166,6 +166,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "disable": MessageLookupByLibrary.simpleMessage("关闭"),
         "disconnect": MessageLookupByLibrary.simpleMessage("断开"),
         "download": MessageLookupByLibrary.simpleMessage("下载"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "emailSupport": MessageLookupByLibrary.simpleMessage("联系客服"),
         "enable": MessageLookupByLibrary.simpleMessage("启用"),
         "endInvestDate": MessageLookupByLibrary.simpleMessage("接受资金的结束日期："),

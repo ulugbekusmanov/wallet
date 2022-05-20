@@ -278,6 +278,7 @@ class PremiumGlobalButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 40,
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -299,22 +300,6 @@ class PremiumGlobalButton extends StatelessWidget {
                         color: active ? Colors.white : AppColors.text)),
         ],
       ),
-    );
-  }
-}
-
-class NotificationsBell extends StatelessWidget {
-  const NotificationsBell({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: AppColors.altGradient,
-      ),
-      child: Icon(Icons.notifications_none),
     );
   }
 }
@@ -406,6 +391,7 @@ class Button extends StatelessWidget {
   bool isActive;
   void Function()? onTap;
   Color? color;
+  bool isOutLine;
   Widget? leadingIcon;
   bool gradientBorder;
   Button(
@@ -414,6 +400,7 @@ class Button extends StatelessWidget {
       this.onTap,
       this.color,
       this.leadingIcon,
+      this.isOutLine = false,
       this.gradientBorder = false,
       this.isActive = true})
       : super(key: key);
@@ -437,8 +424,13 @@ class Button extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: color ?? Color(0xff4E94D7),
+                  color: isOutLine
+                      ? Colors.transparent
+                      : color ?? Color(0xff4E94D7),
                   borderRadius: BorderRadius.circular(gradientBorder ? 14 : 16),
+                  border: isOutLine
+                      ? Border.all(width: 1, color: AppColors.primary)
+                      : null,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -448,7 +440,9 @@ class Button extends StatelessWidget {
                             color: isActive
                                 ? gradientBorder
                                     ? AppColors.text
-                                    : Colors.white
+                                    : !isOutLine
+                                        ? Colors.white
+                                        : AppColors.primary
                                 : AppColors.inactiveText)),
                   ],
                 ),

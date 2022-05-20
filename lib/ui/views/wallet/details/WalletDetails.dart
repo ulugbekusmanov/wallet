@@ -39,49 +39,52 @@ class WalletDetails extends StatelessWidget {
         //   ),
         // ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: balance.token.icon(80)),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: AutoSizeText(
-                '${balance.balance} ${balance.token.symbol}',
-                maxLines: 1,
-                minFontSize: 22,
-                maxFontSize: 26,
+      body: Container(
+        child: Center(
+          child: Column(
+            children: [
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: balance.token.icon(80)),
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: AutoSizeText(
+                  '${balance.balance} ${balance.token.symbol}',
+                  maxLines: 1,
+                  minFontSize: 22,
+                  maxFontSize: 26,
+                ),
               ),
-            ),
-            Text(
-              '${FIAT_CURRENCY_LITERAL} ${balance.fiatBalance.toStringWithFractionDigits(2)}',
-              style: tt.headline6!.copyWith(color: AppColors.inactiveText),
-            ),
-            //Padding(
-            //  padding: const const EdgeInsets.all(5.0),
-            //  child: AccountPNL('2.34', '5'),
-            //),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (var t in [
-                  [AppIcons.arrow_outcome(24, AppColors.text), () {}],
-                  [AppIcons.arrow_income(24, AppColors.text), () {}],
-                  [
-                    Icon(Icons.more_horiz, size: 24, color: AppColors.text),
-                    () {}
-                  ]
-                ])
-                  ControlButtons(
-                    icon: t[0] as Widget?,
-                    onTap: t[1] as Function,
-                  )
-              ],
-            ),
-            Expanded(flex: 11, child: HistoryListView(balance.token, accIndex))
-          ],
+              Text(
+                '${FIAT_CURRENCY_LITERAL} ${balance.fiatBalance.toStringWithFractionDigits(2)}',
+                style: tt.headline6!.copyWith(color: AppColors.inactiveText),
+              ),
+              //Padding(
+              //  padding: const const EdgeInsets.all(5.0),
+              //  child: AccountPNL('2.34', '5'),
+              //),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (var t in [
+                    [AppIcons.arrow_outcome(24, AppColors.text), () {}],
+                    [AppIcons.arrow_income(24, AppColors.text), () {}],
+                    [
+                      Icon(Icons.more_horiz, size: 24, color: AppColors.text),
+                      () {}
+                    ]
+                  ])
+                    ControlButtons(
+                      icon: t[0] as Widget?,
+                      onTap: t[1] as Function,
+                    )
+                ],
+              ),
+              Expanded(
+                  flex: 11, child: HistoryListView(balance.token, accIndex))
+            ],
+          ),
         ),
       ),
     );
@@ -108,15 +111,17 @@ class HistoryListView extends StatelessWidget {
           );
         else
           return RefreshIndicator(
-              onRefresh: () async {
-                await model.loadHistory(token, context, accIndex);
+            onRefresh: () async {
+              await model.loadHistory(token, context, accIndex);
+            },
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: model.transactionsListWidgets?.length ?? 0,
+              itemBuilder: (context, index) {
+                return model.transactionsListWidgets![index];
               },
-              child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: model.transactionsListWidgets?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return model.transactionsListWidgets![index];
-                  }));
+            ),
+          );
       },
     );
   }

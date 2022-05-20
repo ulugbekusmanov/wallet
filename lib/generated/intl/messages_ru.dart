@@ -196,6 +196,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "disable": MessageLookupByLibrary.simpleMessage("Выключить"),
         "disconnect": MessageLookupByLibrary.simpleMessage("Отключиться"),
         "download": MessageLookupByLibrary.simpleMessage("Скачать"),
+        "edit": MessageLookupByLibrary.simpleMessage("Редактировать"),
         "emailSupport":
             MessageLookupByLibrary.simpleMessage("Написать в поддержку"),
         "enable": MessageLookupByLibrary.simpleMessage("Включить"),

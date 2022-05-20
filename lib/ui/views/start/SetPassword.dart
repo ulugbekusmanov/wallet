@@ -1,6 +1,5 @@
 import 'package:tbccwallet/core/authentication/AuthService.dart';
 import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/core/storage/SecureStorage.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 

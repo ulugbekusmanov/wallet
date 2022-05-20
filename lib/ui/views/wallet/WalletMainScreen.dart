@@ -71,70 +71,13 @@ class _WalletMainScreenState extends State<WalletMainScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          () {
-                            var active = false;
-                            var type = 'Premium';
-                            if (model.accManager.accountType == AccType.Free) {
-                              active = false;
-                            } else {
-                              active = true;
-                              switch (model.accManager.accountType) {
-                                case AccType.Pro:
-                                  type = 'PRO';
-                                  break;
-                                case AccType.Premium:
-                                  type = 'Premium';
-                                  break;
-                                case AccType.Free:
-                                  // TODO: Handle this case.
-                                  break;
-                              }
-                            }
-
-                            return GestureDetector(
-                                onTap: () {
-                                  if (model.state != ViewState.Busy) {
-                                    if (active) {
-                                      Flushbar.success(
-                                              title:
-                                                  S.of(context).youProNow(type))
-                                          .show();
-                                    } else {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  Pro_PremiumView()));
-                                    }
-                                  }
-                                },
-                                child: PremiumGlobalButton(
-                                  type,
-                                  active,
-                                  true,
-                                  shimmer: model.state == ViewState.Busy,
-                                ));
-                          }(),
+                          PremiumWidget(
+                              acc: model.accManager, state: model.state),
                           SizedBox(width: 12),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (_) => Pro_PremiumView()));
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  gradient: AppColors.altGradient,
-                                  border: Border.all(
-                                      width: 1,
-                                      color: AppColors.inactiveText
-                                          .withOpacity(0.1))),
-                              child: AppIcons.notification_bell(
-                                  20, AppColors.text),
-                            ),
-                          )
-                          // NotificationsBell(),
+                          NotificationWidget(
+                            isNewNotification: true,
+                            onTap: () {},
+                          ),
                         ],
                       ),
                     ),
@@ -238,6 +181,104 @@ class _WalletMainScreenState extends State<WalletMainScreen>
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PremiumWidget extends StatelessWidget {
+  const PremiumWidget({
+    Key? key,
+    required this.acc,
+    required this.state,
+  }) : super(key: key);
+
+  final AccountManager acc;
+  final ViewState state;
+
+  @override
+  Widget build(BuildContext context) {
+    var active = false;
+    var type = 'Premium';
+    if (acc.accountType == AccType.Free) {
+      active = false;
+    } else {
+      active = true;
+      switch (acc.accountType) {
+        case AccType.Pro:
+          type = 'PRO';
+          break;
+        case AccType.Premium:
+          type = 'Premium';
+          break;
+        case AccType.Free:
+          // TODO: Handle this case.
+          break;
+      }
+    }
+    return GestureDetector(
+        onTap: () {
+          if (state != ViewState.Busy) {
+            if (active) {
+              Flushbar.success(title: S.of(context).youProNow(type)).show();
+            } else {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
+            }
+          }
+        },
+        child: PremiumGlobalButton(
+          type,
+          active,
+          true,
+          shimmer: state == ViewState.Busy,
+        ));
+  }
+}
+
+class NotificationWidget extends StatelessWidget {
+  const NotificationWidget({
+    Key? key,
+    required this.onTap,
+    required this.isNewNotification,
+  }) : super(key: key);
+  final Function()? onTap;
+  final bool isNewNotification;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Stack(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                gradient: AppColors.altGradient,
+                border: Border.all(
+                    width: 1, color: AppColors.inactiveText.withOpacity(0.1))),
+            child: AppIcons.notification_bell(20, AppColors.text),
+          ),
+          isNewNotification
+              ? Positioned(
+                  right: 6,
+                  top: 5,
+                  child: Container(
+                    height: 14,
+                    width: 14,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primary,
+                        border:
+                            Border.all(width: 2, color: AppColors.primaryBg)),
+                  ),
+                )
+              : SizedBox()
+        ],
       ),
     );
   }

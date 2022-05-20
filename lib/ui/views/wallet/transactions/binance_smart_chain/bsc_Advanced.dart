@@ -1,6 +1,8 @@
 import 'package:tbccwallet/global_env.dart';
 import 'package:tbccwallet/shared.dart';
 
+import '../../WalletMainScreen.dart';
+import '../ethereum/eth_Transfer.dart';
 import 'model.dart';
 
 class BSCAdvancedScreen extends StatelessWidget {
@@ -17,71 +19,108 @@ class BSCAdvancedScreen extends StatelessWidget {
             appBar: CAppBar(
               elevation: 0,
               title: Text(S.of(context).advanced),
+              actions: [
+                Center(
+                  child: PremiumSmallWidget(
+                    acc: model.accManager,
+                    state: model.state,
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: NotificationWidget(
+                      onTap: () {},
+                      isNewNotification: true,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            body: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Do not change these settings if you don`t know what they mean',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.yellow),
-                  ),
-                  Padding(padding: const EdgeInsets.fromLTRB(12, 10, 0, 10), child: Text('Gas price')),
-                  TextFormField(
-                    controller: model.controllerGasPrice,
-                    keyboardType: TextInputType.number,
-                    //validator: (val) => model.isAddrValid ? null : 'Wrong address',
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: generalTextFieldDecor(context, suffixText: 'gwei'),
-                  ),
-                  SizedBox(height: 8),
-                  Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      gasPriceSelector(context, model.gasPrices!.slow!, 'Slow', model),
-                      SizedBox(height: 8),
-                      gasPriceSelector(context, model.gasPrices!.standard!, 'Average', model),
-                      SizedBox(height: 8),
-                      gasPriceSelector(context, model.gasPrices!.fast!, 'Fast', model),
-                    ],
-                  ),
-                  Padding(padding: const EdgeInsets.fromLTRB(12, 20, 0, 10), child: Text('Gas limit')),
-                  TextFormField(
-                    controller: model.controllerMaxGas,
-                    keyboardType: TextInputType.number,
-                    //validator: (val) => model.isAddrValid ? null : 'Wrong address',
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: generalTextFieldDecor(context),
-                  ),
-                  SizedBox(height: 8),
-                  Padding(padding: const EdgeInsets.fromLTRB(12, 20, 0, 10), child: Text('Nonce')),
-                  TextFormField(
-                    controller: model.controllerNonce,
-                    keyboardType: TextInputType.number,
-                    //validator: (val) => model.isAddrValid ? null : 'Wrong address',
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: generalTextFieldDecor(context),
-                  ),
-                  SizedBox(height: 8),
-                  if (model.balance.token.standard == 'Native' && model.balance.token.symbol == 'BNB') ...[
-                    Padding(padding: const EdgeInsets.fromLTRB(12, 20, 0, 10), child: Text('Tx Data')),
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      'Do not change these settings if you don`t know what they mean',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: AppColors.yellow),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 10, 0, 10),
+                        child: Text('Gas price')),
                     TextFormField(
-                      controller: model.controllerData,
+                      controller: model.controllerGasPrice,
+                      keyboardType: TextInputType.number,
+                      //validator: (val) => model.isAddrValid ? null : 'Wrong address',
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration:
+                          generalTextFieldDecor(context, suffixText: 'gwei'),
+                    ),
+                    SizedBox(height: 8),
+                    Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        gasPriceSelector(
+                            context, model.gasPrices!.slow!, 'Slow', model),
+                        SizedBox(height: 8),
+                        gasPriceSelector(context, model.gasPrices!.standard!,
+                            'Average', model),
+                        SizedBox(height: 8),
+                        gasPriceSelector(
+                            context, model.gasPrices!.fast!, 'Fast', model),
+                      ],
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 20, 0, 10),
+                        child: Text('Gas limit')),
+                    TextFormField(
+                      controller: model.controllerMaxGas,
+                      keyboardType: TextInputType.number,
                       //validator: (val) => model.isAddrValid ? null : 'Wrong address',
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: generalTextFieldDecor(context),
                     ),
+                    SizedBox(height: 8),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(12, 20, 0, 10),
+                        child: Text('Nonce')),
+                    TextFormField(
+                      controller: model.controllerNonce,
+                      keyboardType: TextInputType.number,
+                      //validator: (val) => model.isAddrValid ? null : 'Wrong address',
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: generalTextFieldDecor(context),
+                    ),
+                    SizedBox(height: 8),
+                    if (model.balance.token.standard == 'Native' &&
+                        model.balance.token.symbol == 'BNB') ...[
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(12, 20, 0, 10),
+                          child: Text('Tx Data')),
+                      TextFormField(
+                        controller: model.controllerData,
+                        //validator: (val) => model.isAddrValid ? null : 'Wrong address',
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: generalTextFieldDecor(context),
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ));
       },
     );
   }
 
-  Widget gasPriceSelector(c, Decimal gasPrice, String type, BSCTransferModel model) => GestureDetector(
+  Widget gasPriceSelector(
+          c, Decimal gasPrice, String type, BSCTransferModel model) =>
+      GestureDetector(
         onTap: () {
           model.gasPrice = gasPrice;
         },
@@ -91,7 +130,9 @@ class BSCAdvancedScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: AppColors.generalShapesBg,
             borderRadius: BorderRadius.circular(20),
-            border: model.gasPrice == gasPrice ? Border.all(color: AppColors.active) : null,
+            border: model.gasPrice == gasPrice
+                ? Border.all(color: AppColors.active)
+                : null,
           ),
           child: Row(
             children: [
@@ -101,15 +142,19 @@ class BSCAdvancedScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text('$type'),
-                        Text('  $gasPrice gwei', style: Theme.of(c).textTheme.bodyText1),
+                        Text('  $gasPrice gwei',
+                            style: Theme.of(c).textTheme.bodyText1),
                       ],
                     ),
                     () {
                       var fee = model.getTotalFee(gasPrice);
 
                       return Row(children: [
-                        Text('Fee: $fee BNB', style: Theme.of(c).textTheme.bodyText1),
-                        Text('    ${(fee * model.bnbBalance.fiatPrice).toStringWithFractionDigits(2)} $FIAT_CURRENCY_SYMBOL', style: Theme.of(c).textTheme.bodyText1),
+                        Text('Fee: $fee BNB',
+                            style: Theme.of(c).textTheme.bodyText1),
+                        Text(
+                            '    ${(fee * model.bnbBalance.fiatPrice).toStringWithFractionDigits(2)} $FIAT_CURRENCY_SYMBOL',
+                            style: Theme.of(c).textTheme.bodyText1),
                       ]);
                     }()
                   ],

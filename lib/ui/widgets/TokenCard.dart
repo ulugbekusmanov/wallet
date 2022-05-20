@@ -497,7 +497,7 @@ class TokenCardActionsBottomSheet extends StatelessWidget {
                                         return Column(
                                           children: [
                                             for (var i in [
-                                              //['Вебсайт', 'bitcoin.org'],
+                                              ['Вебсайт', 'bitcoin.org'],
                                               [
                                                 'MarketCap',
                                                 '$FIAT_CURRENCY_LITERAL${dividedStringNum(model.data?.marketCap.toInt())}'

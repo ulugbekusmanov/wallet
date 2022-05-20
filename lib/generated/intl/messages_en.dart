@@ -192,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "disable": MessageLookupByLibrary.simpleMessage("Disable"),
         "disconnect": MessageLookupByLibrary.simpleMessage("Disconnect"),
         "download": MessageLookupByLibrary.simpleMessage("Download"),
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "emailSupport": MessageLookupByLibrary.simpleMessage("Email Support"),
         "enable": MessageLookupByLibrary.simpleMessage("Enable"),
         "endInvestDate": MessageLookupByLibrary.simpleMessage(

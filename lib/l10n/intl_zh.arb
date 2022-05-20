@@ -105,6 +105,7 @@
     "scanNewQR": "扫描新的二维码",
     "wallet": "投资组合",
     "settings": "设置",
+    "edit": "Edit",
     "market": "市场",
     "noValidAddrFound": "找不到有效的地址。",
     "proDesc0": "通过TBCC Wallet {type}访问更多功能并节省更多",

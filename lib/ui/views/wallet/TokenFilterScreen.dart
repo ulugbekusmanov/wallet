@@ -1,9 +1,11 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:tbccwallet/core/token/TokenContainer.dart';
 
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
+import 'package:dartx/dartx.dart';
 
 import 'WalletMainScreen.dart';
 import 'WalletMainScreenModel.dart';
@@ -19,6 +21,11 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
   final controllerSearch = TextEditingController();
   late int index;
   bool needToReload = false;
+  bool emptyCheckbox = false;
+  List<ModelSortType> listSort = [];
+  List<DropdownMenuItem> listDrop = [];
+  late ModelSortType chooseTypeSort;
+
   var values;
   @override
   void initState() {
@@ -31,8 +38,27 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
       ['BEP2', TokenFilterType.BEP2],
       ['BEP8', TokenFilterType.BEP8],
     ];
+
+    listSort.add(ModelSortType(id: 'inAlf', name: 'По алфавиту (A - Z)'));
+    listSort.add(ModelSortType(id: 'deAlf', name: 'Против алфавита (Z - A)'));
+    listSort.forEach((element) {
+      listDrop.add(DropdownMenuItem(
+        child: Text(element.name),
+        value: element.id,
+      ));
+    });
+    chooseTypeSort = listSort.first;
+
     super.initState();
   }
+
+  void changeTypeSort(String id) {
+    setState(() {
+      chooseTypeSort = listSort.firstWhere((item) => item.id == id);
+    });
+  }
+
+  void sortLogic(String id) {}
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +102,15 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
                             color: AppColors.inactiveText,
                           ),
                     ),
-                    Text(
-                      'По алфавиту (A – Z)',
-                      style: Theme.of(context).textTheme.bodyText1,
+                    BaseDropMenu(
+                      hint: chooseTypeSort.name,
+                      onChanged: (item) => changeTypeSort(item),
+                      items: listDrop,
+                      value: chooseTypeSort,
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 4),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -92,6 +120,18 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
                             color: AppColors.inactiveText,
                           ),
                     ),
+                    Checkbox(
+                        activeColor: Theme.of(context).primaryColor,
+                        value: emptyCheckbox,
+                        side: BorderSide(width: 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            emptyCheckbox = val!;
+                          });
+                        }),
                   ],
                 ),
                 SizedBox(height: 12),
@@ -100,7 +140,8 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
           ),
           Divider(),
           Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              margin: const EdgeInsets.only(
+                  left: 20, right: 20, top: 0, bottom: 20),
               child: SingleChildScrollView(
                 clipBehavior: Clip.none,
                 scrollDirection: Axis.horizontal,
@@ -118,13 +159,17 @@ class _TokenFilterScreenState extends State<TokenFilterScreen> {
                     }()),
               )),
           Expanded(
-              child: FilterTokensListView(values[index][1], controllerSearch,
-                  (cb) {
-            setState(() {
-              needToReload = true;
-              cb.call();
-            });
-          }))
+            child: FilterTokensListView(
+              values[index][1],
+              controllerSearch,
+              (cb) {
+                setState(() {
+                  needToReload = true;
+                  cb.call();
+                });
+              },
+            ),
+          )
         ],
       ),
     );
@@ -277,26 +322,44 @@ class BaseDropMenu extends StatelessWidget {
     required this.onChanged,
     required this.items,
     required this.value,
+    required this.hint,
   }) : super(key: key);
   final void Function(dynamic) onChanged;
   final List<DropdownMenuItem<dynamic>> items;
   final dynamic value;
+  final String hint;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      isExpanded: true,
-      style: Theme.of(context).textTheme.bodyText2,
-      elevation: 2,
-      borderRadius: BorderRadius.circular(16),
-      underline: SizedBox(),
-      icon: Icon(
-        Icons.arrow_drop_down,
-        color: Colors.black54,
-      ), //Icon(Icons.arrow_drop_down),
-      items: items,
-      value: value,
-      onChanged: onChanged,
+    return Container(
+      child: DropdownButton(
+        hint: Text(
+          hint,
+          style: Theme.of(context).textTheme.bodyText1,
+        ),
+        alignment: Alignment.centerRight,
+        isDense: false,
+        style: Theme.of(context)
+            .textTheme
+            .bodyText2!
+            .copyWith(color: AppColors.text),
+        elevation: 2,
+        borderRadius: BorderRadius.circular(16),
+        underline: SizedBox(),
+        icon: Icon(
+          Icons.keyboard_arrow_down_rounded,
+          color: Colors.black54,
+        ),
+        items: items,
+        // value: value,
+        onChanged: onChanged,
+      ),
     );
   }
+}
+
+class ModelSortType {
+  ModelSortType({required this.id, required this.name});
+  final String id;
+  final String name;
 }
