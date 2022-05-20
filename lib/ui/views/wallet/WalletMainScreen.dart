@@ -757,9 +757,13 @@ class BalancesListView extends StatelessWidget {
       addAutomaticKeepAlives: false,
       itemBuilder: (context, index) {
         return AnimatedOpacityWrapper(
-            index: index,
-            child:
-                TokenCardHeroWrapper('cardAllBalances$index', balances[index]));
+          index: index,
+          child: TokenCardHeroWrapper(
+            'cardAllBalances$index',
+            balances[index],
+            walletMainModel,
+          ),
+        );
       },
       separatorBuilder: (context, index) {
         return SizedBox(
@@ -838,7 +842,8 @@ class TokenCardShimmerPlaceholder extends StatelessWidget {
 class TokenCardHeroWrapper extends StatelessWidget {
   final String heroTag;
   final WalletBalance balance;
-  const TokenCardHeroWrapper(this.heroTag, this.balance, {Key? key})
+  final WalletMainScreenModel model;
+  const TokenCardHeroWrapper(this.heroTag, this.balance, this.model, {Key? key})
       : super(key: key);
 
   @override
@@ -855,7 +860,8 @@ class TokenCardHeroWrapper extends StatelessWidget {
           barrierColor: Color(0xA6272323),
           backgroundColor: Colors.transparent,
           context: context,
-          builder: (context) => TokenCardActionsBottomSheet(heroTag, card),
+          builder: (context) =>
+              TokenCardActionsBottomSheet(heroTag, card, model),
         );
 
         locator<WalletMainScreenModel>().currentTokenMarketsModel = null;

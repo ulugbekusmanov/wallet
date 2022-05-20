@@ -156,7 +156,8 @@ class TokenCard extends StatelessWidget {
 class TokenCardActionsBottomSheet extends StatelessWidget {
   final TokenCard card;
   final String heroTag;
-  TokenCardActionsBottomSheet(this.heroTag, this.card, {Key? key})
+  final WalletMainScreenModel model;
+  TokenCardActionsBottomSheet(this.heroTag, this.card, this.model, {Key? key})
       : super(key: key);
 
   @override
@@ -329,11 +330,15 @@ class TokenCardActionsBottomSheet extends StatelessWidget {
                                             S.of(context).transactions,
                                             () {
                                               Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (_) => WalletDetails(
-                                                          card.balance,
-                                                          locator<WalletMainScreenModel>()
-                                                              .currAccIndex)));
+                                                MaterialPageRoute(
+                                                  builder: (_) => WalletDetails(
+                                                    card.balance,
+                                                    locator<WalletMainScreenModel>()
+                                                        .currAccIndex,
+                                                    model,
+                                                  ),
+                                                ),
+                                              );
                                             }
                                           ],
                                           [divider],

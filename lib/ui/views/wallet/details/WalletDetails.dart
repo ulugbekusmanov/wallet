@@ -3,16 +3,21 @@ import 'package:tbccwallet/shared.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:tbccwallet/ui/styles/AppTheme.dart';
+import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
 import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import '../WalletMainScreen.dart';
+import '../transactions/ethereum/eth_Transfer.dart';
 import 'HistoryModel.dart';
 import 'TxDetailsScreen.dart';
 
 class WalletDetails extends StatelessWidget {
   WalletBalance balance;
   int accIndex;
-  WalletDetails(this.balance, this.accIndex);
+  WalletMainScreenModel model;
+
+  WalletDetails(this.balance, this.accIndex, this.model);
 
   @override
   Widget build(BuildContext context) {
@@ -28,64 +33,94 @@ class WalletDetails extends StatelessWidget {
             ),
           ],
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.all(10.0),
-        //     child: PremiumGlobalButton(),
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-        //     child: NotificationsBell(),
-        //   ),
-        // ],
+        actions: [
+          Center(
+            child: PremiumSmallWidget(
+              acc: model.accManager,
+              state: model.state,
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: NotificationWidget(
+                onTap: () {},
+                isNewNotification: true,
+              ),
+            ),
+          ),
+        ],
       ),
-      body: Container(
-        child: Center(
-          child: Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: balance.token.icon(80)),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: AutoSizeText(
-                  '${balance.balance} ${balance.token.symbol}',
-                  maxLines: 1,
-                  minFontSize: 22,
-                  maxFontSize: 26,
-                ),
-              ),
-              Text(
-                '${FIAT_CURRENCY_LITERAL} ${balance.fiatBalance.toStringWithFractionDigits(2)}',
-                style: tt.headline6!.copyWith(color: AppColors.inactiveText),
-              ),
-              //Padding(
-              //  padding: const const EdgeInsets.all(5.0),
-              //  child: AccountPNL('2.34', '5'),
-              //),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+      body: NestedScrollView(
+        headerSliverBuilder: ((context, innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              expandedHeight: 265,
+              toolbarHeight: 265,
+              floating: true,
+              pinned: false,
+              snap: false,
+              leading: const SizedBox(),
+              flexibleSpace: Column(
                 children: [
-                  for (var t in [
-                    [AppIcons.arrow_outcome(24, AppColors.text), () {}],
-                    [AppIcons.arrow_income(24, AppColors.text), () {}],
-                    [
-                      Icon(Icons.more_horiz, size: 24, color: AppColors.text),
-                      () {}
-                    ]
-                  ])
-                    ControlButtons(
-                      icon: t[0] as Widget?,
-                      onTap: t[1] as Function,
-                    )
+                  Center(
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            child: balance.token.icon(80)),
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: AutoSizeText(
+                            '${balance.balance} ${balance.token.symbol}',
+                            maxLines: 1,
+                            minFontSize: 22,
+                            maxFontSize: 26,
+                          ),
+                        ),
+                        Text(
+                          '${FIAT_CURRENCY_LITERAL} ${balance.fiatBalance.toStringWithFractionDigits(2)}',
+                          style: tt.headline6!
+                              .copyWith(color: AppColors.inactiveText),
+                        ),
+                        //Padding(
+                        //  padding: const const EdgeInsets.all(5.0),
+                        //  child: AccountPNL('2.34', '5'),
+                        //),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            for (var t in [
+                              [
+                                AppIcons.arrow_outcome(24, AppColors.text),
+                                () {}
+                              ],
+                              [
+                                AppIcons.arrow_income(24, AppColors.text),
+                                () {}
+                              ],
+                              [
+                                Icon(Icons.more_horiz,
+                                    size: 24, color: AppColors.text),
+                                () {}
+                              ]
+                            ])
+                              ControlButtons(
+                                icon: t[0] as Widget?,
+                                onTap: t[1] as Function,
+                              )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              Expanded(
-                  flex: 11, child: HistoryListView(balance.token, accIndex))
-            ],
-          ),
-        ),
+            )
+          ];
+        }),
+        body: HistoryListView(balance.token, accIndex),
       ),
     );
   }

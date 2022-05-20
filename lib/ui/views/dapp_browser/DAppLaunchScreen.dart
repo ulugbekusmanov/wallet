@@ -9,7 +9,7 @@ import 'DAppScreen.dart';
 String dappImageUrlBase =
     'https://raw.githubusercontent.com/trustwallet/assets/master/dapps';
 
-enum DAppType { DeFi, Games, Tools }
+enum DAppType { DeFi, Games, Tools, New }
 
 var network_chainId = <TokenNetwork, int>{
   TokenNetwork.BinanceSmartChain: 56,
@@ -145,6 +145,34 @@ class DAppLaunchScreenModel extends BaseViewModel {
         customImageUrl:
             'https://raw.githubusercontent.com/trustwallet/assets/master/dapps/pancakeswap.finance.png'),
   ];
+
+  var newApps = [
+    DApp(Uri.parse('https://dappradar.com/nft/marketplaces'), 'NFT',
+        TokenNetwork.Ethereum, DAppType.New,
+        description: 'Marketplace | DappRadar',
+        fromAsset: true,
+        customImageUrl: 'assets/images/dappradar.png'),
+    DApp(Uri.parse('https://market.playdapp.com/'), 'PlayDapp',
+        TokenNetwork.Ethereum, DAppType.New,
+        description: 'Marketplace | PlayDapp',
+        fromAsset: true,
+        customImageUrl: 'assets/images/playdapp.png'),
+    DApp(Uri.parse('https://www.magiceden.io/'), 'MagicEden',
+        TokenNetwork.Solana, DAppType.New,
+        description: 'NFT marketplace',
+        fromAsset: true,
+        customImageUrl: 'assets/images/magiceden.png'),
+    DApp(Uri.parse('http://nftxcards.com'), 'Muses of pleasure',
+        TokenNetwork.BinanceSmartChain, DAppType.New,
+        description: 'Tarusov & NFTxCards Generative Collection',
+        fromAsset: true,
+        customImageUrl: 'assets/images/nftxcards.png'),
+    DApp(Uri.parse('https://opensea.io/'), 'OpenSea', TokenNetwork.Solana,
+        DAppType.New,
+        description: 'the largest NFT marketplace',
+        fromAsset: true,
+        customImageUrl: 'assets/images/opensea.png'),
+  ];
 }
 
 class DAppLaunchScreen extends StatelessWidget {
@@ -223,6 +251,15 @@ class DAppLaunchScreen extends StatelessWidget {
                             .copyWith(color: AppColors.text)),
                   ),
                   dappsBlock(model.toolsApps, model),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text('New',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: AppColors.text)),
+                  ),
+                  dappsBlock(model.newApps, model),
                 ],
               ),
             ));
