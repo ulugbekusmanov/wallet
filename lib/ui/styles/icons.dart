@@ -53,6 +53,9 @@ class AppIcons {
     'vpn': '$_iconsPathBase/vpn.svg',
     'wallet': '$_iconsPathBase/wallet.svg',
     'walletconnect': '$_iconsPathBase/walletconnect.svg',
+    's': '$_iconsPathBase/s.svg',
+    'g': '$_iconsPathBase/g.svg',
+    'close_circle': '$_iconsPathBase/close_circle.svg',
   };
   static SvgPicture _pic(String path, double size, Color? color) =>
       SvgPicture.asset(path, width: size, color: color);
@@ -153,4 +156,10 @@ class AppIcons {
       _pic(paths['wallet']!, size, color);
   static SvgPicture walletconnect(double size, [Color? color]) =>
       _pic(paths['walletconnect']!, size, color);
+  static SvgPicture s(double size, [Color? color]) =>
+      _pic(paths['s']!, size, color);
+  static SvgPicture g(double size, [Color? color]) =>
+      _pic(paths['g']!, size, color);
+  static SvgPicture closeCircle(double size, [Color? color]) =>
+      _pic(paths['close_circle']!, size, color);
 }

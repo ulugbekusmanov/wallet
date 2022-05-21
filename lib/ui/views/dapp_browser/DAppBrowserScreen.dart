@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tbccwallet/shared.dart';
+import 'package:tbccwallet/ui/views/dapp_browser/MoreInformation.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 //import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -459,26 +460,51 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen>
               appBar: CAppBar(
                 elevation: 0,
                 title: Row(children: [
-                  AppIcons.token_ic(
-                      chainID_symbol[model.chainId]!.toLowerCase(), 24),
-                  SizedBox(width: 10),
-                  Expanded(child: Text('${model.pageTitle}')),
+                  GestureDetector(
+                    onTap: () {
+                      model.dappScreenModel.indexToShow = 0;
+                      model.loadEmpty();
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Icon(Icons.arrow_back_ios_new_rounded),
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Text('${model.pageTitle}'),
+                  ),
                 ]),
                 actions: [
                   IconButton(
-                    icon: Icon(Icons.menu),
+                    icon: Icon(Icons.more_horiz),
                     onPressed: () {
                       showModalBottomSheet(
                           context: context,
+                          backgroundColor: Colors.transparent.withOpacity(0),
                           builder: (c) => optionsBottomSheet(context, model));
                     },
                   ),
-                  IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: GestureDetector(
+                      child: Container(
+                        padding: EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1.5),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.close_rounded,
+                          size: 12,
+                        ),
+                      ),
+                      onTap: () {
                         model.dappScreenModel.indexToShow = 0;
                         model.loadEmpty();
-                      })
+                      },
+                    ),
+                  )
                 ],
               ),
               body: model.state == ViewState.Busy
@@ -524,41 +550,91 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen>
 
   optionsBottomSheet(BuildContext context, DAppBrowserScreenModel model) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          option(S.of(context).reload, () {
-            Navigator.pop(context);
-            model.controller.reload();
-          }),
-          option(S.of(context).goBack, () {
-            Navigator.pop(context);
-
-            model.controller.goBack();
-          }),
-          option(S.of(context).goForward, () {
-            Navigator.pop(context);
-            model.controller.goForward();
-          }),
-          option(S.of(context).clearCache, () {
-            Navigator.pop(context);
-            model.controller.clearCache();
-          }),
-        ],
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 12),
+            option(S.of(context).refresh, Icon(Icons.refresh), () {
+              Navigator.pop(context);
+              model.controller.reload();
+            }),
+            option('Copy link', Icon(Icons.attach_file), () {
+              Navigator.pop(context);
+              // model.controller.goBack();
+            }),
+            option('Favorite', Icon(Icons.star_border_rounded), () {
+              Navigator.pop(context);
+              // model.controller.goForward();
+            }),
+            option(
+                'Floating',
+                Container(
+                    height: 18,
+                    width: 18,
+                    margin: EdgeInsets.only(left: 3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(width: 1.7),
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(width: 1.7),
+                      ),
+                    )), () {
+              Navigator.pop(context);
+              // model.controller.clearCache();
+            }, isLast: false),
+            option('More information', Icon(Icons.info_outline), () {
+              Navigator.of(context).push(
+                PageTransition(
+                  type: PageTransitionType.rightToLeftWithFade,
+                  child: MoreInformation(),
+                ),
+              );
+              // model.controller.clearCache();
+            }, isLast: true),
+          ],
+        ),
       ),
     );
   }
 
-  option(String text, void Function()? onTap) => GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          child: Text('$text'),
+  option(
+    String text,
+    Widget icon,
+    void Function()? onTap, {
+    bool isLast = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+            child: Row(
+              children: [
+                icon,
+                SizedBox(width: 12),
+                Text('$text'),
+              ],
+            ),
+          ),
         ),
-      );
-  // Future<void> wchandler(String str) async {
-  //   locator<WalletConnectService>().connect(str);
-  // }
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: isLast ? SizedBox() : Divider(),
+        ),
+      ],
+    );
+  }
 }

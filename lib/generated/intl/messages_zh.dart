@@ -78,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "accountExists": MessageLookupByLibrary.simpleMessage("此帐户已被添加！"),
         "accounts": MessageLookupByLibrary.simpleMessage("账户"),
         "actions": MessageLookupByLibrary.simpleMessage("操作"),
+        "addAddress": MessageLookupByLibrary.simpleMessage("Add address"),
         "addChange": MessageLookupByLibrary.simpleMessage("添加/更改"),
         "addWallet": MessageLookupByLibrary.simpleMessage("添加钱包"),
         "address": MessageLookupByLibrary.simpleMessage("地址"),

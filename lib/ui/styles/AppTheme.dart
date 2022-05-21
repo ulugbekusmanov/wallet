@@ -4,6 +4,7 @@ import 'package:tbccwallet/shared.dart';
 class ColorSet {
   late LinearGradient mainGradient;
   late LinearGradient altGradient;
+  late LinearGradient altGradientRotate;
   late LinearGradient cardGradient;
 
   late Color primary;
@@ -23,6 +24,7 @@ class ColorSet {
   late Color generalBorder;
   late Color tokenCardPriceUp;
   late Color tokenCardPriceDown;
+  late Color deActiveButton;
 }
 
 class LightThemeColors extends ColorSet {
@@ -34,6 +36,11 @@ class LightThemeColors extends ColorSet {
     );
     primary = Color(0xff4E94D7);
     active = Color(0xFF438AF9);
+    altGradientRotate = LinearGradient(
+      colors: [Color(0xFFEAEDF2), Color(0xFFFEFFFF)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
     altGradient = LinearGradient(
       colors: [Color(0xFFFEFFFF), Color(0xFFEAEDF2)],
       begin: Alignment.topCenter,
@@ -59,6 +66,7 @@ class LightThemeColors extends ColorSet {
     generalBorder = Color(0xFFE9ECF5);
     tokenCardPriceUp = Color(0x1438D9A9);
     tokenCardPriceDown = Color(0xFFFFF0F6);
+    deActiveButton = Color.fromARGB(251, 155, 170, 182);
   }
 }
 
@@ -68,6 +76,11 @@ class DarkThemeColors extends ColorSet {
       colors: [Color(0xFF589BFF), Color(0xFF4E5FFF)],
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
+    );
+    altGradientRotate = LinearGradient(
+      colors: [Color(0xFFEAEDF2), Color(0xFFFEFFFF)],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
     );
     altGradient = LinearGradient(
         colors: [Color(0xFF111316), Color(0xFF1E2125)],
@@ -95,6 +108,7 @@ class DarkThemeColors extends ColorSet {
     generalBorder = Color(0xFF404854);
     tokenCardPriceUp = Color(0x1438D9A9);
     tokenCardPriceDown = Color(0x1FFF6B6B);
+    deActiveButton = Color.fromARGB(251, 155, 170, 182);
   }
 }
 

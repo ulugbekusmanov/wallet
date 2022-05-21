@@ -57,7 +57,9 @@ class _MarketContainerProState extends State<MarketContainerPro> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: DARK_THEME.backgroundColor, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+          color: DARK_THEME.backgroundColor,
+          borderRadius: BorderRadius.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,25 +72,32 @@ class _MarketContainerProState extends State<MarketContainerPro> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ColorFiltered(
-                      colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      colorFilter:
+                          ColorFilter.mode(Colors.white, BlendMode.srcIn),
                       child: AppIcons.logo(24),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8, left: 10),
                       child: Text(
                         'TBCC',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontWeight: FontWeight.w600, color: Colors.white),
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [Colors.white, Colors.white60]),
+                        gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [Colors.white, Colors.white60]),
                       ),
                       child: Text(
                         'PRO',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: Colors.black, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -102,14 +111,18 @@ class _MarketContainerProState extends State<MarketContainerPro> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: DarkColors.primaryBg),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: DarkColors.primaryBg),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Icon(
                                 Icons.check,
                                 color: AppColors.green,
@@ -133,7 +146,9 @@ class _MarketContainerProState extends State<MarketContainerPro> {
               Button(
                 value: S.of(context).purchasePro('PRO'),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => BuyProScreen(mode: '1', discount: widget.discount)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                          BuyProScreen(mode: '1', discount: widget.discount)));
                 },
               ),
               Button(
@@ -141,7 +156,9 @@ class _MarketContainerProState extends State<MarketContainerPro> {
                   color: Colors.transparent,
                   value: S.of(context).allFeatures,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => BuyProScreen(discount: widget.discount)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) =>
+                            BuyProScreen(discount: widget.discount)));
                   }),
             ],
           )
@@ -163,7 +180,9 @@ class _MarketContainerPremiumState extends State<MarketContainerPremium> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: AppColors.active.withOpacity(0.6), borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+          color: AppColors.active.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,25 +195,29 @@ class _MarketContainerPremiumState extends State<MarketContainerPremium> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ColorFiltered(
-                      colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                      colorFilter:
+                          ColorFilter.mode(Colors.black, BlendMode.srcIn),
                       child: AppIcons.logo(24),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8, left: 10),
                       child: Text(
                         'TBCC',
-                        style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.w600, color: Colors.black),
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
+                            fontWeight: FontWeight.w600, color: Colors.black),
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: DarkColors.primaryBg,
                       ),
                       child: Text(
                         'Premium',
-                        style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.w600),
                       ),
                     ),
                   ],
@@ -208,14 +231,18 @@ class _MarketContainerPremiumState extends State<MarketContainerPremium> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), gradient: AppColors.mainGradient),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: AppColors.mainGradient),
                     child: Column(
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Icon(
                                 Icons.check,
                                 color: AppColors.green,
@@ -223,7 +250,10 @@ class _MarketContainerPremiumState extends State<MarketContainerPremium> {
                             ),
                             Text(
                               '$item',
-                              style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .copyWith(color: Colors.white),
                             ),
                           ],
                         ),
@@ -239,13 +269,17 @@ class _MarketContainerPremiumState extends State<MarketContainerPremium> {
               Button(
                   value: S.of(context).purchasePro('Premium'),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => BuyPremiumScreen(mode: '1', discount: widget.discount)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => BuyPremiumScreen(
+                            mode: '1', discount: widget.discount)));
                   }),
               Button(
                   color: Colors.transparent,
                   value: S.of(context).allFeatures,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => BuyPremiumScreen(mode: '0', discount: widget.discount)));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => BuyPremiumScreen(
+                            mode: '0', discount: widget.discount)));
                   }),
             ],
           )

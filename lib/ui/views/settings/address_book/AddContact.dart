@@ -1,13 +1,14 @@
 import 'package:binance_chain/binance_chain.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:solana/solana.dart' as sol;
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:tbccwallet/global_env.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 import 'package:tbccwallet/ui/QrCodeReader.dart';
 import 'package:tbccwallet/ui/views/settings/address_book/AddressBookModel.dart';
-import 'package:tbccwallet/ui/widgets/NetworkSelector.dart';
-import 'package:solana/solana.dart' as sol;
-import 'AddressBook.dart';
+
+import 'AddCurrency.dart';
 
 class AddContactScreen extends StatelessWidget {
   int mode;
@@ -27,69 +28,139 @@ class AddContactScreen extends StatelessWidget {
             elevation: 0,
             title: Text(mode == 1 ? 'Add contact' : 'Add address'),
           ),
-          body: SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Form(
-              key: model.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (mode == 1) ...[
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text('Name'),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  padding: EdgeInsets.all(20),
+                  child: Form(
+                    key: model.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (mode == 1) ...[
+                          TextFormField(
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            controller: model.controllerName,
+                            validator: (val) {
+                              if (val!.length < 1) {
+                                return 'Too short';
+                              }
+                            },
+                            decoration: generalTextFieldDecor(context,
+                                hintText: 'Name'),
+                          ),
+                        ],
+                        SizedBox(height: 8),
+                        TextFormField(
+                          controller: model.controllerAddress,
+                          validator: (val) =>
+                              model.isAddrValid(val ?? '', context)
+                                  ? null
+                                  : S.of(context).wrongAddr,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: generalTextFieldDecor(
+                            context,
+                            paddingRight: 44,
+                            hintText: S.of(context).address,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        TextFormField(
+                          controller: model.controllerNote,
+                          decoration:
+                              generalTextFieldDecor(context, hintText: 'Note'),
+                        ),
+                        SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12, bottom: 12),
+                          child: Text(
+                            'Currency',
+                            style:
+                                Theme.of(context).textTheme.bodyText2!.copyWith(
+                                      fontSize: 20,
+                                    ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              PageTransition(
+                                type: PageTransitionType.rightToLeftWithFade,
+                                child: AddCurrencyScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 52,
+                            decoration: BoxDecoration(
+                              color: AppColors.secondaryBG,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 18,
+                                    color: AppColors.shadowColor,
+                                    offset: Offset(0, 13))
+                              ],
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 16),
+                                    child: SvgPicture(
+                                      AppIcons.plus_circle(21).pictureProvider,
+                                      allowDrawingOutsideViewBox: true,
+                                      width: 16,
+                                      height: 16,
+                                      fit: BoxFit.contain,
+                                      colorFilter: ColorFilter.mode(
+                                        AppColors.primary,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text('Add currency'),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 10,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        // AddressBookContactTile(
+                        //     model.network!.icon(28), model.network!.name, () async {
+                        //   var network = await Navigator.of(context).push(
+                        //       PageTransition(
+                        //           type: PageTransitionType.rightToLeftWithFade,
+                        //           child: NetworkSelectorScreen()));
+                        //   if (network != null) {
+                        //     model
+                        //       ..network = network
+                        //       ..setState();
+                        //   }
+                        // }),
+                      ],
                     ),
-                    TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: model.controllerName,
-                      validator: (val) {
-                        if (val!.length < 1) {
-                          return 'Too short';
-                        }
-                      },
-                      decoration: generalTextFieldDecor(context),
-                    ),
-                  ],
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text('Note (not required)'),
                   ),
-                  TextFormField(
-                    controller: model.controllerNote,
-                    decoration: generalTextFieldDecor(context),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(S.of(context).address),
-                  ),
-                  Stack(children: [
-                    TextFormField(
-                      controller: model.controllerAddress,
-                      validator: (val) => model.isAddrValid(val ?? '', context) ? null : S.of(context).wrongAddr,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: generalTextFieldDecor(context, paddingRight: 44),
-                    ),
-                    Positioned(
-                      right: 10,
-                      top: 10,
-                      child: textFieldActionsButton(child: gradientIcon(AppIcons.qr_code_scan(22)), onTap: () => model.scanAddressQr(context)),
-                    ),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text('Network'),
-                  ),
-                  AddressBookContactTile(model.network!.icon(28), model.network!.name, () async {
-                    var network = await Navigator.of(context).push(PageTransition(type: PageTransitionType.rightToLeftWithFade, child: NetworkSelectorScreen()));
-                    if (network != null) {
-                      model
-                        ..network = network
-                        ..setState();
-                    }
-                  }),
-                  SizedBox(height: 32),
-                  Button(
-                    value: 'Add contact',
+                ),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  alignment: Alignment.bottomCenter,
+                  child: Button(
+                    value: 'Save',
                     onTap: () {
                       if (model.formKey.currentState?.validate() == true) {
                         model.addContact();
@@ -97,8 +168,8 @@ class AddContactScreen extends StatelessWidget {
                       }
                     },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
@@ -129,7 +200,8 @@ class AddContactModel extends BaseViewModel {
   }
 
   Future<void> scanAddressQr(context) async {
-    var qr = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => QRCodeReader()));
+    var qr = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => QRCodeReader()));
     if (isAddrValid(qr, context)) {
       address = qr;
       controllerAddress.text = address!;
@@ -176,7 +248,8 @@ class AddContactModel extends BaseViewModel {
         ..id = '${DateTime.now().toString().hashCode}';
       abm.contacts.add(contact);
     } else {
-      var contact = abm.contacts.firstWhere((element) => element.id == contactId);
+      var contact =
+          abm.contacts.firstWhere((element) => element.id == contactId);
       contact.addresses.add(AddressBookAddressEntity()
         ..address = controllerAddress.text
         ..description = controllerNote.text

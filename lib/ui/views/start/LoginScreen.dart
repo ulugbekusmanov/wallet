@@ -1,7 +1,5 @@
 import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
 import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/core/storage/SecureStorage.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
 import 'package:tbccwallet/ui/MainScreen.dart';
@@ -26,7 +24,9 @@ class LoginScreen extends StatelessWidget {
         return CScaffold(
           appBar: CAppBar(
             elevation: 0,
-            title: Text(model.confirmation ? S.of(context).confirmAction : S.of(context).logIn),
+            title: Text(model.confirmation
+                ? S.of(context).confirmAction
+                : S.of(context).logIn),
             //actions: acc == null
             //    ? <Widget>[
             //        Padding(
@@ -57,7 +57,8 @@ class LoginScreen extends StatelessWidget {
                             Expanded(child: AppIcons.logo(70)),
                             TextFormField(
                               controller: model.passwordController,
-                              decoration: generalTextFieldDecor(context, hintText: S.of(context).password),
+                              decoration: generalTextFieldDecor(context,
+                                  hintText: S.of(context).password),
                               obscureText: true,
                             ),
                           ],
@@ -72,17 +73,21 @@ class LoginScreen extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Button(
-                                      value: confirmation ? S.of(context).confirm : S.of(context).logIn,
+                                      value: confirmation
+                                          ? S.of(context).confirm
+                                          : S.of(context).logIn,
                                       onTap: () async {
                                         model.logIn(context);
 
                                         ///await locator<Storage>().resetAll();
                                       }),
                                 ),
-                                if (locator<UserSettings>().biometricsEnabled) ...[
+                                if (locator<UserSettings>()
+                                    .biometricsEnabled) ...[
                                   SizedBox(width: 8),
                                   IconButton_(
-                                    icon: AppIcons.fingerprint_scan(22, Colors.white),
+                                    icon: AppIcons.fingerprint_scan(
+                                        22, Colors.white),
                                     onTap: () async {
                                       model.biometricsAuth(context);
                                     },
@@ -117,7 +122,8 @@ class LoginScreenModel extends BaseViewModel {
         //if (acc != null) {
         //  _authService.accountManager.currentAccount = acc;
         //}
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => MainAppScreen()), (_) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => MainAppScreen()), (_) => false);
       }
     } else {
       Flushbar.error(title: S.of(context).incorrectPassword).show();
@@ -133,7 +139,12 @@ class LoginScreenModel extends BaseViewModel {
         //if (acc != null) {
         //  _authService.accountManager.currentAccount = acc;
         //}
-        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => MainAppScreen()), (_) => false);
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (_) => MainAppScreen(),
+          ),
+          (_) => false,
+        );
       }
     }
   }

@@ -33,8 +33,8 @@ InputDecoration generalTextFieldDecor(BuildContext context,
       fillColor: AppColors.generalShapesBg,
       filled: true,
       prefixIcon: prefixIcon,
-      prefixIconConstraints: BoxConstraints(maxWidth: 60, maxHeight: 20),
-      contentPadding: EdgeInsets.fromLTRB(24, 20, paddingRight ?? 24, 20),
+      prefixIconConstraints: BoxConstraints(maxWidth: 60, maxHeight: 52),
+      contentPadding: EdgeInsets.fromLTRB(24, 17, paddingRight ?? 24, 17),
       isDense: true,
       isCollapsed: true,
       suffixText: suffixText,
@@ -307,6 +307,7 @@ class PremiumGlobalButton extends StatelessWidget {
 class CAppBar extends AppBar {
   CAppBar({
     Widget? title,
+    Widget? leading,
     List<Widget>? actions,
     bool? centerTitle = false,
     double? elevation = 0,
@@ -316,6 +317,7 @@ class CAppBar extends AppBar {
           key: key,
           title: title,
           actions: actions,
+          leading: leading,
           elevation: elevation,
           backgroundColor: backgroundColor,
           centerTitle: centerTitle,
@@ -411,7 +413,7 @@ class Button extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 54,
+        height: 52,
         child: Stack(children: [
           Positioned.fill(
             child: Container(
@@ -419,14 +421,17 @@ class Button extends StatelessWidget {
               decoration: gradientBorder
                   ? BoxDecoration(
                       gradient: AppColors.mainGradient,
-                      borderRadius: BorderRadius.circular(16))
+                      borderRadius: BorderRadius.circular(16),
+                    )
                   : null,
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isOutLine
-                      ? Colors.transparent
-                      : color ?? Color(0xff4E94D7),
+                  color: onTap == null
+                      ? AppColors.deActiveButton
+                      : isOutLine
+                          ? Colors.transparent
+                          : color ?? Color(0xff4E94D7),
                   borderRadius: BorderRadius.circular(gradientBorder ? 14 : 16),
                   border: isOutLine
                       ? Border.all(width: 1, color: AppColors.primary)
@@ -435,15 +440,20 @@ class Button extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(value!,
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                            color: isActive
-                                ? gradientBorder
-                                    ? AppColors.text
-                                    : !isOutLine
-                                        ? Colors.white
-                                        : AppColors.primary
-                                : AppColors.inactiveText)),
+                    Text(
+                      value!,
+                      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                            color: onTap == null
+                                ? AppColors.secondaryBG
+                                : isActive
+                                    ? gradientBorder
+                                        ? AppColors.text
+                                        : !isOutLine
+                                            ? Colors.white
+                                            : AppColors.primary
+                                    : AppColors.inactiveText,
+                          ),
+                    ),
                   ],
                 ),
               ),

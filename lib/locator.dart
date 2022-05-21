@@ -2,6 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tbccwallet/App.dart';
 import 'package:tbccwallet/core/settings/AppSettings.dart';
+import 'package:tbccwallet/ui/views/dapp_browser/MoreInformation.dart';
+import 'package:tbccwallet/ui/views/settings/address_book/AddCurrency.dart';
+import 'package:tbccwallet/ui/views/settings/address_book/Gorh.dart';
+import 'package:tbccwallet/ui/views/settings/address_book/Sarm.dart';
 import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
 import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttachModel.dart';
 import 'package:tbccwallet/ui/views/wallet/News.dart';
@@ -90,9 +94,12 @@ void setupLocator() {
   locator.registerLazySingleton(() => BLOCKCHAIN_CONNECTION_STATE());
   locator.registerFactory(() => LotteryScreenModel());
   locator.registerFactory(() => AddContactModel());
+  locator.registerFactory(() => AddCurrencyModel());
   locator.registerFactory(() => BuyVpnModel());
-
   locator.registerFactory(() => SmartCardAttachModel());
+  locator.registerFactory(() => SarmModel());
+  locator.registerFactory(() => GorhModel());
+  locator.registerFactory(() => MoreInformationModel());
 
   //locator.registerFactory(() => DexOrderHistoryModel());
 }

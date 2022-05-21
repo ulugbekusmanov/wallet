@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Такой аккаунт уже добавлен!"),
         "accounts": MessageLookupByLibrary.simpleMessage("Аккаунты"),
         "actions": MessageLookupByLibrary.simpleMessage("Действия"),
+        "addAddress": MessageLookupByLibrary.simpleMessage("Добавить адрес"),
         "addChange":
             MessageLookupByLibrary.simpleMessage("Добавить новую карту"),
         "addWallet": MessageLookupByLibrary.simpleMessage("Добавить кошелёк"),

@@ -1,13 +1,13 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:tbccwallet/global_env.dart';
 import 'package:tbccwallet/shared.dart';
 import 'package:tbccwallet/ui/views/settings/SettingsMainModel.dart';
 import 'package:tbccwallet/ui/views/settings/address_book/AddressBook.dart';
 import 'package:tbccwallet/ui/views/start/LoginScreen.dart';
 import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'About.dart';
@@ -51,14 +51,23 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
                   icon: gradientIcon(AppIcons.verified(24)),
                   value: S.of(context).securityCenter,
                   onTap: () async {
-                    if ((await Navigator.of(context).push<bool>(
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    LoginScreen(confirmation: true)))) ==
-                        true) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => SecurityMainScreen()));
-                    }
+                    // if ((await Navigator.of(context).push<bool>(
+                    //       MaterialPageRoute(
+                    //         builder: (_) => LoginScreen(confirmation: true),
+                    //       ),
+                    //     )) ==
+                    //     true) {
+                    //   Navigator.of(context).push(
+                    //     MaterialPageRoute(
+                    //       builder: (_) => SecurityMainScreen(),
+                    //     ),
+                    //   );
+                    // }
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => SecurityMainScreen(),
+                      ),
+                    );
                   },
                   bottomSpace: true),
 
@@ -101,9 +110,12 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
                 bottomSpace: true,
                 icon: gradientIcon(AppIcons.book_open(24)),
                 value: S.of(context).addressBook,
-                onTap: () => Navigator.of(context).push(PageTransition(
+                onTap: () => Navigator.of(context).push(
+                  PageTransition(
                     type: PageTransitionType.rightToLeftWithFade,
-                    child: AddressBookMain())),
+                    child: AddressBookMain(),
+                  ),
+                ),
               ),
               ThemeSwitcher(builder: (context) {
                 return SwitchSettingsTile(

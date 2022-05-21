@@ -117,10 +117,13 @@ class _WalletMainScreenState extends State<WalletMainScreen>
                                   width: 8,
                                   height: 8,
                                   decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColors.active),
+                                    shape: BoxShape.circle,
+                                    color: AppColors.active,
+                                  ),
                                   margin: const EdgeInsets.only(
-                                      bottom: 10, left: 4),
+                                    bottom: 10,
+                                    left: 4,
+                                  ),
                                 ),
                             ],
                           ),
@@ -173,7 +176,11 @@ class _WalletMainScreenState extends State<WalletMainScreen>
                           ),
                         ];
                       else
-                        return [Expanded(child: NewsListView(model.newsModel))];
+                        return [
+                          Expanded(
+                            child: NewsListView(model.newsModel),
+                          ),
+                        ];
                     }()
                   ],
                 ),

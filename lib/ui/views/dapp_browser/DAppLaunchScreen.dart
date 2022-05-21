@@ -205,25 +205,15 @@ class DAppLaunchScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // SingleChildScrollView(
-                  //   scrollDirection: Axis.horizontal,
-                  //   padding: const EdgeInsets.all(16),
-                  //   child: Column(
-                  //     children: [
-                  //       SingleChildScrollView(
-                  //         child: Row(
-                  //           children: [
-                  //             DAppCardMin(model.dApps[0]),
-                  //             DAppCardMin(model.dApps[1]),
-                  //             DAppCardMin(model.dApps[2]),
-                  //             DAppCardMin(model.dApps[3]),
-                  //             DAppCardMin(model.dApps[4]),
-                  //           ],
-                  //         ),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text('NFT projects',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6!
+                            .copyWith(color: AppColors.text)),
+                  ),
+                  dappsBlock(model.newApps, model),
                   Padding(
                     padding: const EdgeInsets.all(12),
                     child: Text('Binance Smart Chain',
@@ -251,15 +241,6 @@ class DAppLaunchScreen extends StatelessWidget {
                             .copyWith(color: AppColors.text)),
                   ),
                   dappsBlock(model.toolsApps, model),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text('New',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: AppColors.text)),
-                  ),
-                  dappsBlock(model.newApps, model),
                 ],
               ),
             ));

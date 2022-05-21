@@ -90,6 +90,16 @@ class S {
     );
   }
 
+  /// `Add address`
+  String get addAddress {
+    return Intl.message(
+      'Add address',
+      name: 'addAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Clear cache`
   String get clearCache {
     return Intl.message(

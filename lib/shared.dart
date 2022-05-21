@@ -4,6 +4,7 @@ import 'package:binance_chain/binance_chain.dart';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:tbccwallet/locator.dart';
@@ -283,6 +284,10 @@ extension OrderDataModelAdaptor on Order {
 }
 
 extension DateTimeConverters on DateTime {
+  String toStringDMYT(DateTime date) {
+    return DateFormat('EEEE M MMMM y HH:MM', 'ru').format(date);
+  }
+
   String toStringDMY([String dsep = '.', String tsep = ':']) {
     return '${this.day < 10 ? '0' : ''}${this.day}$dsep${this.month < 10 ? '0' : ''}${this.month}$dsep${this.year < 10 ? '0' : ''}${this.year}';
   }

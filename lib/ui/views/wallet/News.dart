@@ -73,9 +73,12 @@ class NewsListView extends StatelessWidget {
                         var post = model.news?[i];
                         return GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(PageTransition(
+                            Navigator.of(context).push(
+                              PageTransition(
                                 type: PageTransitionType.rightToLeft,
-                                child: NewsDetailsView(post!)));
+                                child: NewsDetailsView(post!),
+                              ),
+                            );
                           },
                           behavior: HitTestBehavior.opaque,
                           child: Container(
@@ -83,15 +86,16 @@ class NewsListView extends StatelessWidget {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                    blurRadius: 18,
-                                    color: AppColors.shadowColor,
-                                    offset: Offset(0, 13))
+                                  blurRadius: 18,
+                                  color: AppColors.shadowColor,
+                                  offset: Offset(0, 13),
+                                )
                               ],
-                              gradient: AppColors.altGradient,
-                              //color: AppColors.generalShapesBg,
+                              gradient: AppColors.altGradientRotate,
                               borderRadius: BorderRadius.circular(24),
                             ),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
@@ -107,30 +111,39 @@ class NewsListView extends StatelessWidget {
                                 ),
                                 SizedBox(width: 16),
                                 Expanded(
-                                    child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text('${post.header}',
-                                              style: tt.bodyText2),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              '${post.header}',
+                                              style: tt.bodyText2,
+                                            ),
+                                          ),
+                                          Text(
+                                            post.timestamp?.toStringDMY() ?? '',
+                                            style: tt.caption,
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        '${post.preview}',
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: tt.bodyText1!.copyWith(
+                                          fontSize: 14,
+                                          height: 1.4,
                                         ),
-                                        Text(
-                                          post.timestamp?.toStringDMY() ?? '',
-                                          style: tt.caption,
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(height: 8),
-                                    Text(
-                                      '${post.preview}',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: tt.bodyText1!
-                                          .copyWith(fontSize: 14, height: 1.4),
-                                    )
-                                  ],
-                                )),
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -154,39 +167,35 @@ class NewsDetailsView extends StatelessWidget {
     var tt = Theme.of(context).textTheme;
     var mqsize = MediaQuery.of(context).size;
     return CScaffold(
-      appBar: CAppBar(title: Text(S.of(context).news)),
+      appBar: CAppBar(),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(post.timestamp?.toStringDMY() ?? '',
-                      style: tt.caption!.copyWith(fontWeight: FontWeight.w600)),
-                  SizedBox(height: 12),
-                  Text('${post.header}',
-                      style: tt.bodyText2!.copyWith(fontSize: 20, height: 1.2)),
-                ],
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 4),
+                Text(
+                  post.timestamp == null
+                      ? 'No time'
+                      : post.timestamp?.toStringDMYT(post.timestamp!) ?? '',
+                  style: tt.bodyText1!.copyWith(fontSize: 14),
+                ),
+                SizedBox(height: 12),
+                Text(
+                  '${post.header ?? ''}',
+                  style: tt.bodyText2!.copyWith(fontSize: 20),
+                ),
+                SizedBox(height: 24),
+                LotteryBanner(),
+                SizedBox(height: 24),
+              ],
             ),
-            Html(
-              data: post.content,
-              onLinkTap: (url, _, __, ___) {
-                launch(url!);
-              },
-              // customImageRenders: {
-              //   networkSourceMatcher(): networkImageRender(
-              //     loadingWidget: () => Shimmer.fromColors(
-              //       child: shimmerBlock(mqsize.width, mqsize.width / 1.77, 16),
-              //       baseColor: AppColors.inactiveText,
-              //       highlightColor: AppColors.active,
-              //     ),
-              //   ),
-              // },
+            Text(
+              post.content ?? '',
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ],
         ),
@@ -194,26 +203,6 @@ class NewsDetailsView extends StatelessWidget {
     );
   }
 }
-
-// ImageRender networkImageRender({
-//   Map<String, String>? headers,
-//   String Function(String?)? mapUrl,
-//   double? width,
-//   double? height,
-//   Widget Function(String?)? altWidget,
-//   Widget Function()? loadingWidget,
-// }) =>
-//     (context, attributes, element) {
-//       return ClipRRect(
-//         borderRadius: BorderRadius.circular(24),
-//         child: CachedNetworkImage(
-//           imageUrl: attributes["src"] ?? "about:blank",
-//           width: width,
-//           height: height,
-//           placeholder: loadingWidget != null ? (_, __) => loadingWidget() : null,
-//         ),
-//       );
-//     };
 
 class LotteryBanner extends StatelessWidget {
   const LotteryBanner({Key? key}) : super(key: key);
@@ -227,50 +216,13 @@ class LotteryBanner extends StatelessWidget {
             type: PageTransitionType.rightToLeft, child: LotteryScreen()));
       },
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 18,
-                color: AppColors.shadowColor,
-                offset: Offset(0, 13))
-          ],
-          border: Border.all(color: AppColors.active),
-          color: AppColors.generalShapesBg,
-          borderRadius: BorderRadius.circular(24),
-        ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                'assets/images/lottery.jpg',
-                width: 68,
-                height: 68,
-              ),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    S.of(context).lottery,
-                    style: tt.bodyText2,
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    S.of(context).lotteryDesc1,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: tt.bodyText1,
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ),
-            ),
-          ],
+      child: AspectRatio(
+        aspectRatio: 16 / 10,
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(24),
+          ),
         ),
       ),
     );

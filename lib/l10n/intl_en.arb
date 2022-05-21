@@ -4,6 +4,7 @@
   "purchaseDate": "Date of purchase",
   "addressBook": "Address book",
   "addChange": "Add a new card",
+  "addAddress": "Add address",
   "clearCache": "Clear cache",
   "goForward": "Go forward",
   "goBack": "Go back",

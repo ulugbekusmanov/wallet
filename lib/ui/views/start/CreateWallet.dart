@@ -20,9 +20,7 @@ class CreateWalletModel extends BaseViewModel {
   bool _24words = false;
   late String mnemonic;
   bool loseMnemonicCheckbox = false;
-  bool loseMnemonicCheckboxErr = false;
   bool termsCheckbox = false;
-  bool termsCheckboxErr = false;
 
   late List<String> newMnemonicList;
   late List<String> reformedMnemonicList;
@@ -151,7 +149,7 @@ class CreateWalletScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(6),
                                       border: Border.all(
                                           width: 1,
-                                          color: model.loseMnemonicCheckboxErr
+                                          color: !model.loseMnemonicCheckbox
                                               ? Colors.white
                                               : Colors.transparent
                                                   .withOpacity(0.1)),
@@ -168,7 +166,6 @@ class CreateWalletScreen extends StatelessWidget {
                                   side: BorderSide(width: 1),
                                   onChanged: (val) {
                                     model.loseMnemonicCheckbox = val!;
-                                    model.loseMnemonicCheckboxErr = !val;
                                     model.setState();
                                   }),
                             ]),
@@ -194,7 +191,7 @@ class CreateWalletScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(6),
                                       border: Border.all(
-                                          color: model.termsCheckboxErr
+                                          color: !model.termsCheckbox
                                               ? Colors.transparent
                                               : Colors.transparent
                                                   .withOpacity(0.1)),
@@ -211,7 +208,6 @@ class CreateWalletScreen extends StatelessWidget {
                                   ),
                                   onChanged: (val) {
                                     model.termsCheckbox = val!;
-                                    model.termsCheckboxErr = !val;
                                     model.setState();
                                   }),
                             ]),
@@ -230,19 +226,17 @@ class CreateWalletScreen extends StatelessWidget {
                         SizedBox(height: 12),
                         Button(
                             value: S.of(context).next,
-                            onTap: () {
-                              model.loseMnemonicCheckboxErr =
-                                  !model.loseMnemonicCheckbox;
-                              model.termsCheckboxErr = !model.termsCheckbox;
-                              if (!model.loseMnemonicCheckboxErr &&
-                                  !model.termsCheckboxErr) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) =>
-                                        CheckMnemonicScreen(model)));
-                              } else {
-                                model.setState();
-                              }
-                            }),
+                            onTap: model.loseMnemonicCheckbox &&
+                                    model.termsCheckbox
+                                ? () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            CheckMnemonicScreen(model),
+                                      ),
+                                    );
+                                  }
+                                : null),
                       ],
                     ),
                   ),
@@ -364,7 +358,6 @@ class CheckMnemonicScreen extends StatelessWidget {
                           ),
                           Button(
                             value: S.of(context).next,
-                            isActive: model.setPassworBtnActive,
                             onTap: model.setPassworBtnActive
                                 ? () {
                                     if (model.verifyValid) {

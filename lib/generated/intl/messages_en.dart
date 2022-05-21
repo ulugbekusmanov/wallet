@@ -84,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Such account is already added"),
         "accounts": MessageLookupByLibrary.simpleMessage("Accounts"),
         "actions": MessageLookupByLibrary.simpleMessage("Actions"),
+        "addAddress": MessageLookupByLibrary.simpleMessage("Add address"),
         "addChange": MessageLookupByLibrary.simpleMessage("Add a new card"),
         "addWallet": MessageLookupByLibrary.simpleMessage("Add Wallet"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),

@@ -57,7 +57,10 @@ class AddressBookPickerScreen extends StatelessWidget {
           default:
         }
 
-        contacts = model.contacts.where((element) => element.addresses.containsWhere((e) => e.network == pickNetwork)).toList();
+        contacts = model.contacts
+            .where((element) => element.addresses
+                .containsWhere((e) => e.network == pickNetwork))
+            .toList();
 
         return CScaffold(
           appBar: CAppBar(
@@ -83,7 +86,9 @@ class AddressBookPickerScreen extends StatelessWidget {
                   expandedIndex == i.key + 1,
                   Icon(Icons.person_outline, size: 32, color: AppColors.active),
                   i.value.name,
-                  i.value.addresses.where((element) => element.network == pickNetwork).toList(),
+                  i.value.addresses
+                      .where((element) => element.network == pickNetwork)
+                      .toList(),
                   () {
                     expandedIndex = i.key + 1;
                     model.setState();
@@ -104,7 +109,10 @@ class AddressBookPickerTile extends StatelessWidget {
   List<AddressBookAddressEntity> addrs;
   String title;
 
-  AddressBookPickerTile(this.expanded, this.icon, this.title, this.addrs, this.onTileTap, {Key? key}) : super(key: key);
+  AddressBookPickerTile(
+      this.expanded, this.icon, this.title, this.addrs, this.onTileTap,
+      {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
