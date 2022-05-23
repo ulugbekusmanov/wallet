@@ -595,7 +595,9 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen>
               Navigator.of(context).push(
                 PageTransition(
                   type: PageTransitionType.rightToLeftWithFade,
-                  child: MoreInformation(),
+                  child: MoreInformation(
+                    modelDapp: model,
+                  ),
                 ),
               );
               // model.controller.clearCache();

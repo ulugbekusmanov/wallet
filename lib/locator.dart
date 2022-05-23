@@ -3,6 +3,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:tbccwallet/App.dart';
 import 'package:tbccwallet/core/settings/AppSettings.dart';
 import 'package:tbccwallet/ui/views/dapp_browser/MoreInformation.dart';
+import 'package:tbccwallet/ui/views/dapp_browser/Search.dart';
 import 'package:tbccwallet/ui/views/settings/address_book/AddCurrency.dart';
 import 'package:tbccwallet/ui/views/settings/address_book/Gorh.dart';
 import 'package:tbccwallet/ui/views/settings/address_book/Sarm.dart';
@@ -100,6 +101,7 @@ void setupLocator() {
   locator.registerFactory(() => SarmModel());
   locator.registerFactory(() => GorhModel());
   locator.registerFactory(() => MoreInformationModel());
+  locator.registerFactory(() => SearchModel());
 
   //locator.registerFactory(() => DexOrderHistoryModel());
 }

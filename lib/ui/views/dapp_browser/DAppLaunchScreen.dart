@@ -1,10 +1,16 @@
+import 'dart:ui';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tbccwallet/core/authentication/AccountManager.dart';
+import 'package:tbccwallet/core/blockchain/binance_smart_chain/contracts/TokenHub_abi.dart';
 import 'package:tbccwallet/core/token/utils.dart';
 import 'package:tbccwallet/locator.dart';
 import 'package:tbccwallet/shared.dart';
+import 'package:tbccwallet/ui/QrCodeReader.dart';
+import 'AlertDialog.dart';
 import 'DAppScreen.dart';
+import 'Search.dart';
 
 String dappImageUrlBase =
     'https://raw.githubusercontent.com/trustwallet/assets/master/dapps';
@@ -59,6 +65,7 @@ class BaseImagePlaceHolderWidget extends StatelessWidget {
 class DAppLaunchScreenModel extends BaseViewModel {
   final accManager = locator<AccountManager>();
   DApp? currDapp;
+  bool? isActiveDapp = false;
   int selectedAccIndex = 0;
   bool needToLoadEmpty = false;
   late DAppScreenModel dappScreenModel;
@@ -173,6 +180,15 @@ class DAppLaunchScreenModel extends BaseViewModel {
         fromAsset: true,
         customImageUrl: 'assets/images/opensea.png'),
   ];
+
+  List<DApp> getListDaps() {
+    List<DApp> result = [];
+    result.addAll(newApps);
+    result.addAll(bscDApps);
+    result.addAll(ethDApps);
+    result.addAll(toolsApps);
+    return result;
+  }
 }
 
 class DAppLaunchScreen extends StatelessWidget {
@@ -186,69 +202,264 @@ class DAppLaunchScreen extends StatelessWidget {
       onModelReady: (model) {},
       builder: (context, model, child) {
         return Scaffold(
-            appBar: CAppBar(
-              elevation: 0,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('DApp Browser'),
-                  AccountSelector((index) {
-                    if (model.selectedAccIndex != index) {
-                      model.selectedAccIndex = index;
-                      model.setState();
-                    }
-                  }),
-                ],
-              ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text('NFT projects',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(color: AppColors.text)),
+                        ),
+                        dappsBlock(model.newApps, model, context),
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text('Binance Smart Chain',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(color: AppColors.text)),
+                        ),
+                        dappsBlock(model.bscDApps, model, context),
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text('Ethereum',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(color: AppColors.text)),
+                        ),
+                        dappsBlock(model.ethDApps, model, context),
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text('Tools',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6!
+                                  .copyWith(color: AppColors.text)),
+                        ),
+                        dappsBlock(model.toolsApps, model, context),
+                      ],
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => SearchScreen(
+                                list: model.getListDaps(),
+                                modelDapp: model,
+                              ),
+                            ),
+                          ),
+                          child: TextFormField(
+                            textAlignVertical: TextAlignVertical.center,
+                            enabled: false,
+                            decoration: generalTextFieldDecor(
+                              context,
+                              hintText: 'Find dApp or enter the link',
+                              prefixIcon: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 16, right: 8),
+                                child: Icon(
+                                  Icons.search_rounded,
+                                  size: 22,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    GestureDetector(
+                      // onTap: () => Navigator.of(context).push(QRCodeReader()),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        margin: EdgeInsets.only(right: 16),
+                        padding: EdgeInsets.only(
+                            left: 5, top: 5, bottom: 7, right: 7),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                              width: 1,
+                              color: AppColors.inactiveText.withOpacity(0.08)),
+                          gradient: AppColors.altGradient,
+                        ),
+                        child: AppIcons.qr_code_scan(22),
+                      ),
+                    ),
+                  ],
+                ),
+                model.currDapp != null
+                    ? AnimatedPositioned(
+                        curve: Curves.easeInOut,
+                        top: MediaQuery.of(context).size.height * 0.32,
+                        right: model.isActiveDapp == null
+                            ? -350
+                            : (model.isActiveDapp! ? 0 : -250),
+                        duration: Duration(milliseconds: 500),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (model.isActiveDapp != null)
+                              model.isActiveDapp = !model.isActiveDapp!;
+                            else {
+                              model.isActiveDapp = true;
+                            }
+                            model.setState();
+                          },
+                          child: Container(
+                            width: 335,
+                            height: 85,
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.horizontal(
+                                left: Radius.circular(16),
+                              ),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(0, 2),
+                                    blurRadius: 11,
+                                    color: Colors.black.withOpacity(0.1)),
+                              ],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(24),
+                                  child: Image.asset('assets/images/donut.png'),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 6,
+                                      horizontal: 16,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          model.currDapp!.name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2,
+                                          maxLines: 1,
+                                        ),
+                                        Text(
+                                          model.currDapp?.description ?? '',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2!
+                                              .copyWith(
+                                                color: AppColors.inactiveText,
+                                              ),
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  child: Container(
+                                    padding: EdgeInsets.all(3),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(width: 1.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      Icons.close_rounded,
+                                      size: 14,
+                                    ),
+                                  ),
+                                  onTap: () async {
+                                    model.isActiveDapp = null;
+                                    model.setState();
+
+                                    await Future.delayed(
+                                        Duration(milliseconds: 500));
+                                    model.currDapp = null;
+
+                                    model.setState();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox()
+              ],
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text('NFT projects',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: AppColors.text)),
-                  ),
-                  dappsBlock(model.newApps, model),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text('Binance Smart Chain',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: AppColors.text)),
-                  ),
-                  dappsBlock(model.bscDApps, model),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text('Ethereum',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: AppColors.text)),
-                  ),
-                  dappsBlock(model.ethDApps, model),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Text('Tools',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6!
-                            .copyWith(color: AppColors.text)),
-                  ),
-                  dappsBlock(model.toolsApps, model),
-                ],
-              ),
-            ));
+          ),
+        );
       },
     );
   }
 
-  Widget dappsBlock(List<DApp> dapps, DAppLaunchScreenModel model) {
+  InputDecoration generalTextFieldDecor(BuildContext context,
+          {String? hintText,
+          double? paddingRight,
+          String? suffixText,
+          Widget? prefixIcon}) =>
+      InputDecoration(
+        hintText: hintText,
+        fillColor: AppColors.generalShapesBg,
+        filled: true,
+        prefixIcon: prefixIcon,
+        prefixIconConstraints: BoxConstraints(
+          maxWidth: 60,
+          maxHeight: 52,
+          minHeight: 52,
+        ),
+        contentPadding: EdgeInsets.only(left: 16),
+        isDense: true,
+        isCollapsed: true,
+        suffixText: suffixText,
+        disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(
+                color: AppColors.generalBorder.withOpacity(0.5), width: 1)),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(
+                color: AppColors.generalBorder.withOpacity(0.1), width: 1)),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(
+                color: AppColors.generalBorder.withOpacity(0.1), width: 1)),
+        errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(color: AppColors.red, width: 1)),
+        focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(color: AppColors.active, width: 1)),
+        focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(color: AppColors.red, width: 1.5)),
+      );
+
+  Widget dappsBlock(
+      List<DApp> dapps, DAppLaunchScreenModel model, BuildContext context) {
     return SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -262,10 +473,21 @@ class DAppLaunchScreen extends StatelessWidget {
                 pack.add(
                   DAppCardFull(
                     app,
-                    () {
-                      model.currDapp = app;
-                      model.dappScreenModel.indexToShow = 2;
-                      model.dappScreenModel.browserScreenModel.launchDApp(app);
+                    () async {
+                      var result = await showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent.withOpacity(0),
+                        builder: (c) {
+                          return optionsBottomSheet(context);
+                        },
+                      );
+                      if (result == true) {
+                        model.currDapp = app;
+                        model.isActiveDapp = false;
+                        model.dappScreenModel.indexToShow = 2;
+                        model.dappScreenModel.browserScreenModel
+                            .launchDApp(app);
+                      }
                     },
                     model,
                   ),
@@ -284,6 +506,10 @@ class DAppLaunchScreen extends StatelessWidget {
             }()
                 .toList()));
   }
+}
+
+Widget optionsBottomSheet(BuildContext context) {
+  return AlierDialogCustom();
 }
 
 class DAppCardMin extends StatelessWidget {
