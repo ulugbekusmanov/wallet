@@ -33,9 +33,18 @@ class CreateWalletModel extends BaseViewModel {
   generateNewMnemonic() {
     mnemonic = bip39.generateMnemonic(strength: _24words ? 256 : 128);
     newMnemonicList = mnemonic.split(' ');
+    newMnemonicList = checkAndRemoveDuplicate(newMnemonicList);
     reformedMnemonicList = List.from(newMnemonicList)..shuffle();
-
     setState();
+  }
+
+  List<String> checkAndRemoveDuplicate(List<String> list) {
+    for (var i = 0; i < list.length - 1; i++) {
+      if (list[i] == list[i + 1]) {
+        list.removeAt(i + 1);
+      }
+    }
+    return list;
   }
 
   Future<void> setPassword(BuildContext context) async {
@@ -81,6 +90,8 @@ class CreateWalletScreen extends StatelessWidget {
         model.generateNewMnemonic();
       },
       builder: (context, model, child) {
+        model.generateNewMnemonic();
+
         return CScaffold(
           appBar: CAppBar(
             elevation: 0,
