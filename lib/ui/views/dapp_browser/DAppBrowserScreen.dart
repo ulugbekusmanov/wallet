@@ -551,9 +551,8 @@ class _DAppBrowserScreenState extends State<DAppBrowserScreen>
   optionsBottomSheet(BuildContext context, DAppBrowserScreenModel model) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
