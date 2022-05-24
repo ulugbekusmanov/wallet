@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nfc_in_flutter/nfc_in_flutter.dart';
-import 'package:tbccwallet/locator.dart';
+import 'package:voola/locator.dart';
 
 import '../../../../../core/api/tbcc/TBCCApi.dart';
 import '../../../../../core/authentication/AuthService.dart';

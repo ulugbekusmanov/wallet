@@ -1,10 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tbccwallet/core/token/TokenContainer.dart';
+import 'package:voola/core/token/TokenContainer.dart';
 
-import 'package:tbccwallet/core/token/utils.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/token/utils.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:dartx/dartx.dart';
 
 import 'WalletMainScreen.dart';

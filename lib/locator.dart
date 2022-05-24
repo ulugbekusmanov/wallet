@@ -1,16 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tbccwallet/App.dart';
-import 'package:tbccwallet/core/settings/AppSettings.dart';
-import 'package:tbccwallet/ui/views/dapp_browser/MoreInformation.dart';
-import 'package:tbccwallet/ui/views/dapp_browser/Search.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/AddCurrency.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/Gorh.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/Sarm.dart';
-import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
-import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttachModel.dart';
-import 'package:tbccwallet/ui/views/wallet/News.dart';
-import 'package:tbccwallet/ui/views/wallet/ReceiveScreen.dart';
+import 'package:voola/App.dart';
+import 'package:voola/core/settings/AppSettings.dart';
+import 'package:voola/ui/views/dapp_browser/MoreInformation.dart';
+import 'package:voola/ui/views/dapp_browser/Search.dart';
+import 'package:voola/ui/views/settings/address_book/AddCurrency.dart';
+import 'package:voola/ui/views/settings/address_book/Gorh.dart';
+import 'package:voola/ui/views/settings/address_book/Sarm.dart';
+import 'package:voola/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
+import 'package:voola/ui/views/settings/security/smartCard/SmartCardAttachModel.dart';
+import 'package:voola/ui/views/wallet/News.dart';
+import 'package:voola/ui/views/wallet/ReceiveScreen.dart';
 import 'core/api/tbcc/TBCCApi.dart';
 import 'core/settings/UserSettings.dart';
 

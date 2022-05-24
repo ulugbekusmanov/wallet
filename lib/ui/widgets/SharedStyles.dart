@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tbccwallet/ui/styles/AppTheme.dart';
+import 'package:voola/ui/styles/AppTheme.dart';
 
-BoxDecoration elevatedContainerDecoration({double? borderRadius, Color? color}) => BoxDecoration(
+BoxDecoration elevatedContainerDecoration(
+        {double? borderRadius, Color? color}) =>
+    BoxDecoration(
       color: color ?? AppColors.generalShapesBg,
       boxShadow: [
         BoxShadow(

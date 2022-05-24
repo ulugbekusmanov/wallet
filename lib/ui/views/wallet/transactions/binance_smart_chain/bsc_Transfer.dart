@@ -1,14 +1,14 @@
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/token/utils.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/token/utils.dart';
 
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/AddressBookPicker.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/settings/address_book/AddressBookPicker.dart';
 
-import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
+import 'package:voola/ui/widgets/SharedWidgets.dart';
 
 import '../../WalletMainScreen.dart';
 import '../ethereum/eth_Transfer.dart';

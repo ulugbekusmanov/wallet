@@ -6,10 +6,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:pointycastle/digests/sha1.dart';
 
-import 'package:tbccwallet/core/api/ApiBase.dart';
-import 'package:tbccwallet/core/settings/AppSettings.dart';
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/locator.dart';
+import 'package:voola/core/api/ApiBase.dart';
+import 'package:voola/core/settings/AppSettings.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/locator.dart';
 
 import 'models/Config.dart';
 import 'models/News.dart';
@@ -37,8 +37,7 @@ class TBCCApi extends ApiBase {
   Future<ApiResponse<InnerUpdate>> getInnerUpdateInfo(
       {bool debug = false}) async {
     var result = await get('inner_update',
-        headers: {'x-package-name': 'com.wirelessenergy.tbccwallet'},
-        sign: false);
+        headers: {'x-package-name': 'com.wirelessenergy.voola'}, sign: false);
     var load = InnerUpdate.fromJson(result.json);
     return ApiResponse(result.statusCode ?? -1, load);
   }

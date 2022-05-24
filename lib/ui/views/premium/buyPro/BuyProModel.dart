@@ -1,12 +1,12 @@
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tbccwallet/core/api/binance_chain/BCApi.dart';
-import 'package:tbccwallet/core/api/coingecko/CoingeckoAPI.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
+import 'package:voola/core/api/binance_chain/BCApi.dart';
+import 'package:voola/core/api/coingecko/CoingeckoAPI.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/AuthService.dart';
 
-import 'package:tbccwallet/core/token/TokenContainer.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/token/TokenContainer.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 class BuyProModel extends BaseViewModel {
   String mode = '0';
@@ -21,9 +21,13 @@ class BuyProModel extends BaseViewModel {
     setState(ViewState.Busy);
 
     await findBNBBal();
-    var bnbPriceUsd = (await locator<CoingeckoApi>().loadTickers(ids: ['binancecoin'], vsCurrencies: ['usd'])).load['binancecoin']!.inCurrency;
+    var bnbPriceUsd = (await locator<CoingeckoApi>()
+            .loadTickers(ids: ['binancecoin'], vsCurrencies: ['usd']))
+        .load['binancecoin']!
+        .inCurrency;
 
-    bnbPrice = Decimal.parse((usdPrice / bnbPriceUsd!).toStringWithFractionDigits(3, shrinkZeros: true));
+    bnbPrice = Decimal.parse((usdPrice / bnbPriceUsd!)
+        .toStringWithFractionDigits(3, shrinkZeros: true));
     //model.bnbPrice = Decimal.parse('0.0001');
     setState(ViewState.Idle);
   }
@@ -31,17 +35,25 @@ class BuyProModel extends BaseViewModel {
   Future<void> buyPro(BuildContext context) async {
     setState(ViewState.Busy);
 
-    var resp = await _api.sendToken(accManager.allAccounts[accIndex].bcWallet, 'bnb1axkzc707rl7nqlzxl3jftkm72vmdh7gvqyvy2j', 'BNB', bnbPrice!, 'TBCC PRO', sync: true);
+    var resp = await _api.sendToken(
+        accManager.allAccounts[accIndex].bcWallet,
+        'bnb1axkzc707rl7nqlzxl3jftkm72vmdh7gvqyvy2j',
+        'BNB',
+        bnbPrice!,
+        'TBCC PRO',
+        sync: true);
 
     if (resp.ok) {
       accManager.allAccounts[accIndex].tbccUser.paidFee = 2;
-      accManager.allAccounts[accIndex].tbccUser.subPurchaseDate = DateTime.now().toUtc();
+      accManager.allAccounts[accIndex].tbccUser.subPurchaseDate =
+          DateTime.now().toUtc();
       accManager.accountType = AccType.Pro;
       Navigator.of(context).popUntil((route) => route.isFirst);
 
       Flushbar.success(title: S.of(context).success).show();
 
-      locator<DialogService>().showDialog(title: 'TBCC VPN', description: S.of(context).proVpnDialog);
+      locator<DialogService>().showDialog(
+          title: 'TBCC VPN', description: S.of(context).proVpnDialog);
       accManager.notifyListeners();
 
       //Future.delayed(Duration(seconds: 2), () {
@@ -55,10 +67,20 @@ class BuyProModel extends BaseViewModel {
   }
 
   Future<void> findBNBBal() async {
-    bnbBal = accManager.bcBalanceByToken(accIndex, locator<WALLET_TOKENS_CONTAINER>().BEP2.firstWhere((element) => element.symbol == 'BNB'));
+    bnbBal = accManager.bcBalanceByToken(
+        accIndex,
+        locator<WALLET_TOKENS_CONTAINER>()
+            .BEP2
+            .firstWhere((element) => element.symbol == 'BNB'));
 
     if (bnbBal?.fiatPrice == Decimal.zero) {
-      bnbBal?.fiatPrice = accManager.balanceByToken(accIndex, locator<WALLET_TOKENS_CONTAINER>().COINS.firstWhere((element) => element.symbol == 'BNB'))!.fiatPrice;
+      bnbBal?.fiatPrice = accManager
+          .balanceByToken(
+              accIndex,
+              locator<WALLET_TOKENS_CONTAINER>()
+                  .COINS
+                  .firstWhere((element) => element.symbol == 'BNB'))!
+          .fiatPrice;
     }
   }
 }

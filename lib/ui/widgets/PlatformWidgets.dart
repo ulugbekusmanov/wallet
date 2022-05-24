@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/AuthService.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
-import 'package:tbccwallet/ui/styles/AppTheme.dart';
-import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
+import 'package:voola/ui/styles/AppTheme.dart';
+import 'package:voola/ui/views/premium/Pro_Premium.dart';
 
 class PlatformTabScaffold extends StatefulWidget {
   List<BottomNavigationBarItem> bottomItems;

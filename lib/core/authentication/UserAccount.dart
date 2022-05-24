@@ -2,10 +2,10 @@ import 'dart:typed_data';
 
 import 'package:solana/solana.dart' as sol;
 import 'package:decimal/decimal.dart';
-import 'package:tbccwallet/core/api/tbcc/models/TBCCUser.dart';
-import 'package:tbccwallet/core/balance/WalletBalance.dart';
+import 'package:voola/core/api/tbcc/models/TBCCUser.dart';
+import 'package:voola/core/balance/WalletBalance.dart';
 
-import 'package:tbccwallet/core/token/utils.dart';
+import 'package:voola/core/token/utils.dart';
 
 import 'wallets/BSCWallet.dart';
 import 'wallets/BinanceChainWallet.dart';
@@ -50,22 +50,28 @@ class UserAccount {
   }
 
   void calcTotalBalance() {
-    totalBalance = allBalances.fold<Decimal>(Decimal.zero, (previousValue, element) => previousValue + element.fiatBalance);
+    totalBalance = allBalances.fold<Decimal>(Decimal.zero,
+        (previousValue, element) => previousValue + element.fiatBalance);
   }
 
   void calcTotalPNL() {
     totalPNL = allBalances.fold(Decimal.zero, (previousValue, element) {
       if (element.fiatBalance != Decimal.zero) {
-        return previousValue + element.fiatBalance * (Decimal.one + element.changePercent / Decimal.fromInt(100));
+        return previousValue +
+            element.fiatBalance *
+                (Decimal.one + element.changePercent / Decimal.fromInt(100));
       } else
         return previousValue;
     });
     totalPNL = totalPNL - totalBalance;
-    totalPNLPercent = totalPNL == Decimal.zero ? Decimal.zero : (totalBalance + totalPNL) / totalPNL / Decimal.fromInt(100);
+    totalPNLPercent = totalPNL == Decimal.zero
+        ? Decimal.zero
+        : (totalBalance + totalPNL) / totalPNL / Decimal.fromInt(100);
   }
 
   void sortBalances() {
-    var balComparator = (WalletBalance bal1, WalletBalance bal2) => -bal1.fiatBalance.compareTo(bal2.fiatBalance);
+    var balComparator = (WalletBalance bal1, WalletBalance bal2) =>
+        -bal1.fiatBalance.compareTo(bal2.fiatBalance);
 
     allBalances.sort(balComparator);
     coinBalances.sort(balComparator);
@@ -105,14 +111,16 @@ class UserAccount {
 
   UserAccount.fromJson(Map<String, dynamic> json) {
     mnemonic = json['mnemonic'];
-    if (json['seed'] != null) seed = Uint8List.fromList((json['seed'] as List<dynamic>).cast<int>());
+    if (json['seed'] != null)
+      seed = Uint8List.fromList((json['seed'] as List<dynamic>).cast<int>());
 
     ethWallet = EthWallet.fromJson(json['eth_wallet']);
     bcWallet = BCWallet.fromJson(json['bc_wallet']);
     try {
       bscWallet = BSCWallet.fromJson(json['bsc_wallet']);
     } catch (e) {
-      bscWallet = BSCWallet(address: ethWallet.address, privateKey: ethWallet.privateKey);
+      bscWallet = BSCWallet(
+          address: ethWallet.address, privateKey: ethWallet.privateKey);
     }
 
     cardAttached = json['cardAttached'] == '1';

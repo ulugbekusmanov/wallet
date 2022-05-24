@@ -2,14 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/authentication/AuthService.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:flutter/foundation.dart';
-import 'package:tbccwallet/ui/MainScreen.dart';
-import 'package:tbccwallet/ui/views/start/SetPassword.dart';
-import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
+import 'package:voola/ui/MainScreen.dart';
+import 'package:voola/ui/views/start/SetPassword.dart';
+import 'package:voola/ui/views/wallet/WalletMainScreenModel.dart';
 import 'package:dartx/dartx.dart';
 
 import 'RestoreWallet.dart';

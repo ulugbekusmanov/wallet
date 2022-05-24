@@ -1,5 +1,5 @@
 import 'package:decimal/decimal.dart';
-import 'package:tbccwallet/core/token/WalletToken.dart';
+import 'package:voola/core/token/WalletToken.dart';
 
 class WalletBalance extends Comparable {
   late WalletToken token;

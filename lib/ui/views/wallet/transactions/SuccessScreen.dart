@@ -1,13 +1,14 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TxSuccessScreen extends StatelessWidget {
   final String hash;
   final String? explorerUrl;
   final void Function()? onTapOK;
-  const TxSuccessScreen(this.hash, this.explorerUrl, this.onTapOK, {Key? key}) : super(key: key);
+  const TxSuccessScreen(this.hash, this.explorerUrl, this.onTapOK, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,10 @@ class TxSuccessScreen extends StatelessWidget {
                       Text(
                         S.of(context).transferSuccessText,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 20),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2!
+                            .copyWith(fontSize: 20),
                       ),
                       SizedBox(height: 40),
                       Text('TxHash: '),
@@ -36,7 +40,11 @@ class TxSuccessScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () async {
                           await Clipboard.setData(ClipboardData(text: hash));
-                          Flushbar.success(title: S.of(context).copiedToClipboard('Tx Hash')).show();
+                          Flushbar.success(
+                                  title: S
+                                      .of(context)
+                                      .copiedToClipboard('Tx Hash'))
+                              .show();
                         },
                         behavior: HitTestBehavior.opaque,
                         child: Row(

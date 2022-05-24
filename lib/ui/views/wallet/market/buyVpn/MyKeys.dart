@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/UserAccount.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyVpnKeysScreen extends StatelessWidget {
@@ -35,32 +35,52 @@ class MyVpnKeysScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    launch('http://182.92.107.179/vpn/TBCCVPN-armv7-latest/');
+                                    launch(
+                                        'http://182.92.107.179/vpn/TBCCVPN-armv7-latest/');
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: Container(
-                                    decoration: BoxDecoration(gradient: AppColors.mainGradient, borderRadius: BorderRadius.circular(10)),
+                                    decoration: BoxDecoration(
+                                        gradient: AppColors.mainGradient,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 11, horizontal: 20),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 11, horizontal: 20),
                                       child: Text(
                                         S.of(context).download,
                                         textAlign: TextAlign.center,
-                                        style: Theme.of(context).textTheme.bodyText2!.copyWith(color: AppColors.text, fontWeight: FontWeight.w600),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2!
+                                            .copyWith(
+                                                color: AppColors.text,
+                                                fontWeight: FontWeight.w600),
                                       ),
                                     ),
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    await Clipboard.setData(ClipboardData(text: 'http://182.92.107.179/vpn/TBCCVPN-armv7-latest/'));
-                                    Flushbar.success(title: S.of(context).copiedToClipboard('')).show();
+                                    await Clipboard.setData(ClipboardData(
+                                        text:
+                                            'http://182.92.107.179/vpn/TBCCVPN-armv7-latest/'));
+                                    Flushbar.success(
+                                            title: S
+                                                .of(context)
+                                                .copiedToClipboard(''))
+                                        .show();
                                   },
                                   behavior: HitTestBehavior.opaque,
                                   child: Padding(
                                     padding: EdgeInsets.only(top: 20),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [Icon(Icons.copy_rounded), Text(S.of(context).copy)],
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.copy_rounded),
+                                        Text(S.of(context).copy)
+                                      ],
                                     ),
                                   ),
                                 )
@@ -86,11 +106,17 @@ class MyVPNKeyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(gradient: AppColors.altGradient, borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(
+          gradient: AppColors.altGradient,
+          borderRadius: BorderRadius.circular(16)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(children: [AppIcons.wallet(24), SizedBox(width: 12), Text('${acc.accountAlias}')]),
+          Row(children: [
+            AppIcons.wallet(24),
+            SizedBox(width: 12),
+            Text('${acc.accountAlias}')
+          ]),
           for (var k in acc.tbccUser.vpnKeys!)
             Container(
               padding: EdgeInsets.all(12),
@@ -115,7 +141,10 @@ class MyVPNKeyCard extends StatelessWidget {
                       ),
                       onTap: () async {
                         await Clipboard.setData(ClipboardData(text: k.key));
-                        Flushbar.success(title: S.of(context).copiedToClipboard('VPN Key')).show();
+                        Flushbar.success(
+                                title:
+                                    S.of(context).copiedToClipboard('VPN Key'))
+                            .show();
                       })
                 ],
               ),

@@ -3,15 +3,15 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
-import 'package:tbccwallet/core/token/utils.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/AddressBookModel.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/Gorh.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/Sarm.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/UserAccount.dart';
+import 'package:voola/core/token/utils.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/settings/address_book/AddressBookModel.dart';
+import 'package:voola/ui/views/settings/address_book/Gorh.dart';
+import 'package:voola/ui/views/settings/address_book/Sarm.dart';
 
 import 'AddContact.dart';
 

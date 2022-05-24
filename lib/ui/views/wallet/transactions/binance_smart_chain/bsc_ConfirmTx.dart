@@ -1,8 +1,8 @@
 import 'package:provider/provider.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import '../../WalletMainScreen.dart';
 import '../ethereum/eth_Transfer.dart';
 import 'bsc_Advanced.dart';

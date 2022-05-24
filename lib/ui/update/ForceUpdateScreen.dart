@@ -1,5 +1,5 @@
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 import 'UpdateModel.dart';
 
@@ -22,7 +22,8 @@ class ForceUpdateScreen extends StatelessWidget {
               elevation: 0,
               title: Text(
                 S.of(context).updateAvailable,
-                style: Theme.of(context).textTheme.headline6!.copyWith(color: AppColors.text, fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: AppColors.text, fontWeight: FontWeight.w500),
               ),
             ),
             body: Padding(
@@ -55,38 +56,53 @@ class ForceUpdateScreen extends StatelessWidget {
                           Expanded(
                             child: Center(
                                 child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 30),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 20),
-                                    child: AppIcons.download_cloud(160, AppColors.active),
+                                    child: AppIcons.download_cloud(
+                                        160, AppColors.active),
                                   ),
                                   ...() {
                                     if (model.updateState == 2)
                                       return [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               S.of(context).updateDownloading,
-                                              style: Theme.of(context).textTheme.bodyText2!.copyWith(color: DarkColors.text),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2!
+                                                  .copyWith(
+                                                      color: DarkColors.text),
                                             ),
                                             Text(
                                               '${model.downloadedPercent.toInt()}%',
-                                              style: Theme.of(context).textTheme.bodyText2!.copyWith(color: DarkColors.text),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText2!
+                                                  .copyWith(
+                                                      color: DarkColors.text),
                                             ),
                                           ],
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10),
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
                                           child: Stack(children: [
                                             LinearProgressIndicator(
-                                              value: model.downloadedPercent / 100,
+                                              value:
+                                                  model.downloadedPercent / 100,
                                               minHeight: 5,
                                               backgroundColor: Colors.grey[800],
-                                              valueColor: AlwaysStoppedAnimation<Color>(AppColors.active),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      AppColors.active),
                                             )
                                           ]),
                                         ),
@@ -95,12 +111,15 @@ class ForceUpdateScreen extends StatelessWidget {
                                       return [
                                         Text(S.of(context).checkingIntegrity),
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10),
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
                                           child: Stack(children: [
                                             LinearProgressIndicator(
                                               value: null,
                                               backgroundColor: Colors.grey[800],
-                                              valueColor: AlwaysStoppedAnimation<Color>(AppColors.active),
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      AppColors.active),
                                             )
                                           ]),
                                         ),
@@ -109,17 +128,27 @@ class ForceUpdateScreen extends StatelessWidget {
                                       return [
                                         Text(
                                           S.of(context).updateDownlodaded,
-                                          style: Theme.of(context).textTheme.bodyText1!.copyWith(color: DarkColors.text),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1!
+                                              .copyWith(color: DarkColors.text),
                                           textAlign: TextAlign.center,
                                         ),
                                       ];
                                     else
                                       return [
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 40, bottom: 50),
+                                          padding: const EdgeInsets.only(
+                                              top: 40, bottom: 50),
                                           child: Text(
                                             S.of(context).forceUpdate,
-                                            style: Theme.of(context).textTheme.bodyText2!.copyWith(color: AppColors.text.withOpacity(0.8), height: 1.3),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText2!
+                                                .copyWith(
+                                                    color: AppColors.text
+                                                        .withOpacity(0.8),
+                                                    height: 1.3),
                                             textAlign: TextAlign.center,
                                           ),
                                         )

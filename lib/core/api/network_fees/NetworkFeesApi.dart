@@ -1,6 +1,6 @@
 import 'package:decimal/decimal.dart';
-import 'package:tbccwallet/core/api/ApiBase.dart';
-import 'package:tbccwallet/global_env.dart';
+import 'package:voola/core/api/ApiBase.dart';
+import 'package:voola/global_env.dart';
 import 'package:web3dart/web3dart.dart';
 
 import 'model/BSCGasPrices.dart';
@@ -11,9 +11,12 @@ class NetworkFeesApi extends ApiBase {
     endpoint = '';
   }
   Future<ApiResponse<EthGasPrices>> getEthGasPrices() async {
-    var result = await get('https://ethgasstation.info/api/ethgasAPI.json?api-key=50b677638292234805e9c2d0c1872cff93db9aad5e2bea06c35e59bc8b6a', customPath: true);
+    var result = await get(
+        'https://ethgasstation.info/api/ethgasAPI.json?api-key=50b677638292234805e9c2d0c1872cff93db9aad5e2bea06c35e59bc8b6a',
+        customPath: true);
     if (result.statusCode == 200) {
-      return ApiResponse(result.statusCode!, EthGasPrices.fromJson(result.json));
+      return ApiResponse(
+          result.statusCode!, EthGasPrices.fromJson(result.json));
     } else {
       var gasPriceFromNetwork = await ENVS.ETH_ENV!.getGasPrice();
 

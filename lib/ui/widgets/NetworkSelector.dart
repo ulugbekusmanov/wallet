@@ -1,5 +1,5 @@
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/shared.dart';
 
 class NetworkSelectorScreen extends StatelessWidget {
   const NetworkSelectorScreen({Key? key}) : super(key: key);

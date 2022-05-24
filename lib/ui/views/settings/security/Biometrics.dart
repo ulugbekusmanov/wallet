@@ -1,7 +1,7 @@
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/settings/SettingsMainModel.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/settings/SettingsMainModel.dart';
 
 class BiometricsScreen extends StatelessWidget {
   const BiometricsScreen({Key? key}) : super(key: key);
@@ -33,10 +33,14 @@ class BiometricsScreen extends StatelessWidget {
                           Icon(
                             Icons.fingerprint,
                             size: MediaQuery.of(context).size.height * 0.2,
-                            color: locator<UserSettings>().biometricsEnabled ? AppColors.active : AppColors.inactiveText,
+                            color: locator<UserSettings>().biometricsEnabled
+                                ? AppColors.active
+                                : AppColors.inactiveText,
                           ),
                           Button(
-                            value: locator<UserSettings>().biometricsEnabled ? S.of(context).disable : S.of(context).enable,
+                            value: locator<UserSettings>().biometricsEnabled
+                                ? S.of(context).disable
+                                : S.of(context).enable,
                             onTap: () async {
                               await model.switchBiometrics(context);
                             },

@@ -1,4 +1,4 @@
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 import '../SettingsMainModel.dart';
 
@@ -35,12 +35,21 @@ class LanguageScreen extends StatelessWidget {
                                   color: AppColors.generalShapesBg,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[Text(model.localesList[index][0]), Localizations.localeOf(context) == model.localesList[index][1] ? Icon(Icons.check, color: AppColors.active) : Container()],
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(model.localesList[index][0]),
+                                    Localizations.localeOf(context) ==
+                                            model.localesList[index][1]
+                                        ? Icon(Icons.check,
+                                            color: AppColors.active)
+                                        : Container()
+                                  ],
                                 )),
                           );
                         },
-                        separatorBuilder: (context, index) => SizedBox(height: 10)),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 10)),
                   ));
       },
     );

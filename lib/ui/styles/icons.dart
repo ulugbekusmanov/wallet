@@ -1,5 +1,5 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 import 'AppTheme.dart';
 

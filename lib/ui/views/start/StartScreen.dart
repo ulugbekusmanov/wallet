@@ -1,6 +1,6 @@
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/start/CreateWallet.dart';
-import 'package:tbccwallet/ui/views/start/RestoreWallet.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/start/CreateWallet.dart';
+import 'package:voola/ui/views/start/RestoreWallet.dart';
 
 class StartScreen extends StatelessWidget {
   bool addWallet;

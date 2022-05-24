@@ -1,6 +1,6 @@
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'package:local_auth/local_auth.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/ui/views/start/StartScreen.dart';
-import 'package:tbccwallet/ui/views/wallet/WalletMainScreen.dart';
-import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/ui/views/start/StartScreen.dart';
+import 'package:voola/ui/views/wallet/WalletMainScreen.dart';
+import 'package:voola/ui/views/wallet/WalletMainScreenModel.dart';
 import 'dart:typed_data';
 import 'package:solana/solana.dart' as sol;
 
@@ -15,7 +15,7 @@ import 'UserAccount.dart';
 import 'wallets/BSCWallet.dart';
 import 'wallets/BinanceChainWallet.dart';
 import 'wallets/EthereumWallet.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 class AuthService {
   final localAuth = LocalAuthentication();

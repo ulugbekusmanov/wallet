@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:tbccwallet/core/api/coingecko/CoingeckoAPI.dart';
-import 'package:tbccwallet/core/api/coingecko/model/CoinMarkets.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/api/coingecko/CoingeckoAPI.dart';
+import 'package:voola/core/api/coingecko/model/CoinMarkets.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:dartx/dartx.dart';
 
 class SparklineChart extends StatelessWidget {

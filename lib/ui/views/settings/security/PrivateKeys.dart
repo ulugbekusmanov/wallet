@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/authentication/AuthService.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:web3dart/crypto.dart';
 
 class PrivateKeysScreen extends StatefulWidget {
@@ -33,10 +33,21 @@ class _PrivateKeysScreenState extends State<PrivateKeysScreen> {
               });
             }),
             SizedBox(height: 16),
-            Tile(header: S.of(context).mnemonicPhrase, value: accManager.allAccounts[selectedAcc].mnemonic),
-            Tile(header: S.of(context).binancePK, value: accManager.allAccounts[selectedAcc].bcWallet.privateKey!),
-            Tile(header: S.of(context).ethereumPK, value: bytesToHex(accManager.allAccounts[selectedAcc].ethWallet.privateKey.privateKey)),
-            Tile(header: 'Binance Smart Chain', value: bytesToHex(accManager.allAccounts[selectedAcc].bscWallet.privateKey.privateKey)),
+            Tile(
+                header: S.of(context).mnemonicPhrase,
+                value: accManager.allAccounts[selectedAcc].mnemonic),
+            Tile(
+                header: S.of(context).binancePK,
+                value:
+                    accManager.allAccounts[selectedAcc].bcWallet.privateKey!),
+            Tile(
+                header: S.of(context).ethereumPK,
+                value: bytesToHex(accManager
+                    .allAccounts[selectedAcc].ethWallet.privateKey.privateKey)),
+            Tile(
+                header: 'Binance Smart Chain',
+                value: bytesToHex(accManager
+                    .allAccounts[selectedAcc].bscWallet.privateKey.privateKey)),
           ],
         ),
       ),
@@ -83,13 +94,20 @@ class _TileState extends State<Tile> with TickerProviderStateMixin {
           children: [
             Wrap(
               children: [
-                Text(widget.header, style: Theme.of(context).textTheme.bodyText1),
+                Text(widget.header,
+                    style: Theme.of(context).textTheme.bodyText1),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Text(S.of(context).show, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: AppColors.active)),
+                  child: Text(S.of(context).show,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: AppColors.active)),
                 ),
                 Icon(
-                  expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  expanded
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
                   color: AppColors.active,
                 )
               ],
@@ -101,7 +119,10 @@ class _TileState extends State<Tile> with TickerProviderStateMixin {
               vsync: this,
               child: Container(
                 padding: const EdgeInsets.all(20),
-                constraints: BoxConstraints(minHeight: 0, maxHeight: expanded ? 400 : 0, maxWidth: MediaQuery.of(context).size.width),
+                constraints: BoxConstraints(
+                    minHeight: 0,
+                    maxHeight: expanded ? 400 : 0,
+                    maxWidth: MediaQuery.of(context).size.width),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -112,15 +133,21 @@ class _TileState extends State<Tile> with TickerProviderStateMixin {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        await Clipboard.setData(ClipboardData(text: widget.value));
-                        Flushbar.success(title: S.of(context).copiedToClipboard('')).show();
+                        await Clipboard.setData(
+                            ClipboardData(text: widget.value));
+                        Flushbar.success(
+                                title: S.of(context).copiedToClipboard(''))
+                            .show();
                       },
                       behavior: HitTestBehavior.opaque,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Icon(Icons.copy_rounded), Text(S.of(context).copy)],
+                          children: [
+                            Icon(Icons.copy_rounded),
+                            Text(S.of(context).copy)
+                          ],
                         ),
                       ),
                     )

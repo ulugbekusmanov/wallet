@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "tbccwallet",
+            "name": "voola",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "tbccwallet (profile mode)",
+            "name": "voola (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"

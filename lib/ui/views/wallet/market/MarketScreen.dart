@@ -1,6 +1,6 @@
-import 'package:tbccwallet/core/settings/AppSettings.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/settings/AppSettings.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'buyVpn/BuyVpnView.dart';
@@ -25,7 +25,9 @@ class MarketScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: 18),
                   child: Container(
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), gradient: AppColors.altGradient),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        gradient: AppColors.altGradient),
                     padding: EdgeInsets.zero,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -40,7 +42,8 @@ class MarketScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -50,13 +53,23 @@ class MarketScreen extends StatelessWidget {
                                       ),
                                       Text(
                                         'TBCC VPN',
-                                        style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.w600, color: AppColors.text),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.text),
                                       ),
                                     ],
                                   ),
                                   Text(
                                     '\$25.99',
-                                    style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.w600, color: AppColors.text),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.text),
                                   )
                                 ],
                               ),
@@ -64,7 +77,11 @@ class MarketScreen extends StatelessWidget {
                                 padding: EdgeInsets.only(top: 15, bottom: 10),
                                 child: Text(
                                   S.of(context).vpnDescription,
-                                  style: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.text, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption!
+                                      .copyWith(
+                                          color: AppColors.text, height: 1.5),
                                 ),
                               ),
                             ],
@@ -81,9 +98,12 @@ class MarketScreen extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       if (locator<AppSettings>().buy_vpn) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (_) => BuyVpnScreen(), fullscreenDialog: true));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => BuyVpnScreen(),
+                            fullscreenDialog: true));
                       } else {
-                        Flushbar.error(title: S.of(context).serviceUnavailable).show();
+                        Flushbar.error(title: S.of(context).serviceUnavailable)
+                            .show();
                       }
                     },
                     behavior: HitTestBehavior.opaque,
@@ -92,7 +112,8 @@ class MarketScreen extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyVpnKeysScreen()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => MyVpnKeysScreen()));
                           },
                           behavior: HitTestBehavior.opaque,
                           child: Container(
@@ -103,10 +124,11 @@ class MarketScreen extends StatelessWidget {
                             ),
                             child: Text(
                               'Show my keys',
-                              style: Theme.of(context).textTheme.caption!.copyWith(
-                                    color: AppColors.text,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              style:
+                                  Theme.of(context).textTheme.caption!.copyWith(
+                                        color: AppColors.text,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                             ),
                           ),
                         ),
@@ -120,10 +142,17 @@ class MarketScreen extends StatelessWidget {
                             behavior: HitTestBehavior.opaque,
                             child: Container(
                               padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: AppColors.active),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: AppColors.active),
                               child: Text(
                                 S.of(context).details,
-                                style: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.text, fontWeight: FontWeight.w600),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .caption!
+                                    .copyWith(
+                                        color: AppColors.text,
+                                        fontWeight: FontWeight.w600),
                               ),
                             ),
                           ),
@@ -131,9 +160,13 @@ class MarketScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             if (locator<AppSettings>().buy_vpn) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => BuyVpnScreen(), fullscreenDialog: true));
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_) => BuyVpnScreen(),
+                                  fullscreenDialog: true));
                             } else {
-                              Flushbar.error(title: S.of(context).serviceUnavailable).show();
+                              Flushbar.error(
+                                      title: S.of(context).serviceUnavailable)
+                                  .show();
                             }
                           },
                           behavior: HitTestBehavior.opaque,
@@ -145,10 +178,11 @@ class MarketScreen extends StatelessWidget {
                             ),
                             child: Text(
                               '${S.of(context).purchaseVpn} 🔥',
-                              style: Theme.of(context).textTheme.caption!.copyWith(
-                                    color: AppColors.text,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                              style:
+                                  Theme.of(context).textTheme.caption!.copyWith(
+                                        color: AppColors.text,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                             ),
                           ),
                         ),

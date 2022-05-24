@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReceiveScreen extends StatelessWidget {
@@ -37,7 +37,8 @@ class ReceiveScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              InnerPageTile('Network', token.network.toString().split('.').last),
+              InnerPageTile(
+                  'Network', token.network.toString().split('.').last),
               SizedBox(height: 10),
               InnerPageTile(
                 S.of(context).address,
@@ -45,10 +46,18 @@ class ReceiveScreen extends StatelessWidget {
                 actions: [
                   IconButton(
                       onPressed: () async {
-                        await Clipboard.setData(ClipboardData(text: '$address'));
-                        Flushbar.success(title: S.of(context).copiedToClipboard(S.of(context).address)).show();
+                        await Clipboard.setData(
+                            ClipboardData(text: '$address'));
+                        Flushbar.success(
+                                title: S
+                                    .of(context)
+                                    .copiedToClipboard(S.of(context).address))
+                            .show();
                       },
-                      icon: ShaderMask(blendMode: BlendMode.srcIn, shaderCallback: AppColors.mainGradient.createShader, child: AppIcons.copy(24))),
+                      icon: ShaderMask(
+                          blendMode: BlendMode.srcIn,
+                          shaderCallback: AppColors.mainGradient.createShader,
+                          child: AppIcons.copy(24))),
                 ],
               ),
               Spacer(),
@@ -57,7 +66,8 @@ class ReceiveScreen extends StatelessWidget {
                   Expanded(
                     child: Button(
                       value: S.of(context).share,
-                      leadingIcon: Icon(Icons.share, color: Colors.white, size: 26),
+                      leadingIcon:
+                          Icon(Icons.share, color: Colors.white, size: 26),
                       onTap: () async {
                         Share.share('$address');
                       },
@@ -84,7 +94,9 @@ class ReceiveScreenModel extends BaseViewModel {
   late QrCode qr;
   late String address;
   void genQr() {
-    qr = QrValidator.validate(data: '$address', errorCorrectionLevel: QrErrorCorrectLevel.H).qrCode!;
+    qr = QrValidator.validate(
+            data: '$address', errorCorrectionLevel: QrErrorCorrectLevel.H)
+        .qrCode!;
   }
 
   shareQRImage() async {
@@ -92,7 +104,11 @@ class ReceiveScreenModel extends BaseViewModel {
     var path = '${directory?.path}/qr.png';
     var file = File(path);
 
-    await file.writeAsBytes((await QrPainter.withQr(qr: qr, gapless: true, color: Colors.white).toImageData(512))!.buffer.asUint8List());
+    await file.writeAsBytes(
+        (await QrPainter.withQr(qr: qr, gapless: true, color: Colors.white)
+                .toImageData(512))!
+            .buffer
+            .asUint8List());
 
     Share.shareFiles([path], mimeTypes: ['image/png'], subject: address);
   }

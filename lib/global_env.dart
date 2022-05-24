@@ -3,8 +3,8 @@ import 'package:binance_chain/binance_chain.dart' as bc;
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart';
 import 'package:solana/solana.dart' as sol;
-import 'package:tbccwallet/core/token/TokenContainer.dart';
-import 'package:tbccwallet/core/token/utils.dart';
+import 'package:voola/core/token/TokenContainer.dart';
+import 'package:voola/core/token/utils.dart';
 import 'package:web3dart/web3dart.dart';
 
 import 'core/settings/AppSettings.dart';

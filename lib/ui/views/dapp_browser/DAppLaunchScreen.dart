@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/blockchain/binance_smart_chain/contracts/TokenHub_abi.dart';
-import 'package:tbccwallet/core/token/utils.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/QrCodeReader.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/blockchain/binance_smart_chain/contracts/TokenHub_abi.dart';
+import 'package:voola/core/token/utils.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/QrCodeReader.dart';
 import 'AlertDialog.dart';
 import 'DAppScreen.dart';
 import 'Search.dart';

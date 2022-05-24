@@ -1,8 +1,8 @@
-import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/MainScreen.dart';
+import 'package:voola/core/authentication/AuthService.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/MainScreen.dart';
 
 class LoginScreen extends StatelessWidget {
   bool confirmation;

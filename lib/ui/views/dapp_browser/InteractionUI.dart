@@ -1,14 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tbccwallet/core/api/coingecko/model/SimplePrice.dart';
-import 'package:tbccwallet/core/api/network_fees/NetworkFeesApi.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/blockchain/ethereum/contracts/ERC20_abi.dart';
-import 'package:tbccwallet/core/tickers/TickersService.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/dapp_browser/DAppScreen.dart';
+import 'package:voola/core/api/coingecko/model/SimplePrice.dart';
+import 'package:voola/core/api/network_fees/NetworkFeesApi.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/blockchain/ethereum/contracts/ERC20_abi.dart';
+import 'package:voola/core/tickers/TickersService.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/dapp_browser/DAppScreen.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 

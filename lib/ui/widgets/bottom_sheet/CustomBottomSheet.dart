@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -13,7 +13,8 @@ const Radius _default_bar_top_radius = Radius.circular(15);
 
 const Radius _kDefaultTopRadius = Radius.circular(12);
 const double _kPreviousPageVisibleOffset = 10;
-typedef WidgetWithChildBuilder = Widget Function(BuildContext context, Animation<double> animation, Widget child);
+typedef WidgetWithChildBuilder = Widget Function(
+    BuildContext context, Animation<double> animation, Widget child);
 
 class BarBottomSheet extends StatelessWidget {
   final Widget child;
@@ -35,36 +36,44 @@ class BarBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
-      child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.center, children: [
-        SizedBox(height: 12),
-        SafeArea(
-          bottom: false,
-          child: control ??
-              Container(
-                height: 6,
-                width: 40,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6)),
-              ),
-        ),
-        SizedBox(height: 8),
-        Flexible(
-          flex: 1,
-          fit: FlexFit.loose,
-          child: Material(
-            shape: shape ??
-                RoundedRectangleBorder(
-                  side: BorderSide(),
-                  borderRadius: BorderRadius.only(topLeft: _default_bar_top_radius, topRight: _default_bar_top_radius),
-                ),
-            clipBehavior: clipBehavior ?? Clip.hardEdge,
-            elevation: elevation ?? 2,
-            child: SizedBox(
-              width: double.infinity,
-              child: MediaQuery.removePadding(context: context, removeTop: true, child: child),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 12),
+            SafeArea(
+              bottom: false,
+              child: control ??
+                  Container(
+                    height: 6,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(6)),
+                  ),
             ),
-          ),
-        ),
-      ]),
+            SizedBox(height: 8),
+            Flexible(
+              flex: 1,
+              fit: FlexFit.loose,
+              child: Material(
+                shape: shape ??
+                    RoundedRectangleBorder(
+                      side: BorderSide(),
+                      borderRadius: BorderRadius.only(
+                          topLeft: _default_bar_top_radius,
+                          topRight: _default_bar_top_radius),
+                    ),
+                clipBehavior: clipBehavior ?? Clip.hardEdge,
+                elevation: elevation ?? 2,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: MediaQuery.removePadding(
+                      context: context, removeTop: true, child: child),
+                ),
+              ),
+            ),
+          ]),
     );
   }
 }
@@ -94,7 +103,8 @@ Future<T?> showCupertinoModalBottomSheet<T>({
 }) async {
   assert(debugCheckHasMediaQuery(context));
 
-  final result = await Navigator.of(context, rootNavigator: useRootNavigator).push(
+  final result =
+      await Navigator.of(context, rootNavigator: useRootNavigator).push(
     CupertinoModalBottomSheetRoute<T>(
         builder: builder,
         containerBuilder: (context, _, child) => _CupertinoBottomSheetContainer(
@@ -136,7 +146,8 @@ class _CupertinoBottomSheetContainer extends StatelessWidget {
     final topSafeAreaPadding = MediaQuery.of(context).padding.top;
     final topPadding = _kPreviousPageVisibleOffset + topSafeAreaPadding;
 
-    final _backgroundColor = backgroundColor ?? CupertinoTheme.of(context).scaffoldBackgroundColor;
+    final _backgroundColor =
+        backgroundColor ?? CupertinoTheme.of(context).scaffoldBackgroundColor;
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
       child: ClipRRect(
@@ -221,7 +232,8 @@ class CupertinoModalBottomSheetRoute<T> extends PageRoute<T> {
     );
   }
 
-  Widget getPreviousRouteTransition(BuildContext context, Animation<double> secondaryAnimation, Widget child) {
+  Widget getPreviousRouteTransition(BuildContext context,
+      Animation<double> secondaryAnimation, Widget child) {
     return _CupertinoModalTransition(
       secondaryAnimation: secondaryAnimation,
       body: child,
@@ -232,7 +244,8 @@ class CupertinoModalBottomSheetRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     // By definition, the bottom sheet is aligned to the bottom of the page
     // and isn't exposed to the top padding of the MediaQuery.
     Widget bottomSheet = MediaQuery.removePadding(
@@ -325,7 +338,9 @@ class _CupertinoModalTransition extends StatelessWidget {
           final progress = curvedAnimation.value;
           final yOffset = progress * paddingTop;
           final scale = 1 - progress / 10;
-          final radius = progress == 0 ? 0.0 : (1 - progress) * startRoundCorner + progress * topRadius.x;
+          final radius = progress == 0
+              ? 0.0
+              : (1 - progress) * startRoundCorner + progress * topRadius.x;
           return Stack(
             children: <Widget>[
               Container(color: backgroundColor),
@@ -334,7 +349,9 @@ class _CupertinoModalTransition extends StatelessWidget {
                 child: Transform.scale(
                   scale: scale,
                   alignment: Alignment.topCenter,
-                  child: ClipRRect(borderRadius: BorderRadius.circular(radius), child: child),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(radius),
+                      child: child),
                 ),
               ),
             ],
@@ -414,7 +431,8 @@ class _ModalBottomSheetState<T> extends State<_ModalBottomSheet<T>> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
     assert(widget.route._animationController != null);
-    final scrollController = PrimaryScrollController.of(context) ?? (_scrollController ??= ScrollController());
+    final scrollController = PrimaryScrollController.of(context) ??
+        (_scrollController ??= ScrollController());
     return ModalScrollController(
       controller: scrollController,
       child: Builder(
@@ -488,16 +506,20 @@ class ModalScrollController extends InheritedWidget {
   /// Returns null if there is no [ScrollController] associated with the given
   /// context.
   static ScrollController? of(BuildContext context) {
-    final result = context.dependOnInheritedWidgetOfExactType<ModalScrollController>();
+    final result =
+        context.dependOnInheritedWidgetOfExactType<ModalScrollController>();
     return result?.controller;
   }
 
   @override
-  bool updateShouldNotify(ModalScrollController oldWidget) => controller != oldWidget.controller;
+  bool updateShouldNotify(ModalScrollController oldWidget) =>
+      controller != oldWidget.controller;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<ScrollController>('controller', controller, ifNull: 'no controller', showName: false));
+    properties.add(DiagnosticsProperty<ScrollController>(
+        'controller', controller,
+        ifNull: 'no controller', showName: false));
   }
 }

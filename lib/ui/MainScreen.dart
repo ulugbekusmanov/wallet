@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/styles/AppTheme.dart';
-import 'package:tbccwallet/ui/views/wallet/market/MarketScreen.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/styles/AppTheme.dart';
+import 'package:voola/ui/views/wallet/market/MarketScreen.dart';
 
 import 'views/dapp_browser/DAppScreen.dart';
 import 'views/dex/DexMainScreen.dart';

@@ -1,20 +1,20 @@
 import 'dart:typed_data';
 
-import 'package:tbccwallet/core/api/network_fees/NetworkFeesApi.dart';
-import 'package:tbccwallet/core/api/network_fees/model/EthGasPrices.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
+import 'package:voola/core/api/network_fees/NetworkFeesApi.dart';
+import 'package:voola/core/api/network_fees/model/EthGasPrices.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
 
-import 'package:tbccwallet/core/blockchain/ethereum/contracts/ERC20_abi.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/QrCodeReader.dart';
-import 'package:tbccwallet/ui/views/start/LoginScreen.dart';
-import 'package:tbccwallet/ui/views/wallet/transactions/SuccessScreen.dart';
+import 'package:voola/core/blockchain/ethereum/contracts/ERC20_abi.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/QrCodeReader.dart';
+import 'package:voola/ui/views/start/LoginScreen.dart';
+import 'package:voola/ui/views/wallet/transactions/SuccessScreen.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
-import 'package:tbccwallet/global_env.dart';
+import 'package:voola/global_env.dart';
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
+import 'package:voola/core/authentication/UserAccount.dart';
 
 class ETHTransferModel extends BaseViewModel {
   bool? returnedInsufficientFunds;
@@ -62,13 +62,16 @@ class ETHTransferModel extends BaseViewModel {
       gasPrice: _gasPrice!.toEtherAmount(9),
     );
     if (balance.token.symbol != 'ETH' && balance.token.standard != 'Native') {
-      var encodedCallData = erc20BasicContractAbi.functions.firstWhere((f) => f.name == 'transfer').encodeCall([
+      var encodedCallData = erc20BasicContractAbi.functions
+          .firstWhere((f) => f.name == 'transfer')
+          .encodeCall([
         addressTo ?? EthereumAddress.fromHex(controllerAddress.text),
         value?.toEtherAmount(balance.token.decimals ?? 18).getInWei,
       ]);
       _data = bytesToHex(encodedCallData);
       controllerData.text = '0x${_data ?? ''}';
-      ethTransaction = ethTransaction.copyWith(to: balance.token.ethAddress, data: encodedCallData);
+      ethTransaction = ethTransaction.copyWith(
+          to: balance.token.ethAddress, data: encodedCallData);
       try {
         var estimatedGas = await ENVS.ETH_ENV!.estimateGas(
           sender: ethTransaction.from,
@@ -107,14 +110,17 @@ class ETHTransferModel extends BaseViewModel {
 
   bool get enoughETHTotal {
     if (balance.token.standard == 'Native' && balance.token.symbol == 'ETH') {
-      return (value! + totalFee! <= balance.balance) || returnedInsufficientFunds != true;
+      return (value! + totalFee! <= balance.balance) ||
+          returnedInsufficientFunds != true;
     } else {
-      return (totalFee! < ethBalance.balance) || returnedInsufficientFunds != true;
+      return (totalFee! < ethBalance.balance) ||
+          returnedInsufficientFunds != true;
     }
   }
 
   void calcTotalFee() {
-    totalFee = (Decimal.fromInt(50000) * _gasPrice!) / Decimal.fromInt(1000000000);
+    totalFee =
+        (Decimal.fromInt(50000) * _gasPrice!) / Decimal.fromInt(1000000000);
     totalFeeInFiat = totalFee! * ethBalance.fiatPrice;
   }
 
@@ -197,7 +203,8 @@ class ETHTransferModel extends BaseViewModel {
   }
 
   Future<void> scanAddressQr(BuildContext context) async {
-    var text = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => QRCodeReader()));
+    var text = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => QRCodeReader()));
     try {
       addressTo = EthereumAddress.fromHex(text!);
       controllerAddress.text = text;
@@ -229,16 +236,22 @@ class ETHTransferModel extends BaseViewModel {
   Future<void> sendTransaction(BuildContext context) async {
     setState(ViewState.Busy);
     if (maxTotal! > Decimal.fromInt(300)) {
-      bool confirmation = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => LoginScreen(confirmation: true), fullscreenDialog: true));
+      bool confirmation = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => LoginScreen(confirmation: true),
+          fullscreenDialog: true));
       if (confirmation != true) {
         return;
       }
     }
     try {
-      var resultTxHash = await ENVS.ETH_ENV!.sendTransaction(account.ethWallet.privateKey, ethTransaction, chainId: 1);
+      var resultTxHash = await ENVS.ETH_ENV!.sendTransaction(
+          account.ethWallet.privateKey, ethTransaction,
+          chainId: 1);
 
       /// TODO add to tx listening pool
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => TxSuccessScreen(resultTxHash, 'https://etherscan.io/tx/$resultTxHash', null)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => TxSuccessScreen(
+              resultTxHash, 'https://etherscan.io/tx/$resultTxHash', null)));
       return;
     } catch (e) {
       Flushbar.error(title: 'Error: $e').show();

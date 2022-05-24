@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/dapp_browser/MoreInformation.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/dapp_browser/MoreInformation.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 //import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -21,7 +21,7 @@ String DAPP_INPAGE_PROVIDER_SCRIPT = """
     var callbacks = {};
 
     function bridgeSend (data) {
-        window.tbccwalletprovider.postMessage(JSON.stringify(data));
+        window.voolaprovider.postMessage(JSON.stringify(data));
     }
 
     var history = window.history;
@@ -89,7 +89,7 @@ String DAPP_INPAGE_PROVIDER_SCRIPT = """
     }
     UserRejectedRequest.prototype = Object.create(Error.prototype);
 
-    tbccwalletprovider.onMessage = function (message) {
+    voolaprovider.onMessage = function (message) {
         //console.log(message);
         data = JSON.parse(message);
         var id = data.messageId;
@@ -388,7 +388,7 @@ class DAppBrowserScreenModel extends BaseViewModel {
 
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     ethprovchannel = JavascriptChannel(
-        name: 'tbccwalletprovider',
+        name: 'voolaprovider',
         onMessageReceived: (JavascriptMessage msg) async {
           assert(() {
             print('message received: ${msg.message}');
@@ -403,7 +403,7 @@ class DAppBrowserScreenModel extends BaseViewModel {
   void handleMsg(Map<String, dynamic> msg) async {
     var response = await web3requestHandler.handleRequest(msg);
     if (response != null) {
-      var js = "tbccwalletprovider.onMessage('${json.encode(response)}')";
+      var js = "voolaprovider.onMessage('${json.encode(response)}')";
       while (true) {
         try {
           var result = await controller.evaluateJavascript(js);

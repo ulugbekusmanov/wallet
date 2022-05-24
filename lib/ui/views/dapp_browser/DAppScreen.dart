@@ -1,4 +1,4 @@
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 import 'DAppBrowserScreen.dart';
 import 'DAppLaunchScreen.dart';
 

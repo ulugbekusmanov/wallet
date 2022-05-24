@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pointycastle/digests/sha256.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 class Storage {
   final _secureStorage = FlutterSecureStorage();
@@ -45,7 +45,10 @@ class Storage {
   }
 
   Future<void> migrateStorage() async {
-    var migrated = await Future.wait([_secureStorage.read(key: 'storageMigrated'), _secureStorage.read(key: 'hasLoggedIn')]);
+    var migrated = await Future.wait([
+      _secureStorage.read(key: 'storageMigrated'),
+      _secureStorage.read(key: 'hasLoggedIn')
+    ]);
     if (migrated[0] == '1' || migrated[1] != '1') {
       return;
     } else {
@@ -58,7 +61,8 @@ class Storage {
       ]);
       var settingsJson = <String, dynamic>{};
       if (settings[0] != null) {
-        var passwordHash = bytesToHex(SHA256Digest().process(Uint8List.fromList(settings[0]!.codeUnits)));
+        var passwordHash = bytesToHex(
+            SHA256Digest().process(Uint8List.fromList(settings[0]!.codeUnits)));
         await writeNewPassword(passwordHash);
       }
       if (settings[1] != null) {

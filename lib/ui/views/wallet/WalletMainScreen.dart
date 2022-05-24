@@ -5,17 +5,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/settings/AppSettings.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/MainScreen.dart';
-import 'package:tbccwallet/ui/styles/AppTheme.dart';
-import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
-import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
-import 'package:tbccwallet/ui/widgets/TokenCard.dart';
-import 'package:tbccwallet/ui/widgets/bottom_sheet/CustomBottomSheet.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/settings/AppSettings.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/MainScreen.dart';
+import 'package:voola/ui/styles/AppTheme.dart';
+import 'package:voola/ui/views/premium/Pro_Premium.dart';
+import 'package:voola/ui/widgets/SharedWidgets.dart';
+import 'package:voola/ui/widgets/TokenCard.dart';
+import 'package:voola/ui/widgets/bottom_sheet/CustomBottomSheet.dart';
 
 //import 'package:pull_to_refresh/pull_to_refresh.dart';
 

@@ -1,5 +1,5 @@
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/shared.dart';
 
 class Sarm extends StatelessWidget {
   int mode;

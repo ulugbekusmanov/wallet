@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 class BaseViewModel extends ChangeNotifier {
   ViewState _state = ViewState.Idle;

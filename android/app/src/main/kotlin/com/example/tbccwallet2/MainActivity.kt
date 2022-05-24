@@ -1,4 +1,4 @@
-package com.wirelessenergy.tbccwallet
+package com.wirelessenergy.voola
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/settings/SettingsMain.dart';
-import 'package:tbccwallet/ui/views/settings/SettingsMainModel.dart';
-import 'package:tbccwallet/ui/views/settings/security/Biometrics.dart';
-import 'package:tbccwallet/ui/views/settings/security/PrivateKeys.dart';
-import 'package:tbccwallet/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
-import 'package:tbccwallet/ui/views/start/SetPassword.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/settings/SettingsMain.dart';
+import 'package:voola/ui/views/settings/SettingsMainModel.dart';
+import 'package:voola/ui/views/settings/security/Biometrics.dart';
+import 'package:voola/ui/views/settings/security/PrivateKeys.dart';
+import 'package:voola/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
+import 'package:voola/ui/views/start/SetPassword.dart';
 
 import '../../../../core/authentication/AuthService.dart';
 import '../../../../locator.dart';

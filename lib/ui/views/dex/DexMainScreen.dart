@@ -1,15 +1,15 @@
 import 'package:binance_chain/binance_chain.dart';
 import 'package:provider/provider.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
 
-import 'package:tbccwallet/core/tickers/TickersService.dart';
-import 'package:tbccwallet/core/token/TokenContainer.dart';
+import 'package:voola/core/tickers/TickersService.dart';
+import 'package:voola/core/token/TokenContainer.dart';
 
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/dex/DexActions.dart';
-import 'package:tbccwallet/ui/views/dex/OrderBookTable.dart';
-import 'package:tbccwallet/ui/views/dex/SelectMarketPair.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/dex/DexActions.dart';
+import 'package:voola/ui/views/dex/OrderBookTable.dart';
+import 'package:voola/ui/views/dex/SelectMarketPair.dart';
 
 import 'DexOrderHistory.dart';
 
@@ -38,8 +38,10 @@ class DexMainModel extends BaseViewModel {
   }
 
   setupBalances() {
-    leftBal = accManager.bcBalanceByToken(selectedAccIndex, marketPairModel.selectedMarketPair.left);
-    rightBal = accManager.bcBalanceByToken(selectedAccIndex, marketPairModel.selectedMarketPair.right);
+    leftBal = accManager.bcBalanceByToken(
+        selectedAccIndex, marketPairModel.selectedMarketPair.left);
+    rightBal = accManager.bcBalanceByToken(
+        selectedAccIndex, marketPairModel.selectedMarketPair.right);
   }
 
   marketPairChanged() {
@@ -49,7 +51,8 @@ class DexMainModel extends BaseViewModel {
   }
 
   initOrderBookListening() {
-    orderBookTableModel.initListening(marketPairModel.selectedMarketPair.symbol);
+    orderBookTableModel
+        .initListening(marketPairModel.selectedMarketPair.symbol);
   }
 
   loadDexTickers([bool refresh = false]) async {
@@ -79,18 +82,20 @@ class DexMainScreen extends StatelessWidget {
             builder: (_, mngr, __) => Scaffold(
                 appBar: CAppBar(
                     elevation: 0,
-                    title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text('Binance DEX'),
-                      AccountSelector((val) {
-                        if (model.selectedAccIndex != val) {
-                          model.selectedAccIndex = val;
-                          model.setupBalances();
-                          model.setState();
-                          model.marketPairModel.setState();
-                          model.actionsModel.setState();
-                        }
-                      }),
-                    ])),
+                    title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Binance DEX'),
+                          AccountSelector((val) {
+                            if (model.selectedAccIndex != val) {
+                              model.selectedAccIndex = val;
+                              model.setupBalances();
+                              model.setState();
+                              model.marketPairModel.setState();
+                              model.actionsModel.setState();
+                            }
+                          }),
+                        ])),
                 body: Center(
                     child: model.state == ViewState.Busy
                         ? TBCCLoader()
@@ -104,18 +109,35 @@ class DexMainScreen extends StatelessWidget {
                                     SizedBox(height: 20),
                                     Row(
                                       children: () {
-                                        var ticker = model.tickersService.bcDexTickers?[model.marketPairModel.selectedMarketPair.symbol];
-                                        var price = Decimal.parse(ticker?.lastPrice ?? '0');
-                                        var high24 = Decimal.parse(ticker?.highPrice ?? '0');
-                                        var low24 = Decimal.parse(ticker?.lowPrice ?? '0');
-                                        var rightSymbol = model.marketPairModel.selectedMarketPair.right.symbol.split("-").first;
+                                        var ticker =
+                                            model.tickersService.bcDexTickers?[
+                                                model.marketPairModel
+                                                    .selectedMarketPair.symbol];
+                                        var price = Decimal.parse(
+                                            ticker?.lastPrice ?? '0');
+                                        var high24 = Decimal.parse(
+                                            ticker?.highPrice ?? '0');
+                                        var low24 = Decimal.parse(
+                                            ticker?.lowPrice ?? '0');
+                                        var rightSymbol = model.marketPairModel
+                                            .selectedMarketPair.right.symbol
+                                            .split("-")
+                                            .first;
                                         return [
                                           for (var price in [
-                                            [S.of(context).price, '$price $rightSymbol'],
-                                            ['High 24h', '$high24 $rightSymbol'],
+                                            [
+                                              S.of(context).price,
+                                              '$price $rightSymbol'
+                                            ],
+                                            [
+                                              'High 24h',
+                                              '$high24 $rightSymbol'
+                                            ],
                                             ['Low 24h', '$low24 $rightSymbol'],
                                           ])
-                                            Expanded(child: DexPriceTile(price[0], price[1])),
+                                            Expanded(
+                                                child: DexPriceTile(
+                                                    price[0], price[1])),
                                         ].separate<Widget>(SizedBox(width: 6));
                                       }(),
                                     ),
@@ -124,8 +146,10 @@ class DexMainScreen extends StatelessWidget {
                                       ButtonBarEntry(
                                         child: Text(S.of(context).buy),
                                         onTap: () {
-                                          if (model.actionsModel.mode != ExchangeActionMode.Buy) {
-                                            model.actionsModel.mode = ExchangeActionMode.Buy;
+                                          if (model.actionsModel.mode !=
+                                              ExchangeActionMode.Buy) {
+                                            model.actionsModel.mode =
+                                                ExchangeActionMode.Buy;
                                             model.actionsModel.setState();
                                           }
                                         },
@@ -133,8 +157,10 @@ class DexMainScreen extends StatelessWidget {
                                       ButtonBarEntry(
                                         child: Text(S.of(context).sell),
                                         onTap: () {
-                                          if (model.actionsModel.mode != ExchangeActionMode.Sell) {
-                                            model.actionsModel.mode = ExchangeActionMode.Sell;
+                                          if (model.actionsModel.mode !=
+                                              ExchangeActionMode.Sell) {
+                                            model.actionsModel.mode =
+                                                ExchangeActionMode.Sell;
                                             model.actionsModel.setState();
                                           }
                                         },
@@ -145,25 +171,40 @@ class DexMainScreen extends StatelessWidget {
                                     SizedBox(height: 20),
                                     AnimatedButtonBar([
                                       ButtonBarEntry(
-                                          child: Text(S.of(context).orderBook, style: tt.bodyText1!.copyWith(fontSize: 14)),
+                                          child: Text(S.of(context).orderBook,
+                                              style: tt.bodyText1!
+                                                  .copyWith(fontSize: 14)),
                                           onTap: () {
-                                            if (model.bottomSwitchBar != BottomSwitchBar.OrderBook) {
-                                              model.bottomSwitchBar = BottomSwitchBar.OrderBook;
+                                            if (model.bottomSwitchBar !=
+                                                BottomSwitchBar.OrderBook) {
+                                              model.bottomSwitchBar =
+                                                  BottomSwitchBar.OrderBook;
                                               model.setState();
                                             }
                                           },
-                                          activeColor: AppColors.tokenCardPriceUp),
+                                          activeColor:
+                                              AppColors.tokenCardPriceUp),
                                       ButtonBarEntry(
-                                          child: Text(S.of(context).history, style: tt.bodyText1!.copyWith(fontSize: 14)),
+                                          child: Text(S.of(context).history,
+                                              style: tt.bodyText1!
+                                                  .copyWith(fontSize: 14)),
                                           onTap: () {
-                                            if (model.bottomSwitchBar != BottomSwitchBar.History) {
-                                              model.bottomSwitchBar = BottomSwitchBar.History;
+                                            if (model.bottomSwitchBar !=
+                                                BottomSwitchBar.History) {
+                                              model.bottomSwitchBar =
+                                                  BottomSwitchBar.History;
                                               model.setState();
                                             }
                                           },
-                                          activeColor: AppColors.tokenCardPriceDown),
+                                          activeColor:
+                                              AppColors.tokenCardPriceDown),
                                     ]),
-                                    model.bottomSwitchBar == BottomSwitchBar.OrderBook ? OrderBookTable(model.orderBookTableModel) : DexHistoryPreview(model, model.historyModel),
+                                    model.bottomSwitchBar ==
+                                            BottomSwitchBar.OrderBook
+                                        ? OrderBookTable(
+                                            model.orderBookTableModel)
+                                        : DexHistoryPreview(
+                                            model, model.historyModel),
                                     SizedBox(height: 80)
                                   ],
                                 ),
@@ -176,17 +217,28 @@ class DexMainScreen extends StatelessWidget {
                                   return Align(
                                     alignment: Alignment.bottomCenter,
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 20),
                                       child: Button(
                                         value: () {
-                                          var symbol = model.marketPairModel.selectedMarketPair.left.symbol.split('-').first;
-                                          if (actModel.mode == ExchangeActionMode.Buy)
-                                            return S.of(context).buyToken(symbol);
+                                          var symbol = model.marketPairModel
+                                              .selectedMarketPair.left.symbol
+                                              .split('-')
+                                              .first;
+                                          if (actModel.mode ==
+                                              ExchangeActionMode.Buy)
+                                            return S
+                                                .of(context)
+                                                .buyToken(symbol);
                                           else
-                                            return S.of(context).sellToken(symbol);
+                                            return S
+                                                .of(context)
+                                                .sellToken(symbol);
                                         }(),
                                         onTap: () {
-                                          if (model.actionsModel.state == ViewState.Idle) model.actionsModel.placeOrder();
+                                          if (model.actionsModel.state ==
+                                              ViewState.Idle)
+                                            model.actionsModel.placeOrder();
                                         },
                                       ),
                                     ),
@@ -225,7 +277,8 @@ class DexTokenCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(token.symbol.split('-').first),
-                Text(token.standard, style: Theme.of(context).textTheme.caption),
+                Text(token.standard,
+                    style: Theme.of(context).textTheme.caption),
                 Text(
                   '${balance ?? '?'}',
                   style: Theme.of(context).textTheme.bodyText1,
@@ -251,8 +304,15 @@ class DexPercentBtn extends StatelessWidget {
       shaderCallback: AppColors.mainGradient.createShader,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white, width: 1.5)),
-        child: Text(text, style: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white), textAlign: TextAlign.center),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.white, width: 1.5)),
+        child: Text(text,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(color: Colors.white),
+            textAlign: TextAlign.center),
       ),
     );
   }
@@ -268,11 +328,17 @@ class DexPriceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(color: AppColors.generalShapesBg.withOpacity(0.6), borderRadius: BorderRadius.circular(24)),
+        decoration: BoxDecoration(
+            color: AppColors.generalShapesBg.withOpacity(0.6),
+            borderRadius: BorderRadius.circular(24)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$title', style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.inactiveText)),
+            Text('$title',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(color: AppColors.inactiveText)),
             Text('$price', style: Theme.of(context).textTheme.bodyText1),
           ],
         ));
@@ -282,7 +348,8 @@ class DexPriceTile extends StatelessWidget {
 class DexHistoryPreview extends StatelessWidget {
   DexOrderHistoryModel historyModel;
   DexMainModel dexMainModel;
-  DexHistoryPreview(this.dexMainModel, this.historyModel, {Key? key}) : super(key: key);
+  DexHistoryPreview(this.dexMainModel, this.historyModel, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -311,12 +378,16 @@ class DexHistoryPreview extends StatelessWidget {
                           historyModel.loadOpenOrders();
                         },
                         child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 22),
                             child: Column(
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [Text(S.of(context).noOpenOrders), Icon(Icons.refresh)],
+                                  children: [
+                                    Text(S.of(context).noOpenOrders),
+                                    Icon(Icons.refresh)
+                                  ],
                                 ),
                               ],
                             ))));
@@ -359,19 +430,30 @@ class DexMarketPairSelector extends StatelessWidget {
         builder: (context, model, child) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => SelectMarketPairScreen(dexMainModel.marketPairModel)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) =>
+                      SelectMarketPairScreen(dexMainModel.marketPairModel)));
             },
             behavior: HitTestBehavior.opaque,
             child: Container(
-              decoration: BoxDecoration(boxShadow: [BoxShadow(color: Colors.black.withOpacity(.03), offset: Offset(0, 13), blurRadius: 18)]),
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(.03),
+                    offset: Offset(0, 13),
+                    blurRadius: 18)
+              ]),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Row(
                     children: [
-                      Expanded(child: DexTokenCard(model.selectedMarketPair.left, dexMainModel.leftBal?.balance)),
+                      Expanded(
+                          child: DexTokenCard(model.selectedMarketPair.left,
+                              dexMainModel.leftBal?.balance)),
                       SizedBox(width: 12),
-                      Expanded(child: DexTokenCard(model.selectedMarketPair.right, dexMainModel.rightBal?.balance)),
+                      Expanded(
+                          child: DexTokenCard(model.selectedMarketPair.right,
+                              dexMainModel.rightBal?.balance)),
                     ],
                   ),
                   Container(
@@ -384,7 +466,10 @@ class DexMarketPairSelector extends StatelessWidget {
                     //child: Icon(Icons.swap_horiz_rounded, color: AppColors.inactiveText),
                     child: Text(
                       '/',
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(color: AppColors.inactiveText),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(color: AppColors.inactiveText),
                     ),
                   )
                 ],

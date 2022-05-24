@@ -1,12 +1,12 @@
 import 'package:binance_chain/binance_chain.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solana/solana.dart' as sol;
-import 'package:tbccwallet/core/token/utils.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/QrCodeReader.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/AddressBookModel.dart';
+import 'package:voola/core/token/utils.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/QrCodeReader.dart';
+import 'package:voola/ui/views/settings/address_book/AddressBookModel.dart';
 
 import 'AddCurrency.dart';
 

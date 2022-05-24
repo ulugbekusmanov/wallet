@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tbccwallet/ui/styles/icons.dart';
+import 'package:voola/ui/styles/icons.dart';
 import 'package:web3dart/credentials.dart';
 
 import '../../ui/views/dapp_browser/DAppLaunchScreen.dart';

@@ -1,7 +1,7 @@
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 import 'package:provider/provider.dart';
-import 'package:tbccwallet/locator.dart';
+import 'package:voola/locator.dart';
 
 import 'BaseViewModel.dart';
 

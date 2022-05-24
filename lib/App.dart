@@ -4,11 +4,11 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/main.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/styles/AppTheme.dart';
-import 'package:tbccwallet/ui/update/ForceUpdateScreen.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/main.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/styles/AppTheme.dart';
+import 'package:voola/ui/update/ForceUpdateScreen.dart';
 
 import 'generated/l10n.dart';
 import 'locator.dart';
@@ -34,7 +34,7 @@ class WalletApp extends StatelessWidget {
                 S.delegate,
               ],
               supportedLocales: S.delegate.supportedLocales,
-              title: 'TBCC Wallet',
+              title: 'VOOLA',
               themeMode: ThemeMode.system,
               theme: currTheme,
               locale: model.getLocale(),

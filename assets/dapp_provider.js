@@ -4,7 +4,7 @@
     var callbacks = {};
 
     function bridgeSend (data) {
-        window.tbccwalletprovider.postMessage(JSON.stringify(data));
+        window.voolaprovider.postMessage(JSON.stringify(data));
     }
 
     var history = window.history;
@@ -72,7 +72,7 @@
     }
     UserRejectedRequest.prototype = Object.create(Error.prototype);
 
-    tbccwalletprovider.onMessage = function (message) {
+    voolaprovider.onMessage = function (message) {
         console.log(message);
         data = JSON.parse(message);
         var id = data.messageId;

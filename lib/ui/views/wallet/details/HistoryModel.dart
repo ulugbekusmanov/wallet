@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:tbccwallet/core/api/binance_chain/BCApi.dart';
-import 'package:tbccwallet/core/api/bsc/BSCApi.dart';
-import 'package:tbccwallet/core/api/ethereum/ETHApi.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
+import 'package:voola/core/api/binance_chain/BCApi.dart';
+import 'package:voola/core/api/bsc/BSCApi.dart';
+import 'package:voola/core/api/ethereum/ETHApi.dart';
+import 'package:voola/core/authentication/AuthService.dart';
 
-import 'package:tbccwallet/core/token/utils.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/token/utils.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:solana/src/rpc_client/transaction_signature.dart';
 import 'WalletDetails.dart';
 
@@ -17,7 +17,8 @@ class TxHistoryModel extends BaseViewModel {
   final authService = locator<AuthService>();
   late List<HistoryTransaction> txs;
 
-  Future<void> loadHistory(WalletToken token, BuildContext context, int accIndex) async {
+  Future<void> loadHistory(
+      WalletToken token, BuildContext context, int accIndex) async {
     setState(ViewState.Busy);
     var acc = authService.accManager.allAccounts[accIndex];
     txs = [];
@@ -49,7 +50,10 @@ class TxHistoryModel extends BaseViewModel {
       }
     } else if (token.network == TokenNetwork.Ethereum) {
       var address = acc.ethWallet.address.hex;
-      var apiResp = await locator<ETHApi>().getEthTransactions(token.standard == 'ERC20' ? token.ethAddress?.hex : null, address, token.decimals ?? 18);
+      var apiResp = await locator<ETHApi>().getEthTransactions(
+          token.standard == 'ERC20' ? token.ethAddress?.hex : null,
+          address,
+          token.decimals ?? 18);
       for (var tx in apiResp.load) {
         var txInfo = HistoryTransaction()
           ..blockchain = Blockchain.Eth
@@ -72,13 +76,18 @@ class TxHistoryModel extends BaseViewModel {
             ..nonce = tx.nonce)
           ..fee = tx.gasPrice! * tx.gasUsed!
           ..feeSymbol = 'ETH'
-          ..timestamp = DateTime.fromMillisecondsSinceEpoch(int.parse(tx.timeStamp!) * 1000).toLocal();
+          ..timestamp = DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(tx.timeStamp!) * 1000)
+              .toLocal();
 
         txs.add(txInfo);
       }
     } else if (token.network == TokenNetwork.BinanceSmartChain) {
       var address = acc.bscWallet.address.hex;
-      var apiResp = await locator<BSCApi>().getBSCTransactions(token.standard == 'BEP20' ? token.ethAddress?.hex : null, address, token.decimals ?? 18);
+      var apiResp = await locator<BSCApi>().getBSCTransactions(
+          token.standard == 'BEP20' ? token.ethAddress?.hex : null,
+          address,
+          token.decimals ?? 18);
       for (var tx in apiResp.load) {
         var txInfo = HistoryTransaction()
           ..blockchain = Blockchain.BSC
@@ -101,7 +110,9 @@ class TxHistoryModel extends BaseViewModel {
             ..nonce = tx.nonce)
           ..fee = tx.gasPrice! * tx.gasUsed!
           ..feeSymbol = 'BNB'
-          ..timestamp = DateTime.fromMillisecondsSinceEpoch(int.parse(tx.timeStamp!) * 1000).toLocal();
+          ..timestamp = DateTime.fromMillisecondsSinceEpoch(
+                  int.parse(tx.timeStamp!) * 1000)
+              .toLocal();
 
         txs.add(txInfo);
       }
@@ -165,7 +176,13 @@ class HistoryTransaction {
   String? description;
 }
 
-enum TransactionType { BinanceOrder, BinanceTransfer, ETH_Transfer, ETH_ContractCall, BinanceOther }
+enum TransactionType {
+  BinanceOrder,
+  BinanceTransfer,
+  ETH_Transfer,
+  ETH_ContractCall,
+  BinanceOther
+}
 enum Blockchain { BC, Eth, BSC }
 
 class EthTransactionInfo {

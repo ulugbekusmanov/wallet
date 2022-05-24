@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:tbccwallet/core/api/tbcc/models/Update.dart';
-import 'package:tbccwallet/core/storage/SecureStorage.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/api/tbcc/models/Update.dart';
+import 'package:voola/core/storage/SecureStorage.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 class UserSettings {
   bool initNetworkFailed = false;

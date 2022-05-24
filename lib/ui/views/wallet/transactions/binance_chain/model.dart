@@ -1,14 +1,14 @@
 import 'package:binance_chain/binance_chain.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
 
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/QrCodeReader.dart';
-import 'package:tbccwallet/ui/views/start/LoginScreen.dart';
-import 'package:tbccwallet/ui/views/wallet/transactions/SuccessScreen.dart';
-import 'package:tbccwallet/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/QrCodeReader.dart';
+import 'package:voola/ui/views/start/LoginScreen.dart';
+import 'package:voola/ui/views/wallet/transactions/SuccessScreen.dart';
+import 'package:voola/global_env.dart';
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
+import 'package:voola/core/authentication/UserAccount.dart';
 
 class BCTransferModel extends BaseViewModel {
   final accManager = locator<AccountManager>();
@@ -86,7 +86,8 @@ class BCTransferModel extends BaseViewModel {
   }
 
   Future<void> scanAddressQr(BuildContext context) async {
-    var text = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => QRCodeReader()));
+    var text = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => QRCodeReader()));
 
     if (validateAddress(text!)) {
       controllerAddress.text = text;
@@ -96,12 +97,15 @@ class BCTransferModel extends BaseViewModel {
   }
 
   void scanMemoQr(BuildContext context) async {
-    var text = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => QRCodeReader()));
+    var text = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => QRCodeReader()));
     controllerMemo.text = text;
   }
 
   void setMax() async {
-    value = balance.token.symbol == 'BNB' ? balance.balance - totalFee! : balance.balance;
+    value = balance.token.symbol == 'BNB'
+        ? balance.balance - totalFee!
+        : balance.balance;
     controllerValue.text = value.toString();
     setState();
   }
@@ -123,7 +127,9 @@ class BCTransferModel extends BaseViewModel {
     setState(ViewState.Busy);
 
     if (maxTotal! > Decimal.fromInt(300)) {
-      bool confirmation = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => LoginScreen(confirmation: true), fullscreenDialog: true));
+      bool confirmation = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => LoginScreen(confirmation: true),
+          fullscreenDialog: true));
       if (confirmation != true) {
         return;
       }
@@ -140,11 +146,14 @@ class BCTransferModel extends BaseViewModel {
           sync: true);
       if (broadcastResult.ok == true) {
         var resultTxHash = broadcastResult.load!.first.hash!;
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => TxSuccessScreen(resultTxHash, 'https://explorer.binance.org/tx/$resultTxHash', null)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) => TxSuccessScreen(resultTxHash,
+                'https://explorer.binance.org/tx/$resultTxHash', null)));
 
         return;
       } else
-        Flushbar.error(title: 'Error: ${broadcastResult.error?.message}').show();
+        Flushbar.error(title: 'Error: ${broadcastResult.error?.message}')
+            .show();
     } catch (e, st) {
       print(e);
       print(st);

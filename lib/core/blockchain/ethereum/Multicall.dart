@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:tbccwallet/core/blockchain/ethereum/contracts/ERC20_abi.dart';
-import 'package:tbccwallet/global_env.dart';
+import 'package:voola/core/blockchain/ethereum/contracts/ERC20_abi.dart';
+import 'package:voola/global_env.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 
@@ -14,12 +14,15 @@ class EthMulticallInteractor {
   Web3Client? provider;
 
   EthMulticallInteractor([this.provider]) {
-    contract = DeployedContract(multicallContractAbi, EthereumAddress.fromHex('0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'));
+    contract = DeployedContract(multicallContractAbi,
+        EthereumAddress.fromHex('0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'));
     aggFunc = contract.function('aggregate');
   }
 
-  Future<List<EtherAmount>> getBalances(List<EthereumAddress> addresses, List<WalletToken> tokens) async {
-    final balanceOfFunc = erc20BasicContractAbi.functions.firstWhere((f) => f.name == 'balanceOf');
+  Future<List<EtherAmount>> getBalances(
+      List<EthereumAddress> addresses, List<WalletToken> tokens) async {
+    final balanceOfFunc = erc20BasicContractAbi.functions
+        .firstWhere((f) => f.name == 'balanceOf');
     final getEthBalanceFunction = contract.function('getEthBalance');
     final callArgs = [
       [
@@ -37,11 +40,14 @@ class EthMulticallInteractor {
       ]
     ];
     final resp = await aggregate(callArgs);
-    final result = (resp[1] as List<dynamic>).cast<Uint8List>().map((e) => EtherAmount.inWei(bytesToInt(e)));
+    final result = (resp[1] as List<dynamic>)
+        .cast<Uint8List>()
+        .map((e) => EtherAmount.inWei(bytesToInt(e)));
     return result.toList();
   }
 
   Future<List<dynamic>> aggregate(List<dynamic> args) async {
-    return (provider ?? ENVS.ETH_ENV!).call(contract: contract, function: aggFunc, params: args);
+    return (provider ?? ENVS.ETH_ENV!)
+        .call(contract: contract, function: aggFunc, params: args);
   }
 }

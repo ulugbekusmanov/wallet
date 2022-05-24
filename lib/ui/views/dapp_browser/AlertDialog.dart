@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'DAppBrowserScreen.dart';

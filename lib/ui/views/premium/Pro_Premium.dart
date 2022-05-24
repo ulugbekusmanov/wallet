@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 import 'buyPro/BuyProView.dart';
 
 import 'buyPremium/BuyPremiumView.dart';

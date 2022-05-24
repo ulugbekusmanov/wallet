@@ -2,12 +2,12 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/settings/SettingsMainModel.dart';
-import 'package:tbccwallet/ui/views/settings/address_book/AddressBook.dart';
-import 'package:tbccwallet/ui/views/start/LoginScreen.dart';
-import 'package:tbccwallet/ui/widgets/SharedWidgets.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/settings/SettingsMainModel.dart';
+import 'package:voola/ui/views/settings/address_book/AddressBook.dart';
+import 'package:voola/ui/views/start/LoginScreen.dart';
+import 'package:voola/ui/widgets/SharedWidgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'About.dart';

@@ -1,9 +1,9 @@
 import 'dart:math' show pi;
 
-import 'package:tbccwallet/core/token/DexPair.dart';
-import 'package:tbccwallet/core/token/TokenContainer.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/token/DexPair.dart';
+import 'package:voola/core/token/TokenContainer.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 import 'DexMainScreen.dart';
 
@@ -81,7 +81,8 @@ class SelectMarketPairScreen extends StatelessWidget {
           color: AppColors.generalShapesBg,
           borderRadius: BorderRadius.circular(24),
         ),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(
             children: [
               pair.left.icon(32),
@@ -89,7 +90,8 @@ class SelectMarketPairScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(pair.left.symbol.split('-').first, style: tt.bodyText2!.copyWith(fontSize: 14)),
+                  Text(pair.left.symbol.split('-').first,
+                      style: tt.bodyText2!.copyWith(fontSize: 14)),
                   Text(pair.left.standard, style: tt.subtitle2),
                 ],
               )
@@ -104,11 +106,18 @@ class SelectMarketPairScreen extends StatelessWidget {
                   children: [
                     Transform.rotate(
                       angle: changePercent.isNegative ? pi : 0,
-                      child: AppIcons.arrow(10, changePercent.isNegative ? AppColors.red : AppColors.green),
+                      child: AppIcons.arrow(
+                          10,
+                          changePercent.isNegative
+                              ? AppColors.red
+                              : AppColors.green),
                     ),
                     Text(
                       '${changePercent.abs()}%',
-                      style: tt.subtitle2!.copyWith(color: changePercent.isNegative ? AppColors.red : AppColors.green),
+                      style: tt.subtitle2!.copyWith(
+                          color: changePercent.isNegative
+                              ? AppColors.red
+                              : AppColors.green),
                     ),
                   ],
                 ),
@@ -120,7 +129,8 @@ class SelectMarketPairScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(pair.right.symbol.split('-').first, style: tt.bodyText2!.copyWith(fontSize: 14)),
+                  Text(pair.right.symbol.split('-').first,
+                      style: tt.bodyText2!.copyWith(fontSize: 14)),
                   Text(pair.right.standard, style: tt.subtitle2),
                 ],
               ),

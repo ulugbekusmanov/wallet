@@ -1,7 +1,7 @@
-import 'package:tbccwallet/core/api/coingecko/CoingeckoAPI.dart';
-import 'package:tbccwallet/core/token/TokenContainer.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/api/coingecko/CoingeckoAPI.dart';
+import 'package:voola/core/token/TokenContainer.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 import 'BuyPremiumModel.dart';
 
@@ -9,7 +9,8 @@ class BuyPremiumScreen extends StatelessWidget {
   Decimal price = Decimal.fromInt(20);
   bool discount;
   String mode;
-  BuyPremiumScreen({this.mode = '0', this.discount = false, Key? key}) : super(key: key) {
+  BuyPremiumScreen({this.mode = '0', this.discount = false, Key? key})
+      : super(key: key) {
     if (discount) price = price * Decimal.parse('0.9');
   }
 
@@ -56,7 +57,11 @@ class BuyPremiumScreen extends StatelessWidget {
                           Text(
                             "${S.of(context).goPro('Premium')} ⚡",
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.bold, fontSize: 30),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    fontWeight: FontWeight.bold, fontSize: 30),
                           ),
                         ],
                       ),
@@ -64,7 +69,10 @@ class BuyPremiumScreen extends StatelessWidget {
                         padding: const EdgeInsets.fromLTRB(40, 30, 40, 30),
                         child: Text(
                           S.of(context).proDesc0('Premium'),
-                          style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.normal),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(fontWeight: FontWeight.normal),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -73,35 +81,57 @@ class BuyPremiumScreen extends StatelessWidget {
                           return [
                             Expanded(
                               child: SingleChildScrollView(
-                                padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                                padding:
+                                    const EdgeInsets.fromLTRB(16, 0, 16, 20),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(bottom: 25),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 25),
                                       child: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 16),
                                         decoration: BoxDecoration(
                                           color: AppColors.primaryBg,
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
                                             Container(
-                                              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 4,
+                                                      horizontal: 12),
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(6),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
                                                 color: DarkColors.primaryBg,
                                               ),
                                               child: Text(
                                                 'Premium',
-                                                style: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.yellow, fontWeight: FontWeight.w600, height: 1),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .caption!
+                                                    .copyWith(
+                                                        color: AppColors.yellow,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        height: 1),
                                               ),
                                             ),
                                             Text(
-                                              S.of(context).proDesc12('\$$price'),
-                                              style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
+                                              S
+                                                  .of(context)
+                                                  .proDesc12('\$$price'),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .copyWith(fontSize: 18),
                                               textAlign: TextAlign.center,
                                             ),
                                           ],
@@ -109,7 +139,8 @@ class BuyPremiumScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
                                       child: TileWithBtn(
                                         S.of(context).proDesc2h,
                                         S.of(context).proDesc2,
@@ -125,7 +156,8 @@ class BuyPremiumScreen extends StatelessWidget {
                                     //  ),
                                     //),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
                                       child: TileWithBtn(
                                         S.of(context).proDesc4h,
                                         S.of(context).proDesc4,
@@ -133,7 +165,8 @@ class BuyPremiumScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
                                       child: TileWithBtn(
                                         S.of(context).proDesc5h,
                                         S.of(context).proDesc5,
@@ -141,7 +174,8 @@ class BuyPremiumScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
                                       child: TileWithBtn(
                                         S.of(context).proDesc6h,
                                         S.of(context).proDesc6,
@@ -165,9 +199,11 @@ class BuyPremiumScreen extends StatelessWidget {
                         else {
                           return [
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 25, right: 16, left: 16),
+                              padding: const EdgeInsets.only(
+                                  bottom: 25, right: 16, left: 16),
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 16),
                                 decoration: BoxDecoration(
                                   color: AppColors.primaryBg,
                                   borderRadius: BorderRadius.circular(10),
@@ -176,23 +212,39 @@ class BuyPremiumScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 12),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(6),
                                         color: DarkColors.primaryBg,
                                       ),
                                       child: Text(
                                         'Premium',
-                                        style: Theme.of(context).textTheme.caption!.copyWith(color: AppColors.yellow, fontWeight: FontWeight.w600, height: 1),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption!
+                                            .copyWith(
+                                                color: AppColors.yellow,
+                                                fontWeight: FontWeight.w600,
+                                                height: 1),
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 10),
-                                      child: Text(S.of(context).oneTimePayment, style: Theme.of(context).textTheme.caption!.copyWith(fontWeight: FontWeight.w500)),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      child: Text(S.of(context).oneTimePayment,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500)),
                                     ),
                                     Text(
                                       S.of(context).proDesc12('\$$price'),
-                                      style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 18),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .copyWith(fontSize: 18),
                                       textAlign: TextAlign.center,
                                     )
                                   ],
@@ -215,7 +267,8 @@ class BuyPremiumScreen extends StatelessWidget {
                                           children: [
                                             Expanded(
                                               child: SingleChildScrollView(
-                                                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                                                padding: const EdgeInsets.only(
+                                                    top: 20, bottom: 20),
                                                 child: Column(
                                                   children: [
                                                     AccountSelector((index) {
@@ -225,41 +278,93 @@ class BuyPremiumScreen extends StatelessWidget {
                                                     }),
                                                     SizedBox(height: 10),
                                                     Padding(
-                                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10),
                                                       child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
-                                                          Text('${S.of(context).amount}: '),
-                                                          Text('${model.bnbPrice} BNB', style: Theme.of(context).textTheme.bodyText1),
+                                                          Text(
+                                                              '${S.of(context).amount}: '),
+                                                          Text(
+                                                              '${model.bnbPrice} BNB',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyText1),
                                                         ],
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10),
                                                       child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
-                                                          Text('${S.of(context).fee}: '),
-                                                          Text('0.000075 BNB', style: Theme.of(context).textTheme.bodyText1),
+                                                          Text(
+                                                              '${S.of(context).fee}: '),
+                                                          Text('0.000075 BNB',
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .bodyText1),
                                                         ],
                                                       ),
                                                     ),
                                                     ...() {
                                                       return [
                                                         Padding(
-                                                          padding: const EdgeInsets.symmetric(vertical: 10),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  vertical: 10),
                                                           child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
                                                             children: [
                                                               Text(
                                                                 '${S.of(context).yourBalance}: ',
-                                                                textAlign: TextAlign.right,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .right,
                                                               ),
-                                                              Text(' ${model.bnbBal!.balance} BNB', style: Theme.of(context).textTheme.bodyText1),
+                                                              Text(
+                                                                  ' ${model.bnbBal!.balance} BNB',
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText1),
                                                             ],
                                                           ),
                                                         ),
-                                                        if (model.bnbBal!.balance < (model.bnbPrice! + model.fee)) Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: Text(S.of(context).notEnoughTokens, style: Theme.of(context).textTheme.bodyText2!.copyWith(color: AppColors.red))),
+                                                        if (model.bnbBal!
+                                                                .balance <
+                                                            (model.bnbPrice! +
+                                                                model.fee))
+                                                          Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .symmetric(
+                                                                      vertical:
+                                                                          10),
+                                                              child: Text(
+                                                                  S
+                                                                      .of(
+                                                                          context)
+                                                                      .notEnoughTokens,
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .bodyText2!
+                                                                      .copyWith(
+                                                                          color:
+                                                                              AppColors.red))),
                                                       ];
                                                     }(),
                                                   ],
@@ -267,13 +372,27 @@ class BuyPremiumScreen extends StatelessWidget {
                                               ),
                                             ),
                                             Column(
-                                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 Button(
-                                                  value: S.of(context).purchasePro('Premium'),
+                                                  value: S
+                                                      .of(context)
+                                                      .purchasePro('Premium'),
                                                   onTap: () {
-                                                    if (model.accManager.bcBalanceByToken(model.accIndex, locator<WALLET_TOKENS_CONTAINER>().BEP2.firstWhere((element) => element.symbol == 'BNB'))!.balance >= (model.bnbPrice! + model.fee)) {
+                                                    if (model.accManager
+                                                            .bcBalanceByToken(
+                                                                model.accIndex,
+                                                                locator<WALLET_TOKENS_CONTAINER>()
+                                                                    .BEP2
+                                                                    .firstWhere((element) =>
+                                                                        element
+                                                                            .symbol ==
+                                                                        'BNB'))!
+                                                            .balance >=
+                                                        (model.bnbPrice! +
+                                                            model.fee)) {
                                                       model.buyPremium(context);
                                                     }
                                                   },
@@ -307,13 +426,15 @@ class BuyPremiumScreen extends StatelessWidget {
 class TileWithBtn extends StatefulWidget {
   String header, description, buttonText;
 
-  TileWithBtn(this.header, this.description, this.buttonText, {Key? key}) : super(key: key);
+  TileWithBtn(this.header, this.description, this.buttonText, {Key? key})
+      : super(key: key);
 
   @override
   _TileWithBtnState createState() => _TileWithBtnState();
 }
 
-class _TileWithBtnState extends State<TileWithBtn> with TickerProviderStateMixin {
+class _TileWithBtnState extends State<TileWithBtn>
+    with TickerProviderStateMixin {
   bool expanded = false;
   @override
   Widget build(BuildContext context) {
@@ -342,7 +463,11 @@ class _TileWithBtnState extends State<TileWithBtn> with TickerProviderStateMixin
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.header, style: Theme.of(context).textTheme.bodyText1!.copyWith(fontWeight: FontWeight.w600)),
+                      Text(widget.header,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(fontWeight: FontWeight.w600)),
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: GestureDetector(
@@ -360,10 +485,15 @@ class _TileWithBtnState extends State<TileWithBtn> with TickerProviderStateMixin
                                 children: [
                                   Text(
                                     S.of(context).details,
-                                    style: Theme.of(context).textTheme.bodyText2!.copyWith(color: AppColors.green),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2!
+                                        .copyWith(color: AppColors.green),
                                   ),
                                   Icon(
-                                    expanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                                    expanded
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down,
                                     color: AppColors.green,
                                   )
                                 ],
@@ -373,7 +503,14 @@ class _TileWithBtnState extends State<TileWithBtn> with TickerProviderStateMixin
                                 alignment: Alignment.topCenter,
                                 curve: Curves.easeIn,
                                 vsync: this,
-                                child: Container(constraints: BoxConstraints(minHeight: 0, maxHeight: expanded ? 400 : 0), child: Text('${widget.description}\n', style: Theme.of(context).textTheme.bodyText2)),
+                                child: Container(
+                                    constraints: BoxConstraints(
+                                        minHeight: 0,
+                                        maxHeight: expanded ? 400 : 0),
+                                    child: Text('${widget.description}\n',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2)),
                               ),
                             ],
                           ),
@@ -397,7 +534,10 @@ class _TileWithBtnState extends State<TileWithBtn> with TickerProviderStateMixin
             ),
             child: Text(
               widget.buttonText,
-              style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 12, color: Colors.white),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2!
+                  .copyWith(fontSize: 12, color: Colors.white),
             ),
           ),
         )

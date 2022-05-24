@@ -1,11 +1,11 @@
 import 'package:stacked_services/stacked_services.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/core/token/utils.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/core/token/utils.dart';
 
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/BaseViewModel.dart';
-import 'package:tbccwallet/ui/views/premium/Pro_Premium.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/BaseViewModel.dart';
+import 'package:voola/ui/views/premium/Pro_Premium.dart';
 
 import 'News.dart';
 import 'SparklineChart.dart';
@@ -65,10 +65,13 @@ class WalletMainScreenModel extends BaseViewModel {
     //await Future.delayed(Duration(seconds: 1));
     print(accManager.subscriptionExpireDate);
     if (accManager.subscriptionExpireDate != null) {
-      if (accManager.subscriptionExpireDate!.compareTo(DateTime.now().toUtc()) < 0) {
+      if (accManager.subscriptionExpireDate!.compareTo(DateTime.now().toUtc()) <
+          0) {
         showSubEnded();
       } else {
-        var daysRemaining = accManager.subscriptionExpireDate!.difference(DateTime.now().toUtc()).inDays;
+        var daysRemaining = accManager.subscriptionExpireDate!
+            .difference(DateTime.now().toUtc())
+            .inDays;
         if (daysRemaining < 5) {
           showSubExpiresInDays(daysRemaining);
         }
@@ -81,7 +84,8 @@ class WalletMainScreenModel extends BaseViewModel {
       title: 'Subscription ended',
       subtitle: 'Renew subsctiption',
       action: () {
-        StackedService.navigatorKey?.currentState?.push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
+        StackedService.navigatorKey?.currentState
+            ?.push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
       },
     ).show(Duration(seconds: 15));
   }
@@ -91,7 +95,8 @@ class WalletMainScreenModel extends BaseViewModel {
       title: 'Subscription ends in $daysRemaining days',
       subtitle: 'Renew subsctiption',
       action: () {
-        StackedService.navigatorKey?.currentState?.push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
+        StackedService.navigatorKey?.currentState
+            ?.push(MaterialPageRoute(builder: (_) => Pro_PremiumView()));
       },
     ).show(Duration(seconds: 15));
   }

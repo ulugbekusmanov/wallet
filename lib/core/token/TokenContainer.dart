@@ -1,4 +1,4 @@
-import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
+import 'package:voola/ui/views/wallet/WalletMainScreenModel.dart';
 
 import 'DexPair.dart';
 import 'WalletToken.dart';

@@ -1,14 +1,14 @@
 import 'package:solana/solana.dart' as sol;
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
 
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/QrCodeReader.dart';
-import 'package:tbccwallet/ui/views/start/LoginScreen.dart';
-import 'package:tbccwallet/ui/views/wallet/transactions/SuccessScreen.dart';
-import 'package:tbccwallet/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/QrCodeReader.dart';
+import 'package:voola/ui/views/start/LoginScreen.dart';
+import 'package:voola/ui/views/wallet/transactions/SuccessScreen.dart';
+import 'package:voola/global_env.dart';
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/UserAccount.dart';
+import 'package:voola/core/authentication/UserAccount.dart';
 
 class SOLTransferModel extends BaseViewModel {
   final accManager = locator<AccountManager>();
@@ -85,7 +85,8 @@ class SOLTransferModel extends BaseViewModel {
   //}
 
   Future<void> scanAddressQr(BuildContext context) async {
-    var text = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => QRCodeReader()));
+    var text = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => QRCodeReader()));
 
     if (sol.isValidAddress(text!)) {
       controllerAddress.text = text;
@@ -100,7 +101,9 @@ class SOLTransferModel extends BaseViewModel {
   //}
 
   void setMax() async {
-    value = balance.token.symbol == 'SOL' ? balance.balance - totalFee! : balance.balance;
+    value = balance.token.symbol == 'SOL'
+        ? balance.balance - totalFee!
+        : balance.balance;
     controllerValue.text = value.toString();
     setState();
   }
@@ -122,15 +125,21 @@ class SOLTransferModel extends BaseViewModel {
     setState(ViewState.Busy);
 
     if (maxTotal! > Decimal.fromInt(300)) {
-      bool confirmation = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => LoginScreen(confirmation: true), fullscreenDialog: true));
+      bool confirmation = await Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => LoginScreen(confirmation: true),
+          fullscreenDialog: true));
       if (confirmation != true) {
         return;
       }
     }
     try {
-      var resultTxHash = await account.solWallet.transfer(destination: addressTo!, lamports: (value! * Decimal.fromInt(10).pow(9)).toInt());
+      var resultTxHash = await account.solWallet.transfer(
+          destination: addressTo!,
+          lamports: (value! * Decimal.fromInt(10).pow(9)).toInt());
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => TxSuccessScreen(resultTxHash.toString(), 'https://solscan.io/tx/$resultTxHash', null)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => TxSuccessScreen(resultTxHash.toString(),
+              'https://solscan.io/tx/$resultTxHash', null)));
     } catch (e, st) {
       print(e);
       print(st);

@@ -1,11 +1,11 @@
 import 'package:binance_chain/binance_chain.dart';
-import 'package:tbccwallet/core/api/binance_chain/BCApi.dart';
+import 'package:voola/core/api/binance_chain/BCApi.dart';
 
-import 'package:tbccwallet/core/token/DexPair.dart';
+import 'package:voola/core/token/DexPair.dart';
 
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/dex/DexMainScreen.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/dex/DexMainScreen.dart';
 
 enum ExchangeActionMode { Buy, Sell }
 
@@ -26,32 +26,54 @@ class DexActions extends StatelessWidget {
             : Column(
                 children: [
                   DexTextField(
-                    title: S.of(context).priceToken(model.dexMainModel.marketPairModel.selectedMarketPair.right.symbol.split('-').first),
+                    title: S.of(context).priceToken(model.dexMainModel
+                        .marketPairModel.selectedMarketPair.right.symbol
+                        .split('-')
+                        .first),
                     controls: true,
                     controller: model.priceController,
                     onMinusTap: model.minusPrice,
                     onPlusTap: model.plusPrice,
                     onChanged: model.onPriceChanged,
                   ),
-                  if (model.priceFieldError) Text('${model.priceFieldErrorText ?? ''}', style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.red, height: 1.5)),
+                  if (model.priceFieldError)
+                    Text('${model.priceFieldErrorText ?? ''}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: AppColors.red, height: 1.5)),
                   SizedBox(height: 6),
                   DexTextField(
-                    title: S.of(context).amountToken(model.dexMainModel.marketPairModel.selectedMarketPair.left.symbol.split('-').first),
+                    title: S.of(context).amountToken(model.dexMainModel
+                        .marketPairModel.selectedMarketPair.left.symbol
+                        .split('-')
+                        .first),
                     controls: true,
                     controller: model.amountController,
                     onMinusTap: model.minusAmount,
                     onPlusTap: model.plusAmount,
                     onChanged: model.onAmountChanged,
                   ),
-                  if (model.amountFieldError) Text('${model.amountFieldErrorText ?? ''}', style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.red, height: 1.5)),
+                  if (model.amountFieldError)
+                    Text('${model.amountFieldErrorText ?? ''}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: AppColors.red, height: 1.5)),
                   SizedBox(height: 6),
                   DexTextField(
-                    title: '${S.of(context).total} ${(model.mode == ExchangeActionMode.Buy ? model.dexMainModel.marketPairModel.selectedMarketPair.right : model.dexMainModel.marketPairModel.selectedMarketPair.left).symbol.split('-').first}',
+                    title:
+                        '${S.of(context).total} ${(model.mode == ExchangeActionMode.Buy ? model.dexMainModel.marketPairModel.selectedMarketPair.right : model.dexMainModel.marketPairModel.selectedMarketPair.left).symbol.split('-').first}',
                     controls: false,
                     controller: model.totalController,
                     onChanged: (_) {},
                   ),
-                  if (!model.enoughBalance) Text(S.of(context).notEnoughTokens, style: Theme.of(context).textTheme.bodyText1!.copyWith(color: AppColors.red, height: 1.5)),
+                  if (!model.enoughBalance)
+                    Text(S.of(context).notEnoughTokens,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: AppColors.red, height: 1.5)),
                   SizedBox(height: 10),
                   Row(
                     children: [
@@ -59,7 +81,10 @@ class DexActions extends StatelessWidget {
                         Expanded(
                             child: GestureDetector(
                                 onTap: () {
-                                  model.percentage(Decimal.parse(percent.startsWith('1') ? '1' : '0.$percent'));
+                                  model.percentage(Decimal.parse(
+                                      percent.startsWith('1')
+                                          ? '1'
+                                          : '0.$percent'));
                                 },
                                 behavior: HitTestBehavior.opaque,
                                 child: DexPercentBtn('$percent%'))),
@@ -140,7 +165,10 @@ class ExchangeActionsModel extends BaseViewModel {
     dPrice = (dPrice ?? Decimal.zero) + pair.tickSize;
     checkpriceCorr(pair);
 
-    priceController.text = dPrice?.toStringWithFractionDigits(pair.tickSize.scale, shrinkZeros: true) ?? '';
+    priceController.text = dPrice?.toStringWithFractionDigits(
+            pair.tickSize.scale,
+            shrinkZeros: true) ??
+        '';
     onPriceChanged(null, false);
   }
 
@@ -149,7 +177,10 @@ class ExchangeActionsModel extends BaseViewModel {
 
     dPrice = (dPrice ?? Decimal.zero) - pair.tickSize;
     checkpriceCorr(pair);
-    priceController.text = dPrice?.toStringWithFractionDigits(pair.tickSize.scale, shrinkZeros: true) ?? '';
+    priceController.text = dPrice?.toStringWithFractionDigits(
+            pair.tickSize.scale,
+            shrinkZeros: true) ??
+        '';
     onPriceChanged(null, false);
   }
 
@@ -158,7 +189,10 @@ class ExchangeActionsModel extends BaseViewModel {
     dAmount = (dAmount ?? Decimal.zero) + pair.lotSize;
     checkAmountCorr(pair);
 
-    amountController.text = dAmount?.toStringWithFractionDigits(pair.lotSize.scale, shrinkZeros: true) ?? '';
+    amountController.text = dAmount?.toStringWithFractionDigits(
+            pair.lotSize.scale,
+            shrinkZeros: true) ??
+        '';
     onAmountChanged(null, false);
   }
 
@@ -167,7 +201,10 @@ class ExchangeActionsModel extends BaseViewModel {
 
     dAmount = (dAmount ?? Decimal.zero) - pair.lotSize;
     checkAmountCorr(pair);
-    amountController.text = dAmount?.toStringWithFractionDigits(pair.lotSize.scale, shrinkZeros: true) ?? '';
+    amountController.text = dAmount?.toStringWithFractionDigits(
+            pair.lotSize.scale,
+            shrinkZeros: true) ??
+        '';
     onAmountChanged(null, false);
   }
 
@@ -196,7 +233,8 @@ class ExchangeActionsModel extends BaseViewModel {
       dAmount = bal!.balance * multipler;
     }
 
-    this.amountController.text = dAmount?.toStringWithFractionDigits(pair.lotSize.scale) ?? '0';
+    this.amountController.text =
+        dAmount?.toStringWithFractionDigits(pair.lotSize.scale) ?? '0';
     onAmountChanged(this.amountController.text);
   }
 
@@ -258,17 +296,21 @@ class ExchangeActionsModel extends BaseViewModel {
     try {
       if (validateAll()) {
         var orderMsg = NewOrderMsg(
-            wallet: dexMainModel.accManager.allAccounts[dexMainModel.selectedAccIndex].bcWallet,
+            wallet: dexMainModel
+                .accManager.allAccounts[dexMainModel.selectedAccIndex].bcWallet,
             price: dPrice,
             quantity: dAmount,
-            side: mode == ExchangeActionMode.Buy ? OrderSide.BUY() : OrderSide.SELL(),
+            side: mode == ExchangeActionMode.Buy
+                ? OrderSide.BUY()
+                : OrderSide.SELL(),
             order_type: OrderType.LIMIT(),
             time_in_force: TimeInForce.GOOD_TILL_EXPIRE(),
             symbol: dexMainModel.marketPairModel.selectedMarketPair.symbol);
 
         var resp = await locator<BinanceChainApi>().placeOrder(orderMsg);
         if (resp.ok)
-          Flushbar.success(title: S.of(context).orderPlaced).show(Duration(seconds: 4));
+          Flushbar.success(title: S.of(context).orderPlaced)
+              .show(Duration(seconds: 4));
         //dexMainModel.statusModel.setSuccess(S.of(context).orderPlaced, Duration(seconds: 4));
         else
           Flushbar.error(title: S.of(context).error).show(Duration(seconds: 6));
@@ -295,7 +337,15 @@ class DexTextField extends StatelessWidget {
   final void Function()? onPlusTap;
   final void Function(String value) onChanged;
 
-  const DexTextField({required this.title, required this.onChanged, this.controls = true, required this.controller, this.onMinusTap, this.onPlusTap, Key? key}) : super(key: key);
+  const DexTextField(
+      {required this.title,
+      required this.onChanged,
+      this.controls = true,
+      required this.controller,
+      this.onMinusTap,
+      this.onPlusTap,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -312,12 +362,18 @@ class DexTextField extends StatelessWidget {
             GestureDetector(
               onTap: onMinusTap,
               behavior: HitTestBehavior.opaque,
-              child: Padding(padding: const EdgeInsets.only(left: 30, right: 16), child: AppIcons.minus(24)),
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 30, right: 16),
+                  child: AppIcons.minus(24)),
             ),
           Expanded(
             child: Column(
               children: [
-                Text('$title', style: Theme.of(context).textTheme.subtitle2!.copyWith(color: AppColors.inactiveText)),
+                Text('$title',
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(color: AppColors.inactiveText)),
                 TextFormField(
                   controller: controller,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -341,7 +397,9 @@ class DexTextField extends StatelessWidget {
             GestureDetector(
               onTap: onPlusTap,
               behavior: HitTestBehavior.opaque,
-              child: Padding(padding: const EdgeInsets.only(left: 16, right: 30), child: AppIcons.plus(24)),
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 30),
+                  child: AppIcons.plus(24)),
             ),
         ],
       ),

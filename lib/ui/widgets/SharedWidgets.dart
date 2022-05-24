@@ -2,14 +2,14 @@ import 'dart:math' show pi;
 
 import 'package:overlay_support/overlay_support.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tbccwallet/core/authentication/AccountManager.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/authentication/AccountManager.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 import 'package:rive/rive.dart'
     show RiveAnimation, OneShotAnimation, RiveAnimationController;
 
-import 'package:tbccwallet/ui/styles/AppTheme.dart';
+import 'package:voola/ui/styles/AppTheme.dart';
 
 Widget gradientIcon(Widget icon) => ShaderMask(
     shaderCallback: AppColors.mainGradient.createShader,

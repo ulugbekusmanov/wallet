@@ -1,7 +1,7 @@
-import 'package:tbccwallet/core/api/ApiBase.dart';
+import 'package:voola/core/api/ApiBase.dart';
 
-import 'package:tbccwallet/core/api/coingecko/model/CoinMarkets.dart';
-import 'package:tbccwallet/core/api/coingecko/model/SimplePrice.dart';
+import 'package:voola/core/api/coingecko/model/CoinMarkets.dart';
+import 'package:voola/core/api/coingecko/model/SimplePrice.dart';
 
 class CoingeckoApi extends ApiBase {
   CoingeckoApi() {
@@ -26,12 +26,16 @@ class CoingeckoApi extends ApiBase {
         "&include_24hr_change=$include24hchange"
         "&include_last_updated_at=$includeLastUpdatedAt",
         customPath: true);
-    var load = <String, SimplePrice>{for (var id in ids) id: SimplePrice.fromJson(result.json[id] ?? {}, vsCurrencies.first)};
+    var load = <String, SimplePrice>{
+      for (var id in ids)
+        id: SimplePrice.fromJson(result.json[id] ?? {}, vsCurrencies.first)
+    };
 
     return ApiResponse(result.statusCode ?? -1, load);
   }
 
-  Future<ApiResponse<CoinMarkets>> loadCoinMarkets(String id, String vsCurrency, int days, String interval) async {
+  Future<ApiResponse<CoinMarkets>> loadCoinMarkets(
+      String id, String vsCurrency, int days, String interval) async {
     var load;
     var result;
     try {

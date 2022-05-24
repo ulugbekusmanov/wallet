@@ -7,10 +7,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/digests/md5.dart' as md5;
 import 'package:hex/hex.dart' as hex;
-import 'package:tbccwallet/core/api/tbcc/models/Update.dart';
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/api/tbcc/models/Update.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 class UpdateViewModel extends BaseViewModel {
   UpdateViewModel();
@@ -33,12 +33,20 @@ class UpdateViewModel extends BaseViewModel {
     info = _userSettings.update;
     downloadDir = (await getExternalStorageDirectory())!;
     var existsApkFile = (await downloadDir.list().toList()).firstWhereMaybe(
-      (element) => element.path.split('/').last.startsWith('tbccwallet'),
+      (element) => element.path.split('/').last.startsWith('voola'),
       orElse: () => null,
     );
     if (existsApkFile != null) {
-      int fileVer = int.tryParse(existsApkFile.path.split('/').last.split('-').last.split('.').first) ?? -1;
-      if (fileVer < _userSettings.update.actualVersion! || fileVer <= int.parse(_userSettings.versionCode)) {
+      int fileVer = int.tryParse(existsApkFile.path
+              .split('/')
+              .last
+              .split('-')
+              .last
+              .split('.')
+              .first) ??
+          -1;
+      if (fileVer < _userSettings.update.actualVersion! ||
+          fileVer <= int.parse(_userSettings.versionCode)) {
         await existsApkFile.delete();
       } else {
         var data = await File(existsApkFile.path).readAsBytes();
@@ -52,7 +60,8 @@ class UpdateViewModel extends BaseViewModel {
         }
       }
     }
-    if (_userSettings.update.actualVersion! > int.parse(_userSettings.versionCode)) {
+    if (_userSettings.update.actualVersion! >
+        int.parse(_userSettings.versionCode)) {
       //if (100 > int.parse(_userSettings.versionCode)) {
       updateState = 1;
       setState(ViewState.Idle);
@@ -80,7 +89,8 @@ class UpdateViewModel extends BaseViewModel {
         chunks.add(chunk);
         downloaded += chunk.length;
       }, onDone: () async {
-        File file = new File('${downloadDir.path}/${info.url!.split('/').last}');
+        File file =
+            new File('${downloadDir.path}/${info.url!.split('/').last}');
         final Uint8List bytes = Uint8List(r.contentLength!);
         int offset = 0;
         for (List<int> chunk in chunks) {
@@ -103,7 +113,10 @@ class UpdateViewModel extends BaseViewModel {
   }
 
   Future<void> installUpdate() async {
-    InstallPlugin.installApk(downloadDir.path + '/${info.url!.split('/').last}', 'com.wirelessenergy.tbccwallet').then((result) {}).catchError((error) {});
+    InstallPlugin.installApk(downloadDir.path + '/${info.url!.split('/').last}',
+            'com.wirelessenergy.voola')
+        .then((result) {})
+        .catchError((error) {});
   }
 }
 

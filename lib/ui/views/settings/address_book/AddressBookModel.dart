@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:tbccwallet/core/storage/SecureStorage.dart';
-import 'package:tbccwallet/core/token/utils.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/core/storage/SecureStorage.dart';
+import 'package:voola/core/token/utils.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 class AddressBookModel extends BaseViewModel {
   final storage = locator<Storage>();
@@ -34,7 +34,9 @@ class AddressBookContactEntity {
   AddressBookContactEntity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    addresses = [for (var a in json['addresses']) AddressBookAddressEntity.fromJson(a)];
+    addresses = [
+      for (var a in json['addresses']) AddressBookAddressEntity.fromJson(a)
+    ];
   }
   Map<String, dynamic> toJson() => {
         'id': id,

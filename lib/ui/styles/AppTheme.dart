@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 
 class ColorSet {
   late LinearGradient mainGradient;

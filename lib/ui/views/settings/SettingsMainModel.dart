@@ -1,10 +1,10 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:tbccwallet/App.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/core/settings/UserSettings.dart';
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/App.dart';
+import 'package:voola/core/authentication/AuthService.dart';
+import 'package:voola/core/settings/UserSettings.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
 
 class SettingsMainModel extends BaseViewModel {
   final settings = locator<UserSettings>();
@@ -30,7 +30,10 @@ class SettingsMainModel extends BaseViewModel {
   }
 
   Future<void> logout(BuildContext context) async {
-    var confirmed = (await showConfirmationDialog(S.of(context).logOutAllQuestion, S.of(context).checkSavedMnemonicAll)).confirmed;
+    var confirmed = (await showConfirmationDialog(
+            S.of(context).logOutAllQuestion,
+            S.of(context).checkSavedMnemonicAll))
+        .confirmed;
 
     if (confirmed) {
       locator<AuthService>().logoutAll(context);

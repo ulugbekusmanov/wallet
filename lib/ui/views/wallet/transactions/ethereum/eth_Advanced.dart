@@ -1,6 +1,6 @@
-import 'package:tbccwallet/global_env.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/views/wallet/transactions/ethereum/model.dart';
+import 'package:voola/global_env.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/views/wallet/transactions/ethereum/model.dart';
 
 import '../../WalletMainScreen.dart';
 import 'eth_Transfer.dart';

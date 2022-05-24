@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'package:bip39/bip39.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/core/authentication/AuthService.dart';
-import 'package:tbccwallet/locator.dart';
-import 'package:tbccwallet/shared.dart';
-import 'package:tbccwallet/ui/MainScreen.dart';
-import 'package:tbccwallet/ui/QrCodeReader.dart';
-import 'package:tbccwallet/ui/views/wallet/WalletMainScreenModel.dart';
+import 'package:voola/core/authentication/AuthService.dart';
+import 'package:voola/locator.dart';
+import 'package:voola/shared.dart';
+import 'package:voola/ui/MainScreen.dart';
+import 'package:voola/ui/QrCodeReader.dart';
+import 'package:voola/ui/views/wallet/WalletMainScreenModel.dart';
 
 import 'SetPassword.dart';
 

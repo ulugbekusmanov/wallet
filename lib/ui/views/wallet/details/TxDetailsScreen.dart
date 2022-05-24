@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:tbccwallet/shared.dart';
+import 'package:voola/shared.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'HistoryModel.dart';
@@ -30,11 +30,14 @@ class TxDetailsScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                  child: tx.side! ? AppIcons.arrow_income(30, AppColors.green) : AppIcons.arrow_outcome(30, AppColors.red),
+                  child: tx.side!
+                      ? AppIcons.arrow_income(30, AppColors.green)
+                      : AppIcons.arrow_outcome(30, AppColors.red),
                 ),
                 Text(
                   '${tx.value} ${tx.symbol}',
-                  style: Theme.of(context).textTheme.headline5!.copyWith(color: tx.side! ? AppColors.green : AppColors.red),
+                  style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: tx.side! ? AppColors.green : AppColors.red),
                 ),
               ],
             ),
@@ -45,14 +48,19 @@ class TxDetailsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      tx.side! ? InnerPageTile(S.of(context).from, tx.from ?? '') : InnerPageTile(S.of(context).to, tx.to ?? ''),
+                      tx.side!
+                          ? InnerPageTile(S.of(context).from, tx.from ?? '')
+                          : InnerPageTile(S.of(context).to, tx.to ?? ''),
                       SizedBox(height: 8),
-                      InnerPageTile(S.of(context).networkFee, '${tx.fee} ${tx.feeSymbol} '),
+                      InnerPageTile(S.of(context).networkFee,
+                          '${tx.fee} ${tx.feeSymbol} '),
                       SizedBox(height: 8),
                       ...() {
-                        if ([Blockchain.Eth, Blockchain.BSC].contains(tx.blockchain)) {
+                        if ([Blockchain.Eth, Blockchain.BSC]
+                            .contains(tx.blockchain)) {
                           return [
-                            InnerPageTile(S.of(context).confirmations, '${tx.eth_info?.confirmations}'),
+                            InnerPageTile(S.of(context).confirmations,
+                                '${tx.eth_info?.confirmations}'),
                             SizedBox(height: 8),
                             InnerPageTile('Nonce', '${tx.eth_info?.nonce}'),
                             SizedBox(height: 8),
@@ -60,7 +68,8 @@ class TxDetailsScreen extends StatelessWidget {
                         } else
                           return [];
                       }(),
-                      InnerPageTile(S.of(context).txTime, tx.timestamp?.toStringDMY_hms() ?? ''),
+                      InnerPageTile(S.of(context).txTime,
+                          tx.timestamp?.toStringDMY_hms() ?? ''),
                       SizedBox(height: 8),
                       InnerPageTile(
                         'TxHash',
@@ -68,8 +77,13 @@ class TxDetailsScreen extends StatelessWidget {
                         actions: [
                           GestureDetector(
                               onTap: () async {
-                                await Clipboard.setData(ClipboardData(text: tx.txHash));
-                                Flushbar.success(title: S.of(context).copiedToClipboard('TxHash')).show();
+                                await Clipboard.setData(
+                                    ClipboardData(text: tx.txHash));
+                                Flushbar.success(
+                                        title: S
+                                            .of(context)
+                                            .copiedToClipboard('TxHash'))
+                                    .show();
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -99,7 +113,8 @@ class TxDetailsScreen extends StatelessWidget {
                 if (tx.blockchain == Blockchain.BC) {
                   url = 'https://explorer.binance.org/tx/${tx.txHash}';
                 } else if (tx.blockchain == Blockchain.Eth) {
-                  url = 'https://blockchair.com/ethereum/transaction/${tx.txHash}';
+                  url =
+                      'https://blockchair.com/ethereum/transaction/${tx.txHash}';
                 } else {
                   //BSC
                   url = 'https://bscscan.com/tx/${tx.txHash}';
