@@ -292,5 +292,10 @@
     "renewPremium": "更新您的高级帐户",
     "subExpires": "订阅即将到期",
     "subExpiresDate": "订阅将于 {date} 到期",
-    "annually": "每年"
+    "annually": "每年",
+    "cancle": "取消",
+    "fingerprintAuthentication": "指纹认证",
+    "faceDetection": "人脸检测",
+    "lookCamera": "看相机",
+    "touchSensor": "触摸传感器"
 }

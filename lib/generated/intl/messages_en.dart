@@ -134,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buyToken": m4,
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "canceled": MessageLookupByLibrary.simpleMessage("Canceled"),
+        "cancle": MessageLookupByLibrary.simpleMessage("Cancle"),
         "candlestickChart":
             MessageLookupByLibrary.simpleMessage("Candlestick chart"),
         "cantBeEmpty": MessageLookupByLibrary.simpleMessage("Can\'t be empty"),
@@ -203,11 +204,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "ethereumPK":
             MessageLookupByLibrary.simpleMessage("Ethereum PrivateKey"),
         "exchange": MessageLookupByLibrary.simpleMessage("Exchange"),
+        "faceDetection": MessageLookupByLibrary.simpleMessage("Face Detection"),
         "fast": MessageLookupByLibrary.simpleMessage("Fast"),
         "fee": MessageLookupByLibrary.simpleMessage("Fee"),
         "fileDamaged": MessageLookupByLibrary.simpleMessage(
             "The file is damaged. Try it again"),
         "fingerprint": MessageLookupByLibrary.simpleMessage("Fingerprint"),
+        "fingerprintAuthentication":
+            MessageLookupByLibrary.simpleMessage("Fingerprint Authentication"),
         "forceUpdate": MessageLookupByLibrary.simpleMessage(
             "An important app update is available. To continue, you need to download and install it."),
         "from": MessageLookupByLibrary.simpleMessage("From"),
@@ -250,6 +254,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logOutAllQuestion":
             MessageLookupByLibrary.simpleMessage("Log out of all accounts?"),
         "logOutQuestion": MessageLookupByLibrary.simpleMessage("Log out?"),
+        "lookCamera": MessageLookupByLibrary.simpleMessage("Look at Camera"),
         "lottery": MessageLookupByLibrary.simpleMessage("TBCC Lottery"),
         "lotteryAccept": MessageLookupByLibrary.simpleMessage("Buy Ticket"),
         "lotteryAccepted":
@@ -451,6 +456,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalFundBal":
             MessageLookupByLibrary.simpleMessage("Total Fund balance"),
+        "touchSensor": MessageLookupByLibrary.simpleMessage("Touch Sensor"),
         "transactions": MessageLookupByLibrary.simpleMessage("Transactions"),
         "transferSuccessText": MessageLookupByLibrary.simpleMessage(
             "Transaction sent to processing. Will appear in the history soon."),

@@ -292,5 +292,11 @@
   "youProNow": "You {type} now",
   "youReceive": "You receive",
   "yourBalance": "Your balance",
-  "check":"Check"
+  "check":"Check",
+  "cancle": "Cancle",
+  "fingerprintAuthentication": "Fingerprint Authentication",
+  "faceDetection": "Face Detection",
+  "lookCamera": "Look at Camera",
+  "touchSensor": "Touch Sensor"
+
 }

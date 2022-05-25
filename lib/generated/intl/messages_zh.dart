@@ -122,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buyToken": m4,
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "canceled": MessageLookupByLibrary.simpleMessage("取消"),
+        "cancle": MessageLookupByLibrary.simpleMessage("取消"),
         "candlestickChart": MessageLookupByLibrary.simpleMessage("烛台图"),
         "cantBeEmpty": MessageLookupByLibrary.simpleMessage("不能为空"),
         "cardAttachedYet": MessageLookupByLibrary.simpleMessage("该卡已链接到其中一个帐户"),
@@ -175,10 +176,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "error": MessageLookupByLibrary.simpleMessage("错误"),
         "ethereumPK": MessageLookupByLibrary.simpleMessage("以太坊私钥"),
         "exchange": MessageLookupByLibrary.simpleMessage("交易所"),
+        "faceDetection": MessageLookupByLibrary.simpleMessage("人脸检测"),
         "fast": MessageLookupByLibrary.simpleMessage("快速"),
         "fee": MessageLookupByLibrary.simpleMessage("费用"),
         "fileDamaged": MessageLookupByLibrary.simpleMessage("文件损坏，再试一次"),
         "fingerprint": MessageLookupByLibrary.simpleMessage("指纹"),
+        "fingerprintAuthentication":
+            MessageLookupByLibrary.simpleMessage("指纹认证"),
         "forceUpdate":
             MessageLookupByLibrary.simpleMessage("重要的应用更新已可用。 要继续，您需要下载并安装它。"),
         "from": MessageLookupByLibrary.simpleMessage("由于"),
@@ -214,6 +218,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logOut": MessageLookupByLibrary.simpleMessage("退出"),
         "logOutAllQuestion": MessageLookupByLibrary.simpleMessage("退出所有帐户？"),
         "logOutQuestion": MessageLookupByLibrary.simpleMessage("注销？"),
+        "lookCamera": MessageLookupByLibrary.simpleMessage("看相机"),
         "lottery": MessageLookupByLibrary.simpleMessage("抽奖 TBCC"),
         "lotteryAccept": MessageLookupByLibrary.simpleMessage("参与"),
         "lotteryAccepted": MessageLookupByLibrary.simpleMessage("您已经参加了。期待结果。"),
@@ -386,6 +391,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tokenPrice": m23,
         "total": MessageLookupByLibrary.simpleMessage("总计"),
         "totalFundBal": MessageLookupByLibrary.simpleMessage("资金余额："),
+        "touchSensor": MessageLookupByLibrary.simpleMessage("触摸传感器"),
         "transactions": MessageLookupByLibrary.simpleMessage("交易记录"),
         "transferSuccessText":
             MessageLookupByLibrary.simpleMessage("交易在处理中。 并可在交易记录中查询。"),

@@ -2979,6 +2979,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Cancle`
+  String get cancle {
+    return Intl.message(
+      'Cancle',
+      name: 'cancle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fingerprint Authentication`
+  String get fingerprintAuthentication {
+    return Intl.message(
+      'Fingerprint Authentication',
+      name: 'fingerprintAuthentication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Face Detection`
+  String get faceDetection {
+    return Intl.message(
+      'Face Detection',
+      name: 'faceDetection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Look at Camera`
+  String get lookCamera {
+    return Intl.message(
+      'Look at Camera',
+      name: 'lookCamera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Touch Sensor`
+  String get touchSensor {
+    return Intl.message(
+      'Touch Sensor',
+      name: 'touchSensor',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

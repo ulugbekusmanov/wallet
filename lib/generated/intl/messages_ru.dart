@@ -136,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buyToken": m4,
         "cancel": MessageLookupByLibrary.simpleMessage("Отмена"),
         "canceled": MessageLookupByLibrary.simpleMessage("Отменён"),
+        "cancle": MessageLookupByLibrary.simpleMessage("Отменить"),
         "candlestickChart":
             MessageLookupByLibrary.simpleMessage("Свечной график"),
         "cantBeEmpty":
@@ -208,11 +209,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "ethereumPK":
             MessageLookupByLibrary.simpleMessage("Приватный ключ Ethereum"),
         "exchange": MessageLookupByLibrary.simpleMessage("Биржа"),
+        "faceDetection":
+            MessageLookupByLibrary.simpleMessage("Распознавание лиц"),
         "fast": MessageLookupByLibrary.simpleMessage("Быстро"),
         "fee": MessageLookupByLibrary.simpleMessage("Комиссия"),
         "fileDamaged": MessageLookupByLibrary.simpleMessage(
             "Файл поврежден. Попробуйте снова."),
         "fingerprint": MessageLookupByLibrary.simpleMessage("Отпечаток пальца"),
+        "fingerprintAuthentication": MessageLookupByLibrary.simpleMessage(
+            "Аутентификация по отпечатку пальца"),
         "forceUpdate": MessageLookupByLibrary.simpleMessage(
             "Доступно важное обновление приложения. Для продолжения необходимо его скачать и установить."),
         "from": MessageLookupByLibrary.simpleMessage("От"),
@@ -255,6 +260,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "logOutAllQuestion":
             MessageLookupByLibrary.simpleMessage("Выйти из всех аккаунтов?"),
         "logOutQuestion": MessageLookupByLibrary.simpleMessage("Выйти?"),
+        "lookCamera":
+            MessageLookupByLibrary.simpleMessage("Посмотрите на камеру"),
         "lottery": MessageLookupByLibrary.simpleMessage("Лотерея ТBСС"),
         "lotteryAccept": MessageLookupByLibrary.simpleMessage("Купить билет"),
         "lotteryAccepted":
@@ -453,6 +460,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "tokenPrice": m23,
         "total": MessageLookupByLibrary.simpleMessage("Итого"),
         "totalFundBal": MessageLookupByLibrary.simpleMessage("Баланс фонда"),
+        "touchSensor": MessageLookupByLibrary.simpleMessage("Сенсорный датчик"),
         "transactions": MessageLookupByLibrary.simpleMessage("Транзакции"),
         "transferSuccessText": MessageLookupByLibrary.simpleMessage(
             "Транзакция отправлена в обработку. Скоро появится в истории."),

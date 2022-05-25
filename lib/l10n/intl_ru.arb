@@ -290,6 +290,11 @@
     "subExpires": "Подписка истекает",
     "subExpiresDate": "Подписка истекает {date}",
     "annually": "Ежегодно",
-    "check":"Проверить"
+    "check":"Проверить",
+    "cancle": "Отменить",
+    "fingerprintAuthentication": "Аутентификация по отпечатку пальца",
+    "faceDetection": "Распознавание лиц",
+    "lookCamera": "Посмотрите на камеру",
+    "touchSensor": "Сенсорный датчик"
 
 }
