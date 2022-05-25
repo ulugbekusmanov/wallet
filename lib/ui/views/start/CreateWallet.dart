@@ -90,8 +90,6 @@ class CreateWalletScreen extends StatelessWidget {
         model.generateNewMnemonic();
       },
       builder: (context, model, child) {
-        model.generateNewMnemonic();
-
         return CScaffold(
           appBar: CAppBar(
             elevation: 0,

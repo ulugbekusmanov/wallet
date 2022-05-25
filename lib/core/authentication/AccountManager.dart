@@ -329,6 +329,7 @@ class AccountManager extends ChangeNotifier {
             accountType = AccType.Premium;
           }
         }
+        accountType = AccType.Pro;
       } catch (e) {
         acc.tbccUser = TBCCUserModel(address: acc.bcWallet.address!);
         _tbccApi.newClient(acc.bcWallet.address!);
