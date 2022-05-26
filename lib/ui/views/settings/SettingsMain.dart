@@ -41,6 +41,43 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
           body: ListView(
             padding: const EdgeInsets.all(20),
             children: [
+              AspectRatio(
+                aspectRatio: 16 / 8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.primary,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppIcons.crown(38, AppColors.secondaryBG),
+                      SizedBox(height: 10),
+                      Text(
+                        'Go PRO',
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            fontSize: 20, color: AppColors.secondaryBG),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 6),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.08,
+                        ),
+                        child: Text(
+                          'get access to more features and more savings with VOOLA Wallet PRO ',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: AppColors.secondaryBG,
+                                  ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
               SettingsTile(
                 index: 1,
                 icon: AppIcons.walletconnect(20, AppColors.primary),
