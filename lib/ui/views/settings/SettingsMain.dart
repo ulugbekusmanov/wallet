@@ -163,7 +163,9 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
                 onTap: () {
                   // launch('https://t.me/tbcc_china');
                 },
-                endIcon: false,
+                endIcon: true,
+                endIconWidget:
+                    AppIcons.arrowOutCorner(18, AppColors.inactiveText),
                 trailing: Text(
                   '@tbcclabs',
                   style: Theme.of(context).textTheme.caption,
@@ -176,7 +178,9 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
                 onTap: () {
                   // launch('https://t.me/tbcc_china');
                 },
-                endIcon: false,
+                endIcon: true,
+                endIconWidget:
+                    AppIcons.arrowOutCorner(18, AppColors.inactiveText),
                 trailing: Text(
                   '@tbcclabs',
                   style: Theme.of(context).textTheme.caption,
@@ -212,15 +216,19 @@ class SettingsTile extends StatelessWidget {
   final bool bottomSpace;
   final int index;
   final bool endIcon;
+  final Widget? endIconWidget;
+
   @override
-  SettingsTile(
-      {required this.index,
-      required this.icon,
-      required this.value,
-      this.onTap,
-      this.bottomSpace = false,
-      this.trailing,
-      this.endIcon = true});
+  SettingsTile({
+    required this.index,
+    required this.icon,
+    required this.value,
+    this.onTap,
+    this.bottomSpace = false,
+    this.trailing,
+    this.endIcon = true,
+    this.endIconWidget,
+  });
 
   Widget build(BuildContext context) {
     return AnimatedOpacityWrapper(
@@ -261,7 +269,14 @@ class SettingsTile extends StatelessWidget {
               ),
               Spacer(),
               if (trailing != null) trailing!,
-              if (endIcon) Icon(Icons.chevron_right, color: AppColors.text),
+              if (endIcon)
+                Row(
+                  children: [
+                    SizedBox(width: 8),
+                    endIconWidget ??
+                        Icon(Icons.chevron_right, color: AppColors.text),
+                  ],
+                ),
             ],
           ),
         ),
