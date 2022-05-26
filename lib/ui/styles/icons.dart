@@ -56,6 +56,7 @@ class AppIcons {
     's': '$_iconsPathBase/s.svg',
     'g': '$_iconsPathBase/g.svg',
     'close_circle': '$_iconsPathBase/close_circle.svg',
+    'arrow_out_corner': '$_iconsPathBase/arrow_out_corner.svg'
   };
   static SvgPicture _pic(String path, double size, Color? color) =>
       SvgPicture.asset(path, width: size, color: color);
@@ -162,4 +163,6 @@ class AppIcons {
       _pic(paths['g']!, size, color);
   static SvgPicture closeCircle(double size, [Color? color]) =>
       _pic(paths['close_circle']!, size, color);
+  static SvgPicture arrowOutCorner(double size, [Color? color]) =>
+      _pic(paths['arrow_out_corner']!, size, color);
 }

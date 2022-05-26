@@ -6,6 +6,7 @@ import 'package:voola/global_env.dart';
 import 'package:voola/shared.dart';
 import 'package:voola/ui/views/settings/SettingsMainModel.dart';
 import 'package:voola/ui/views/settings/address_book/AddressBook.dart';
+import 'package:voola/ui/views/settings/support/SupportCenter.dart';
 import 'package:voola/ui/views/start/LoginScreen.dart';
 import 'package:voola/ui/widgets/SharedWidgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -40,37 +41,49 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
           body: ListView(
             padding: const EdgeInsets.all(20),
             children: [
-              //SettingsTile(
-              //  index: 0,
-              //  icon: gradientIcon(AppIcons.walletconnect(24)),
-              //  value: 'WalletConnect',
-              //  onTap: () {},
-              //),
-              SettingsTile(
-                  index: 2,
-                  icon: gradientIcon(AppIcons.verified(24)),
-                  value: S.of(context).securityCenter,
-                  onTap: () async {
-                    // if ((await Navigator.of(context).push<bool>(
-                    //       MaterialPageRoute(
-                    //         builder: (_) => LoginScreen(confirmation: true),
-                    //       ),
-                    //     )) ==
-                    //     true) {
-                    //   Navigator.of(context).push(
-                    //     MaterialPageRoute(
-                    //       builder: (_) => SecurityMainScreen(),
-                    //     ),
-                    //   );
-                    // }
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => SecurityMainScreen(),
+              AspectRatio(
+                aspectRatio: 16 / 8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.primary,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AppIcons.crown(38, AppColors.secondaryBG),
+                      SizedBox(height: 10),
+                      Text(
+                        'Go PRO',
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            fontSize: 20, color: AppColors.secondaryBG),
+                        textAlign: TextAlign.center,
                       ),
-                    );
-                  },
-                  bottomSpace: true),
-
+                      SizedBox(height: 6),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.08,
+                        ),
+                        child: Text(
+                          'get access to more features and more savings with VOOLA Wallet PRO ',
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: AppColors.secondaryBG,
+                                  ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              SettingsTile(
+                index: 1,
+                icon: AppIcons.walletconnect(20, AppColors.primary),
+                value: 'Wallet Connection',
+                onTap: () {},
+              ),
               SettingsTile(
                 index: 1,
                 icon: ClipRRect(
@@ -97,18 +110,27 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
                 ),
               ),
               SettingsTile(
-                index: 2,
-                icon: gradientIcon(AppIcons.globe(24)),
-                value: S.of(context).language,
-                onTap: () => Navigator.of(context).push(PageTransition(
-                    type: PageTransitionType.rightToLeftWithFade,
-                    child: LanguageScreen(model))),
+                index: 1,
+                icon: gradientIcon(AppIcons.verified(20)),
+                value: S.of(context).securityCenter,
+                onTap: () async {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => SecurityMainScreen(),
+                    ),
+                  );
+                },
               ),
-              //SettingsTile(index: 3, icon: gradientIcon(AppIcons.crown(24)), value: 'Push Notifications', onTap: () {}),
               SettingsTile(
-                index: 4,
+                index: 1,
+                icon: AppIcons.notification_bell(18, AppColors.primary),
+                value: 'Push Notifications',
+                onTap: () {},
+              ),
+              SettingsTile(
+                index: 1,
                 bottomSpace: true,
-                icon: gradientIcon(AppIcons.book_open(24)),
+                icon: AppIcons.book_open(20, AppColors.primary),
                 value: S.of(context).addressBook,
                 onTap: () => Navigator.of(context).push(
                   PageTransition(
@@ -119,9 +141,8 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
               ),
               ThemeSwitcher(builder: (context) {
                 return SwitchSettingsTile(
-                  bottomSpace: true,
                   index: 3,
-                  icon: gradientIcon(AppIcons.idea(24)),
+                  icon: AppIcons.idea(20, AppColors.primary),
                   value: S.of(context).darkMode,
                   onTap: () {},
                   isSwitched:
@@ -131,28 +152,83 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
                   },
                 );
               }),
-              //SettingsTile(index: 4, icon: gradientIcon(AppIcons.support(24)), value: S.of(context).supportCenter, onTap: () {}),
               SettingsTile(
                 index: 4,
-                icon: gradientIcon(AppIcons.person_add(24)),
-                value: S.of(context).community,
+                bottomSpace: true,
+                icon: AppIcons.crown(20, AppColors.inactiveText),
+                value: 'Multi - wallet',
+                // onTap: () {},
+              ),
+              SettingsTile(
+                index: 4,
+                icon: gradientIcon(AppIcons.support(20)),
+                value: S.of(context).supportCenter,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => SupportCenter(),
+                  ),
+                ),
+              ),
+              SettingsTile(
+                index: 5,
+                icon: gradientIcon(AppIcons.info(20)),
+                value: S.of(context).aboutTbcc,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AboutScreen(),
+                  ),
+                ),
+                bottomSpace: true,
+              ),
+              SettingsTile(
+                index: 4,
+                icon: AppIcons.twitter(20, AppColors.primary),
+                value: 'Twitter',
                 onTap: () {
-                  launch('https://t.me/tbcc_china');
+                  // launch('https://t.me/tbcc_china');
                 },
                 endIcon: false,
                 trailing: Text(
-                  'Telegram @tbcc_china',
+                  '@tbcclabs',
                   style: Theme.of(context).textTheme.caption,
                 ),
               ),
-
               SettingsTile(
-                index: 5,
-                icon: gradientIcon(AppIcons.info(24)),
-                value: S.of(context).aboutTbcc,
-                onTap: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => AboutScreen())),
+                index: 4,
+                icon: AppIcons.telegram(20, AppColors.primary),
+                value: 'Telegram',
+                onTap: () {
+                  // launch('https://t.me/tbcc_china');
+                },
+                endIcon: true,
+                endIconWidget:
+                    AppIcons.arrowOutCorner(18, AppColors.inactiveText),
+                trailing: Text(
+                  '@tbcclabs',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ),
+              SettingsTile(
+                index: 4,
+                icon: AppIcons.telegram(20, AppColors.primary),
+                value: 'Telegram bot',
+                onTap: () {
+                  // launch('https://t.me/tbcc_china');
+                },
+                endIcon: true,
+                endIconWidget:
+                    AppIcons.arrowOutCorner(18, AppColors.inactiveText),
+                trailing: Text(
+                  '@tbcclabs',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ),
+              SettingsTile(
+                index: 4,
                 bottomSpace: true,
+                icon: AppIcons.crown(20, AppColors.primary),
+                value: 'Suggestions',
+                onTap: () {},
               ),
               SettingsTile(
                 index: 6,
@@ -171,21 +247,25 @@ class _SettingsMainScreenState extends State<SettingsMainScreen>
 
 class SettingsTile extends StatelessWidget {
   final Widget icon;
-  final void Function() onTap;
+  final void Function()? onTap;
   final String value;
   final Widget? trailing;
   final bool bottomSpace;
   final int index;
   final bool endIcon;
+  final Widget? endIconWidget;
+
   @override
-  SettingsTile(
-      {required this.index,
-      required this.icon,
-      required this.value,
-      required this.onTap,
-      this.bottomSpace = false,
-      this.trailing,
-      this.endIcon = true});
+  SettingsTile({
+    required this.index,
+    required this.icon,
+    required this.value,
+    this.onTap,
+    this.bottomSpace = false,
+    this.trailing,
+    this.endIcon = true,
+    this.endIconWidget,
+  });
 
   Widget build(BuildContext context) {
     return AnimatedOpacityWrapper(
@@ -198,7 +278,14 @@ class SettingsTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: AppColors.generalShapesBg),
+              color: AppColors.secondaryBG,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 13),
+                  blurRadius: 18,
+                  color: AppColors.shadowColor,
+                )
+              ]),
           child: Row(
             children: [
               Row(
@@ -206,14 +293,27 @@ class SettingsTile extends StatelessWidget {
                   Padding(
                       padding: const EdgeInsets.only(right: 14), child: icon),
                   Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(value,
-                          style: Theme.of(context).textTheme.bodyText2)),
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Text(
+                      value,
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                          color: onTap == null
+                              ? AppColors.inactiveText
+                              : AppColors.text),
+                    ),
+                  ),
                 ],
               ),
               Spacer(),
               if (trailing != null) trailing!,
-              if (endIcon) Icon(Icons.chevron_right, color: AppColors.text),
+              if (endIcon)
+                Row(
+                  children: [
+                    SizedBox(width: 8),
+                    endIconWidget ??
+                        Icon(Icons.chevron_right, color: AppColors.text),
+                  ],
+                ),
             ],
           ),
         ),
@@ -252,7 +352,14 @@ class SwitchSettingsTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8.5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: AppColors.generalShapesBg),
+              color: AppColors.secondaryBG,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 13),
+                  blurRadius: 18,
+                  color: AppColors.shadowColor,
+                )
+              ]),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

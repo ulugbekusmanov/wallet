@@ -3,28 +3,26 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:voola/App.dart';
 import 'package:voola/core/settings/AppSettings.dart';
 import 'package:voola/ui/views/dapp_browser/MoreInformation.dart';
-import 'package:voola/ui/views/dapp_browser/Search.dart';
 import 'package:voola/ui/views/settings/address_book/AddCurrency.dart';
 import 'package:voola/ui/views/settings/address_book/Gorh.dart';
 import 'package:voola/ui/views/settings/address_book/Sarm.dart';
-import 'package:voola/ui/views/settings/security/smartCard/SmartCardAttach1.dart';
 import 'package:voola/ui/views/settings/security/smartCard/SmartCardAttachModel.dart';
 import 'package:voola/ui/views/wallet/News.dart';
 import 'package:voola/ui/views/wallet/ReceiveScreen.dart';
-import 'core/api/tbcc/TBCCApi.dart';
-import 'core/settings/UserSettings.dart';
 
 import 'core/api/coingecko/CoingeckoAPI.dart';
 import 'core/api/network_fees/NetworkFeesApi.dart';
+import 'core/api/tbcc/TBCCApi.dart';
+import 'core/settings/UserSettings.dart';
 import 'core/storage/SecureStorage.dart';
 import 'core/token/TokenContainer.dart';
-
 import 'ui/MainScreen.dart';
 import 'ui/update/UpdateModel.dart';
 import 'ui/views/dapp_browser/DAppBrowserScreen.dart';
 import 'ui/views/dapp_browser/DAppLaunchScreen.dart';
 import 'ui/views/dapp_browser/DAppScreen.dart';
 import 'ui/views/dapp_browser/InteractionUI.dart';
+import 'ui/views/dex/DexMainScreen.dart';
 import 'ui/views/premium/buyPremium/BuyPremiumModel.dart';
 import 'ui/views/premium/buyPro/BuyProModel.dart';
 import 'ui/views/settings/SettingsMainModel.dart';
@@ -43,7 +41,6 @@ import 'ui/views/wallet/transactions/binance_chain/model.dart';
 import 'ui/views/wallet/transactions/binance_smart_chain/model.dart';
 import 'ui/views/wallet/transactions/ethereum/model.dart';
 import 'ui/views/wallet/transactions/solana/model.dart';
-import 'ui/views/dex/DexMainScreen.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -101,7 +98,6 @@ void setupLocator() {
   locator.registerFactory(() => SarmModel());
   locator.registerFactory(() => GorhModel());
   locator.registerFactory(() => MoreInformationModel());
-  locator.registerFactory(() => SearchModel());
 
   //locator.registerFactory(() => DexOrderHistoryModel());
 }
