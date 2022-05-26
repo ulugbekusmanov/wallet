@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:voola/core/authentication/AccountManager.dart';
 import 'package:voola/core/blockchain/binance_smart_chain/contracts/TokenHub_abi.dart';
 import 'package:voola/core/token/utils.dart';
@@ -10,7 +11,7 @@ import 'package:voola/shared.dart';
 import 'package:voola/ui/QrCodeReader.dart';
 import 'AlertDialog.dart';
 import 'DAppScreen.dart';
-import 'Search.dart';
+import 'package:dartx/dartx.dart';
 
 String dappImageUrlBase =
     'https://raw.githubusercontent.com/trustwallet/assets/master/dapps';
@@ -69,6 +70,20 @@ class DAppLaunchScreenModel extends BaseViewModel {
   int selectedAccIndex = 0;
   bool needToLoadEmpty = false;
   late DAppScreenModel dappScreenModel;
+  FocusNode focusNode = FocusNode();
+  final TextEditingController search = TextEditingController();
+  List<DApp> allDapps = [];
+  List<DApp> allDappsSearched = [];
+
+  void searchList(String value) {
+    allDappsSearched.clear();
+    allDapps.forEach((element) => {
+          if (element.name.contains(search.text))
+            {allDappsSearched.add(element)}
+        });
+    setState();
+  }
+
   var ethDApps = [
     DApp(Uri.parse('https://app.uniswap.org'), 'Uniswap', TokenNetwork.Ethereum,
         DAppType.DeFi,
@@ -113,7 +128,7 @@ class DAppLaunchScreenModel extends BaseViewModel {
         description: 'AMM DEX'),
   ];
 
-  var toolsApps = [
+  var toolsDApps = [
     DApp(Uri.parse('https://bscscan.com/'), 'BscScan',
         TokenNetwork.BinanceSmartChain, DAppType.Tools,
         description: 'Binance Smart Chain Explorer',
@@ -153,7 +168,7 @@ class DAppLaunchScreenModel extends BaseViewModel {
             'https://raw.githubusercontent.com/trustwallet/assets/master/dapps/pancakeswap.finance.png'),
   ];
 
-  var newApps = [
+  var newDApps = [
     DApp(Uri.parse('https://dappradar.com/nft/marketplaces'), 'NFT',
         TokenNetwork.Ethereum, DAppType.New,
         description: 'Marketplace | DappRadar',
@@ -181,14 +196,42 @@ class DAppLaunchScreenModel extends BaseViewModel {
         customImageUrl: 'assets/images/opensea.png'),
   ];
 
-  List<DApp> getListDaps() {
-    List<DApp> result = [];
-    result.addAll(newApps);
-    result.addAll(bscDApps);
-    result.addAll(ethDApps);
-    result.addAll(toolsApps);
-    return result;
+  void getAllDapps() {
+    allDapps.addAll(newDApps);
+    allDapps.addAll(ethDApps);
+    allDapps.addAll(bscDApps);
+    allDapps.addAll(toolsDApps);
   }
+
+  List<Widget> caruselWidgets = [
+    Container(
+      margin: EdgeInsets.only(right: 8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: Image.asset(
+          'assets/images/banner.png',
+        ),
+      ),
+    ),
+    Container(
+      margin: EdgeInsets.only(right: 8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: Image.asset(
+          'assets/images/banner.png',
+        ),
+      ),
+    ),
+    Container(
+      margin: EdgeInsets.only(right: 8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: Image.asset(
+          'assets/images/banner.png',
+        ),
+      ),
+    ),
+  ];
 }
 
 class DAppLaunchScreen extends StatelessWidget {
@@ -199,85 +242,127 @@ class DAppLaunchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<DAppLaunchScreenModel>(
       model: model,
-      onModelReady: (model) {},
+      onModelReady: (model) {
+        model.getAllDapps();
+      },
       builder: (context, model, child) {
         return Scaffold(
           body: SafeArea(
             child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text('NFT projects',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: AppColors.text)),
+                model.focusNode.hasFocus
+                    ? GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          model.setState();
+                        },
+                        child: model.search.text == ''
+                            ? Center(
+                                child: Text('Строка поиска пуста'),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(top: 50),
+                                child: ListView.builder(
+                                  itemCount: model.allDappsSearched.length,
+                                  itemBuilder: (context, i) {
+                                    return dappsBlock(
+                                        model.allDappsSearched, model, context);
+                                  },
+                                ),
+                              ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(top: 70),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              CarouselSlider(
+                                items: model.caruselWidgets,
+                                options: CarouselOptions(
+                                  disableCenter: true,
+                                  initialPage: 0,
+                                  height: 185,
+                                  autoPlay: false,
+                                  enlargeCenterPage: false,
+                                  enableInfiniteScroll: true,
+                                  viewportFraction: 0.9,
+                                  onPageChanged: (index_, reason) {},
+                                ),
+                              ),
+                              SizedBox(height: 16),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Text('Hot dApps',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6!
+                                        .copyWith(color: AppColors.text)),
+                              ),
+                              dappsBlock(
+                                model.newDApps,
+                                model,
+                                context,
+                                isHorizontal: true,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Text('Binance Smart Chain',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6!
+                                        .copyWith(color: AppColors.text)),
+                              ),
+                              dappsBlock(model.bscDApps, model, context),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Text('Ethereum',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6!
+                                        .copyWith(color: AppColors.text)),
+                              ),
+                              dappsBlock(model.ethDApps, model, context),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12),
+                                child: Text('Tools',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6!
+                                        .copyWith(color: AppColors.text)),
+                              ),
+                              dappsBlock(model.toolsDApps, model, context),
+                            ],
+                          ),
                         ),
-                        dappsBlock(model.newApps, model, context),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text('Binance Smart Chain',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: AppColors.text)),
-                        ),
-                        dappsBlock(model.bscDApps, model, context),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text('Ethereum',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: AppColors.text)),
-                        ),
-                        dappsBlock(model.ethDApps, model, context),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text('Tools',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: AppColors.text)),
-                        ),
-                        dappsBlock(model.toolsApps, model, context),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
                 Row(
                   children: [
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16),
-                        child: GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => SearchScreen(
-                                list: model.getListDaps(),
-                                modelDapp: model,
-                              ),
-                            ),
-                          ),
-                          child: TextFormField(
-                            textAlignVertical: TextAlignVertical.center,
-                            enabled: false,
-                            decoration: generalTextFieldDecor(
-                              context,
-                              hintText: 'Find dApp or enter the link',
-                              prefixIcon: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 16, right: 8),
-                                child: Icon(
-                                  Icons.search_rounded,
-                                  size: 22,
-                                ),
+                        child: TextFormField(
+                          controller: model.search,
+                          focusNode: model.focusNode,
+                          key: key,
+                          onTap: () {
+                            model.focusNode.unfocus();
+                            model.setState();
+                          },
+                          onChanged: (v) {
+                            model.searchList(v);
+                          },
+                          textAlignVertical: TextAlignVertical.center,
+                          decoration: generalTextFieldDecor(
+                            context,
+                            hintText: 'Find dApp or enter the link',
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 16, right: 8),
+                              child: Icon(
+                                Icons.search_rounded,
+                                size: 22,
                               ),
                             ),
                           ),
@@ -286,7 +371,7 @@ class DAppLaunchScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 16),
                     GestureDetector(
-                      // onTap: () => Navigator.of(context).push(QRCodeReader()),
+                      // onTap: () => Navigator.of(context).push(()),
                       child: Container(
                         height: 40,
                         width: 40,
@@ -308,7 +393,7 @@ class DAppLaunchScreen extends StatelessWidget {
                 model.currDapp != null
                     ? AnimatedPositioned(
                         curve: Curves.easeInOut,
-                        top: MediaQuery.of(context).size.height * 0.32,
+                        top: MediaQuery.of(context).size.height * 0.24,
                         right: model.isActiveDapp == null
                             ? -350
                             : (model.isActiveDapp! ? 0 : -250),
@@ -459,52 +544,64 @@ class DAppLaunchScreen extends StatelessWidget {
       );
 
   Widget dappsBlock(
-      List<DApp> dapps, DAppLaunchScreenModel model, BuildContext context) {
-    return SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: () sync* {
-              int packCnt = 0;
-              List<Widget> pack = [];
-              for (var i
-                  in List<int>.generate(dapps.length, (index) => index)) {
-                var app = dapps[i];
-                pack.add(
-                  DAppCardFull(
-                    app,
-                    () async {
-                      var result = await showModalBottomSheet(
-                        context: context,
-                        backgroundColor: Colors.transparent.withOpacity(0),
-                        builder: (c) {
-                          return optionsBottomSheet(context);
-                        },
-                      );
-                      if (result == true) {
-                        model.currDapp = app;
-                        model.isActiveDapp = false;
-                        model.dappScreenModel.indexToShow = 2;
-                        model.dappScreenModel.browserScreenModel
-                            .launchDApp(app);
-                      }
-                    },
-                    model,
-                  ),
-                );
+      List<DApp> dapps, DAppLaunchScreenModel model, BuildContext context,
+      {bool? isHorizontal = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: () sync* {
+                int packCnt = 0;
+                List<Widget> pack = [];
+                for (var i
+                    in List<int>.generate(dapps.length, (index) => index)) {
+                  var app = dapps[i];
+                  pack.add(
+                    DAppCardFull(
+                      app,
+                      () async {
+                        var result = await showModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent.withOpacity(0),
+                          builder: (c) {
+                            return optionsBottomSheet(context);
+                          },
+                        );
+                        if (result == true) {
+                          model.currDapp = app;
+                          model.isActiveDapp = false;
+                          model.dappScreenModel.indexToShow = 2;
+                          model.dappScreenModel.browserScreenModel
+                              .launchDApp(app);
+                        }
+                      },
+                      model,
+                      isHorizontal: isHorizontal,
+                    ),
+                  );
 
-                packCnt += 1;
+                  packCnt += 1;
 
-                if (packCnt == 3 || dapps.length == i + 1) {
-                  packCnt = 0;
-                  yield Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: pack);
-                  pack = [];
+                  if (packCnt == 3 || dapps.length == i + 1) {
+                    packCnt = 0;
+                    if (isHorizontal != true) {
+                      yield Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: pack);
+                      pack = [];
+                    } else {
+                      yield Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: pack);
+                      pack = [];
+                    }
+                  }
                 }
-              }
-            }()
-                .toList()));
+              }()
+                  .toList())),
+    );
   }
 }
 
@@ -555,8 +652,14 @@ class DAppCardFull extends StatelessWidget {
   DAppLaunchScreenModel launchScreenModel;
   DApp dapp;
   void Function() onTap;
-  DAppCardFull(this.dapp, this.onTap, this.launchScreenModel, {Key? key})
-      : super(key: key);
+  bool? isHorizontal;
+  DAppCardFull(
+    this.dapp,
+    this.onTap,
+    this.launchScreenModel, {
+    Key? key,
+    this.isHorizontal = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -564,32 +667,56 @@ class DAppCardFull extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
         child: Container(
-          width: 260,
+          width: isHorizontal == true ? 65 : 260,
           margin: const EdgeInsets.all(12),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: dapp.image,
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child: isHorizontal == true
+              ? Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(dapp.name,
-                        style: Theme.of(context).textTheme.bodyText1),
-                    Text(
-                      dapp.description ?? '',
-                      style: Theme.of(context).textTheme.caption,
-                      overflow: TextOverflow.ellipsis,
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: dapp.image,
                     ),
+                    SizedBox(height: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          dapp.name,
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: AppColors.text.withOpacity(0.7),
+                                  ),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: dapp.image,
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(dapp.name,
+                              style: Theme.of(context).textTheme.bodyText1),
+                          Text(
+                            dapp.description ?? '',
+                            style: Theme.of(context).textTheme.caption,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
         ));
   }
 }
