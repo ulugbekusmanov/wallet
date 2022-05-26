@@ -42,22 +42,21 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                     value: S.of(context).changePassword,
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (_) => SetPasswordScreen(
-                          S.of(context).changePassword,
+                              S.of(context).changePassword,
                               () => Navigator.of(context).pop(),
-                          changePassword: true,
-                        )))),
+                              changePassword: true,
+                            )))),
                 SettingsTile(
                     index: 2,
                     icon: gradientIcon(AppIcons.fingerprint_scan(24)),
                     value: S.of(context).biometrics,
-                    onTap: () {/*
+                    onTap: () {
+                      /*
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => BiometricsScreen())),*/
                       showModalBottomSheet(
-
                           isScrollControlled: true,
                           context: context,
-
                           builder: (context) {
                             return BottomSheet(
                               onClosing: () {},
@@ -66,9 +65,14 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                     builder: (BuildContext context, setState) =>
                                         Container(
                                           decoration: new BoxDecoration(
-                                              borderRadius: new BorderRadius.only(
-                                                  topLeft: const Radius.circular(100.0),
-                                                  topRight: const Radius.circular(100.0))),
+                                              borderRadius:
+                                                  new BorderRadius.only(
+                                                      topLeft:
+                                                          const Radius.circular(
+                                                              100.0),
+                                                      topRight:
+                                                          const Radius.circular(
+                                                              100.0))),
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 8, vertical: 12),
                                           child: Column(
@@ -82,8 +86,8 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                                   decoration: BoxDecoration(
                                                     color: Colors.black12,
                                                     borderRadius:
-                                                    BorderRadius.circular(
-                                                        24),
+                                                        BorderRadius.circular(
+                                                            24),
                                                   ),
                                                   child: Row(
                                                     children: [
@@ -92,38 +96,43 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                                           child: Container(
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                horizontal:
-                                                                36,
-                                                                vertical: 4),
+                                                                    horizontal:
+                                                                        36,
+                                                                    vertical:
+                                                                        4),
                                                             decoration:
-                                                            BoxDecoration(
+                                                                BoxDecoration(
                                                               color: fingerprint
                                                                   ? Color(
-                                                                  0xff4E94D7)
-                                                                  : Colors.black12,
+                                                                      0xff4E94D7)
+                                                                  : Colors
+                                                                      .black12,
                                                               borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                  24),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          24),
                                                             ),
                                                             child: Text(
-                                                              S.of(context).fingerprint,
+                                                              S
+                                                                  .of(context)
+                                                                  .fingerprint,
                                                               style: TextStyle(
                                                                 color: fingerprint
-                                                                    ? Colors.white
+                                                                    ? Colors
+                                                                        .white
                                                                     : LightColors
-                                                                    .text,
+                                                                        .text,
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                FontWeight
-                                                                    .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                               ),
                                                             ),
                                                           ),
                                                           onTap: () {
                                                             setState(() {
                                                               fingerprint =
-                                                              !fingerprint;
+                                                                  !fingerprint;
                                                             });
                                                           },
                                                         ),
@@ -133,47 +142,51 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                                           child: Container(
                                                             padding: EdgeInsets
                                                                 .symmetric(
-                                                                horizontal:
-                                                                36,
-                                                                vertical: 4),
+                                                                    horizontal:
+                                                                        36,
+                                                                    vertical:
+                                                                        4),
                                                             decoration:
-                                                            BoxDecoration(
+                                                                BoxDecoration(
                                                               color: !fingerprint
                                                                   ? Color(
-                                                                  0xff4E94D7)
+                                                                      0xff4E94D7)
                                                                   : Color(
-                                                                  0xffF4F7FC),
+                                                                      0xffF4F7FC),
                                                               borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                  24),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          24),
                                                             ),
                                                             child: Text(
-                                                              S.of(context).faceDetection,
+                                                              S
+                                                                  .of(context)
+                                                                  .faceDetection,
                                                               style: TextStyle(
                                                                 color: !fingerprint
-                                                                    ? Colors.white
+                                                                    ? Colors
+                                                                        .white
                                                                     : LightColors
-                                                                    .text,
+                                                                        .text,
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                FontWeight
-                                                                    .w500,
+                                                                    FontWeight
+                                                                        .w500,
                                                               ),
                                                             ),
                                                           ),
                                                           onTap: () {
                                                             setState(() {
                                                               fingerprint =
-                                                              !fingerprint;
+                                                                  !fingerprint;
                                                             });
                                                           },
                                                         ),
                                                       ),
                                                     ],
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                   ),
                                                 ),
                                               ),
@@ -184,7 +197,9 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                               Text(
                                                 fingerprint
                                                     ? S.of(context).fingerprint
-                                                    : S.of(context).faceDetection,
+                                                    : S
+                                                        .of(context)
+                                                        .faceDetection,
                                                 style: TextStyle(
                                                   color: Color(0xff738390),
                                                   fontSize: 16,
@@ -196,9 +211,14 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                               ),
                                               fingerprint
                                                   ? AppIcons.fingerprint_scan(
-                                                  160,locator<UserSettings>().biometricsEnabled ? AppColors.active : AppColors.inactiveText)
+                                                      160,
+                                                      locator<UserSettings>()
+                                                              .biometricsEnabled
+                                                          ? AppColors.active
+                                                          : AppColors
+                                                              .inactiveText)
                                                   : AppIcons.face_detection(
-                                                  160),
+                                                      160),
                                               SizedBox(
                                                 height: 36,
                                               ),
@@ -216,10 +236,19 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                                 height: 36,
                                               ),
                                               Button(
-                                                value:  locator<UserSettings>().biometricsEnabled ? S.of(context).disable : S.of(context).enable,
+                                                value: locator<UserSettings>()
+                                                        .biometricsEnabled
+                                                    ? S.of(context).disable
+                                                    : S.of(context).enable,
                                                 onTap: () async {
-                                                  await model.switchBiometrics(context);
-                                                },),
+                                                  if (await model
+                                                      .checkBiometrics()) {
+                                                    await model
+                                                        .switchBiometrics(
+                                                            context);
+                                                  }
+                                                },
+                                              ),
                                               SizedBox(
                                                 height: 6,
                                               ),
@@ -229,16 +258,16 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                                     .width,
                                                 child: OutlinedButton(
                                                   style:
-                                                  OutlinedButton.styleFrom(
+                                                      OutlinedButton.styleFrom(
                                                     padding:
-                                                    const EdgeInsets.all(
-                                                        16),
+                                                        const EdgeInsets.all(
+                                                            16),
                                                     shape:
-                                                    RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            16)),
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16)),
                                                   ),
                                                   onPressed: () =>
                                                       Navigator.pop(context),
@@ -248,7 +277,7 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                                                       color: Color(0xff738390),
                                                       fontSize: 16,
                                                       fontWeight:
-                                                      FontWeight.w400,
+                                                          FontWeight.w400,
                                                     ),
                                                   ),
                                                 ),
@@ -259,8 +288,7 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
                               },
                             );
                           });
-                    }
-                ),
+                    }),
                 SettingsTile(
                     index: 2,
                     icon: gradientIcon(
@@ -300,4 +328,3 @@ class _SecurityMainScreenState extends State<SecurityMainScreen> {
     );
   }
 }
-

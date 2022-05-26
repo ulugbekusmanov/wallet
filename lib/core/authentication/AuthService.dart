@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:voola/core/authentication/AccountManager.dart';
 import 'package:voola/core/settings/UserSettings.dart';
@@ -73,13 +74,26 @@ class AuthService {
     try {
       return await localAuth.authenticate(
         localizedReason: reason,
+        useErrorDialogs: true,
         stickyAuth: true,
+        biometricOnly: true,
       );
     } catch (e, st) {
       print('$e: $st');
       return false;
     }
   }
+  Future<bool> checkBiometrics() async {
+    late bool canCheckBiometrics;
+    try {
+      canCheckBiometrics = await localAuth.canCheckBiometrics;
+    } on PlatformException catch (e) {
+      canCheckBiometrics = false;
+      print(e);
+    }
+    return canCheckBiometrics;
+  }
+
 
   Future<void> setPassword(String password) async {
     var passwordHash = bytesToHex(

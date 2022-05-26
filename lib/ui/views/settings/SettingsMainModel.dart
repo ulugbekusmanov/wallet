@@ -79,4 +79,9 @@ class SettingsMainModel extends BaseViewModel {
       setState();
     }
   }
+
+  Future<bool> checkBiometrics() async {
+    var _settings = locator<UserSettings>();
+    return _settings.canCheckBiometrics;
+  }
 }
