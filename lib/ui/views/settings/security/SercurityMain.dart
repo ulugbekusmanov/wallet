@@ -29,34 +29,41 @@ class SecurityMainScreen extends StatelessWidget {
             child: Column(
               children: [
                 SettingsTile(
-                    index: 2,
-                    icon: gradientIcon(AppIcons.password(24)),
-                    value: S.of(context).changePassword,
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => SetPasswordScreen(
-                              S.of(context).changePassword,
-                              () => Navigator.of(context).pop(),
-                              changePassword: true,
-                            )))),
+                  icon: AppIcons.verified(20, AppColors.primary),
+                  index: 2,
+                  value: 'Authentication mode',
+                  onTap: () {},
+                ),
                 SettingsTile(
                   index: 2,
-                  icon: gradientIcon(AppIcons.fingerprint_scan(24)),
-                  value: S.of(context).biometrics,
+                  icon: AppIcons.password(20, AppColors.primary),
+                  value: S.of(context).changePassword,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => SetPasswordScreen(
+                        S.of(context).changePassword,
+                        () => Navigator.of(context).pop(),
+                        changePassword: true,
+                      ),
+                    ),
+                  ),
+                ),
+                SettingsTile(
+                  index: 2,
+                  icon: AppIcons.fingerprint_scan(20, AppColors.primary),
+                  value: 'Fingerprint',
                   onTap: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => BiometricsScreen())),
                 ),
                 SettingsTile(
-                    index: 2,
-                    icon: gradientIcon(
-                        Icon(Icons.vpn_key_outlined, color: Colors.white)),
-                    value: S.of(context).privateKeys,
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => PrivateKeysScreen()));
-                    }),
+                  index: 2,
+                  icon: AppIcons.face_detection(20, AppColors.primary),
+                  value: 'Face Detection',
+                  onTap: () {},
+                ),
                 if (!Platform.isIOS) ...[
                   SettingsTile(
-                    icon: AppIcons.credit_card(24),
+                    icon: AppIcons.credit_card(20),
                     //value: I18n.of(context).smartCard,
                     value: 'Smart Card',
                     onTap: () {
@@ -70,12 +77,27 @@ class SecurityMainScreen extends StatelessWidget {
 
                         return;
                       }
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => SmartCardAttach1()));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => SmartCardAttach1(),
+                        ),
+                      );
                     },
                     index: 2,
                   ),
-                ]
+                ],
+                SettingsTile(
+                  index: 2,
+                  icon: Icon(Icons.vpn_key_outlined, color: AppColors.primary),
+                  value: S.of(context).privateKeys,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => PrivateKeysScreen(),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

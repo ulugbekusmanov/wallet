@@ -55,11 +55,17 @@ class CurrencyScreen extends StatelessWidget {
   Widget currencyCard(String symbol) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.generalShapesBg,
-        borderRadius: BorderRadius.circular(16),
-      ),
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.secondaryBG,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 13),
+              blurRadius: 18,
+              color: AppColors.shadowColor,
+            )
+          ]),
       child: Row(
         children: [
           ClipRRect(
@@ -77,7 +83,14 @@ class CurrencyScreen extends StatelessWidget {
           SizedBox(width: 25),
           Text('${symbol.toUpperCase()}'),
           Spacer(),
-          RadioSelectorCircle(active: symbol == FIAT_CURRENCY_SYMBOL),
+          CupertinoSwitch(
+            value: symbol == FIAT_CURRENCY_SYMBOL,
+            onChanged: (b) {
+              needToReload = true;
+              model.currencyChanged(symbol);
+            },
+            activeColor: AppColors.active,
+          ),
         ],
       ),
     );

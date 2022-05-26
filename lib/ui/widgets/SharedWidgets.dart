@@ -311,6 +311,7 @@ class CAppBar extends AppBar {
     List<Widget>? actions,
     bool? centerTitle = false,
     double? elevation = 0,
+    double? titleSpacing,
     Color? backgroundColor = Colors.transparent,
     Key? key,
   }) : super(
@@ -321,7 +322,7 @@ class CAppBar extends AppBar {
           elevation: elevation,
           backgroundColor: backgroundColor,
           centerTitle: centerTitle,
-          // titleSpacing: -10,
+          titleSpacing: titleSpacing,
           backwardsCompatibility: false,
           toolbarHeight: 64,
           foregroundColor: AppColors.text,
